@@ -25,7 +25,7 @@ public class Item : MonoBehaviour {
         UpdateStartData();
     }
 
-    public void ResetPickUp() {
+    public void ResetItem() {
         //Pause physics
         if (rigidbodyRef != null) {
             rigidbodyRef.isKinematic = true;

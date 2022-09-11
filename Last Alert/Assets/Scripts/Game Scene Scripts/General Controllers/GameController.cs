@@ -63,8 +63,7 @@ public class GameController : MonoBehaviour {
 
             //Example of teleporting the player
             if (Input.GetKey(KeyCode.L)) {
-                playerControllerRef.SetLocation(new Vector3(0, 0, 0));
-                playerControllerRef.SetCameraAngle(new Vector2(0, 180));
+                playerControllerRef.ResetPlayer();
             }
             
             //Example code of scene switching to make sure it works

@@ -186,4 +186,10 @@ public class PlayerController : MonoBehaviour {
         transform.rotation = Quaternion.Euler(0, newAngle.y, 0);
         cameraRef.transform.localRotation = Quaternion.Euler(newAngle.x, 0, 0);
     }
+
+    public void ResetPlayer() {
+        //TEMP CODE NEEDS TO BE REPLACED WITH CHECKPOINT SYSTEM'S LAST CHECKPOINT
+        SetLocation(new Vector3(0, 0, 0));
+        SetCameraAngle(new Vector2(0, 180));
+    }
 }

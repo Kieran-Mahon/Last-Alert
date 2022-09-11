@@ -23,6 +23,6 @@ public class PickUp : MonoBehaviour {
 
     //Call the item reset function
     public void ResetPickUp() {
-        itemRef.ResetPickUp();
+        itemRef.ResetItem();
     }
 }

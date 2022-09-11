@@ -94,8 +94,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51291165de58add4b9a398bf09e17029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickUpDistance: 5
-  rotateSpeed: 25
+  maxPickUpDistance: 5
+  minPickUpDistance: 1
+  rotateSpeed: 90
+  collisionOffSet: 0.2
+  ignoreLayer: 2
   itemHolderRef: {fileID: 7370461202363214210}
   cameraRef: {fileID: 1462304361688584945}
 --- !u!1 &1462304361688584945
