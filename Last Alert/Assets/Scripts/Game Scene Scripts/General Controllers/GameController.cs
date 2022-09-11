@@ -17,20 +17,21 @@ public class GameController : MonoBehaviour {
     void Start() {
         itemManagerRef.GetAllPickUps();
         ChangeGameState(GameState.GAME);
+        KeyboardController.AddKey(KeyboardController.Action.CROUCH, KeyCode.C);
     }
 
     //Update is called once per frame
     void Update() {
         if (gameState == GameState.PAUSEMENU) {
             //Unpause game
-            if (Input.GetKeyDown(KeyboardController.pauseKey)) {
+            if (CustomInput.GetKeyDown(KeyboardController.pauseKey)) {
                 UnpauseGame();
                 ChangeGameState(GameState.GAME);
             }
 
         } else if (gameState == GameState.SETTINGMENU) {
             //Unpause game
-            if (Input.GetKeyDown(KeyboardController.pauseKey)) {
+            if (CustomInput.GetKeyDown(KeyboardController.pauseKey)) {
                 UnpauseGame();
                 ChangeGameState(GameState.GAME);
             }
@@ -50,7 +51,7 @@ public class GameController : MonoBehaviour {
             pickUpControllerRef.TryMoveItem();
 
             //Pause game
-            if (Input.GetKeyDown(KeyboardController.pauseKey)) {
+            if (CustomInput.GetKeyDown(KeyboardController.pauseKey)) {
                 PauseGame();
                 ChangeGameState(GameState.PAUSEMENU);
             }
