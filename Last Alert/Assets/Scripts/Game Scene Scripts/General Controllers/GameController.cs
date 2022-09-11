@@ -47,7 +47,7 @@ public class GameController : MonoBehaviour {
             playerControllerRef.MoveCamera();
 
             //Object pick up
-            pickUpControllerRef.TryMoveObject();
+            pickUpControllerRef.TryMoveItem();
 
             //Pause game
             if (Input.GetKeyDown(KeyboardController.pauseKey)) {
@@ -73,7 +73,7 @@ public class GameController : MonoBehaviour {
             }
 
         } else if (gameState == GameState.FINISHMENU) {
-            pickUpControllerRef.DropObject(true);
+            pickUpControllerRef.DropItem(true);
         }
     }
 

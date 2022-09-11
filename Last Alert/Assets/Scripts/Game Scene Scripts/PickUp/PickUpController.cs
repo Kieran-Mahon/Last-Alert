@@ -4,42 +4,45 @@ using UnityEngine;
 
 public class PickUpController : MonoBehaviour {
 
-    public bool holdingObject = false;
+    [Header("Pick Up Information")]
     public float pickUpDistance = 5;
+    public float rotateSpeed = 25;
 
-    public GameObject objectHolderRef;
+    [Header("References")]
+    public GameObject itemHolderRef;
     public GameObject cameraRef;
 
-    private PickUp objectRef;
+    private bool holdingItem = false;
+    private PickUp itemRef;
 
-    public void TryMoveObject() {
-        //Check if no objects are held
-        if (holdingObject == false) {
-            //Check if the players wants to pick up an object
-            PickUpObject();
+    public void TryMoveItem() {
+        //Check if no items are held
+        if (holdingItem == false) {
+            //Check if the players wants to pick up an item
+            PickUpItem();
         } else {
-            //Move object
-            MoveObject();
-            //Check if the player wants to drop the object
-            PutDownObject();
+            //Move item
+            MoveItem();
+            //Check if the player wants to drop the item
+            PutDownItem();
         }
     }
 
-    private void PickUpObject() {
+    private void PickUpItem() {
         //Check if key is pressed
-        if (Input.GetKeyDown(KeyboardController.objectPickUpKey)) {
-            //See if there is a object in front of the player
+        if (Input.GetKeyDown(KeyboardController.itemPickUpKey)) {
+            //See if there is an item in front of the player
             if (Physics.Raycast(cameraRef.transform.position, cameraRef.transform.TransformDirection(Vector3.forward), out RaycastHit hit, pickUpDistance)) {
-                //Check if the object has the pick up tag
+                //Check if the item has the pick up tag
                 PickUp tempPickUp = hit.collider.GetComponent<PickUp>();
                 if (tempPickUp != null) {
-                    holdingObject = true;
-                    objectRef = tempPickUp;
-                    objectRef.held = true;
-                    //Set the objects parent to the holder object
-                    objectRef.transform.parent = objectHolderRef.transform;
-                    //Disable the physics on the object if any
-                    Rigidbody rigidbody = objectRef.rigidbodyRef;
+                    holdingItem = true;
+                    itemRef = tempPickUp;
+                    itemRef.held = true;
+                    //Set the items parent to the holder object
+                    itemRef.transform.parent = itemHolderRef.transform;
+                    //Disable the physics on the item if any
+                    Rigidbody rigidbody = itemRef.rigidbodyRef;
                     if (rigidbody != null) {
                         rigidbody.isKinematic = true;
                     }
@@ -48,43 +51,67 @@ public class PickUpController : MonoBehaviour {
         }
     }
 
-    private void MoveObject() {
-
+    //Code which is ran when the item is being moved
+    private void MoveItem() {
+        KeepLevel();
+        RotateItem();
     }
 
-    private void PutDownObject() {
+    //Keep item level
+    private void KeepLevel() {
+        itemRef.transform.eulerAngles = new Vector3(0, itemRef.transform.eulerAngles.y, 0);
+    }
+
+    //Rotate the item
+    private void RotateItem() {
+        float rotateAmount = 0;
+        //Rotate the item left
+        if (Input.GetKey(KeyboardController.itemRotateLeftKey)) {
+            rotateAmount += rotateSpeed;
+        }
+        //Rotate the item right
+        if (Input.GetKey(KeyboardController.itemRotateRightKey)) {
+            rotateAmount -= rotateSpeed;
+        }
+        //Apply new rotation
+        itemRef.transform.Rotate(new Vector3(0, rotateAmount * Time.deltaTime, 0));
+    }
+
+    //Drop the item
+    private void PutDownItem() {
         //Check if key is pressed
-        if (Input.GetKeyDown(KeyboardController.objectPickUpKey)) {
-            ReleaseObject();
-            holdingObject = false;
+        if (Input.GetKeyDown(KeyboardController.itemPickUpKey)) {
+            ReleaseItem();
+            holdingItem = false;
         }
     }
 
-    private void ReleaseObject() {
-        //Release object from holder
-        objectRef.transform.parent = null;
-        //Enable the physics on the object if any
-        Rigidbody rigidbody = objectRef.rigidbodyRef;
+    //Disconnect the item from the player
+    private void ReleaseItem() {
+        //Release item from holder
+        itemRef.transform.parent = null;
+        //Enable the physics on the item if any
+        Rigidbody rigidbody = itemRef.rigidbodyRef;
         if (rigidbody != null) {
             rigidbody.isKinematic = false;
         }
-        objectRef.held = false;
+        itemRef.held = false;
     }
 
-    public void DropObject(bool dropAtStart) {
-        //Check if holding an object
-        if (holdingObject == true) {
-            holdingObject = false;
+    public void DropItem(bool dropAtStart) {
+        //Check if holding an item
+        if (holdingItem == true) {
+            holdingItem = false;
             //Drop at start location
             if (dropAtStart == true) {
-                //Release object from holder
-                objectRef.transform.parent = null;
+                //Release item from holder
+                itemRef.transform.parent = null;
                 //Set to start location
-                objectRef.ResetPickUp();
+                itemRef.ResetPickUp();
                 //Update held reference
-                objectRef.held = false;
+                itemRef.held = false;
             } else { //Drop at current location
-                ReleaseObject();
+                ReleaseItem();
             }
         }
     }
