@@ -4,42 +4,56 @@ using UnityEngine;
 
 public class PickUpController : MonoBehaviour {
 
-    public bool holdingObject = false;
-    public float pickUpDistance = 5;
+    [Header("Pick Up Information")]
+    public float maxPickUpDistance = 5;
+    public float minPickUpDistance = 1;
+    public float rotateSpeed = 25;
+    public int ignoreLayer = 2;
 
-    public GameObject objectHolderRef;
+    [Header("References")]
+    public GameObject itemHolderRef;
     public GameObject cameraRef;
 
-    private PickUp objectRef;
+    private bool holdingItem = false;
+    private PickUp itemRef;
+    private float pickUpDistance;
 
-    public void TryMoveObject() {
-        //Check if no objects are held
-        if (holdingObject == false) {
-            //Check if the players wants to pick up an object
-            PickUpObject();
+    public void TryMoveItem() {
+        //Check if no items are held
+        if (holdingItem == false) {
+            //Check if the players wants to pick up an item
+            PickUpItem();
         } else {
-            //Move object
-            MoveObject();
-            //Check if the player wants to drop the object
-            PutDownObject();
+            //Move item
+            MoveItem();
+            //Check if the player wants to drop the item
+            PutDownItem();
         }
     }
 
-    private void PickUpObject() {
+    private void PickUpItem() {
         //Check if key is pressed
-        if (Input.GetKeyDown(KeyboardController.objectPickUpKey)) {
-            //See if there is a object in front of the player
-            if (Physics.Raycast(cameraRef.transform.position, cameraRef.transform.TransformDirection(Vector3.forward), out RaycastHit hit, pickUpDistance)) {
-                //Check if the object has the pick up tag
+        if (CustomInput.GetKeyDown(KeyboardController.itemPickUpKey)) {
+            //See if there is an item in front of the player
+            if (Physics.Raycast(cameraRef.transform.position, cameraRef.transform.TransformDirection(Vector3.forward), out RaycastHit hit, maxPickUpDistance)) {
+                //Make sure the item is not too close to the player
+                if (hit.distance <= minPickUpDistance) {
+                    return;
+                }
+                //Check if the item has the pick up tag
                 PickUp tempPickUp = hit.collider.GetComponent<PickUp>();
                 if (tempPickUp != null) {
-                    holdingObject = true;
-                    objectRef = tempPickUp;
-                    objectRef.held = true;
-                    //Set the objects parent to the holder object
-                    objectRef.transform.parent = objectHolderRef.transform;
-                    //Disable the physics on the object if any
-                    Rigidbody rigidbody = objectRef.rigidbodyRef;
+                    holdingItem = true;
+                    itemRef = tempPickUp;
+                    itemRef.held = true;
+                    //Set the items parent to the holder object
+                    SetItemParent();
+                    //Set the pick up distance
+                    pickUpDistance = itemHolderRef.transform.localPosition.z;
+                    //Give the item reference the ignore raycast layer
+                    itemRef.gameObject.layer = ignoreLayer;
+                    //Disable the physics on the item if any
+                    Rigidbody rigidbody = itemRef.rigidbodyRef;
                     if (rigidbody != null) {
                         rigidbody.isKinematic = true;
                     }
@@ -48,43 +62,97 @@ public class PickUpController : MonoBehaviour {
         }
     }
 
-    private void MoveObject() {
-
+    private void SetItemParent() {
+        itemRef.transform.parent = itemHolderRef.transform;
+        itemHolderRef.transform.localPosition = new Vector3(0, 0, itemRef.transform.localPosition.z);
+        itemRef.transform.localPosition = Vector3.zero;
     }
 
-    private void PutDownObject() {
-        //Check if key is pressed
-        if (Input.GetKeyDown(KeyboardController.objectPickUpKey)) {
-            ReleaseObject();
-            holdingObject = false;
+    private void RemoveItemParent() {
+        itemRef.transform.parent = null;
+        itemHolderRef.transform.localPosition = Vector3.zero;
+    }
+
+    //Code which is ran when the item is being moved
+    private void MoveItem() {
+        KeepLevel();
+        RotateItem();
+        ChangeDistance();
+    }
+
+    //Keep item level
+    private void KeepLevel() {
+        itemRef.transform.eulerAngles = new Vector3(0, itemRef.transform.eulerAngles.y, 0);
+    }
+
+    //Rotate the item
+    private void RotateItem() {
+        float rotateAmount = 0;
+        //Rotate the item left
+        if (CustomInput.GetKey(KeyboardController.itemRotateLeftKey)) {
+            rotateAmount += rotateSpeed;
+        }
+        //Rotate the item right
+        if (CustomInput.GetKey(KeyboardController.itemRotateRightKey)) {
+            rotateAmount -= rotateSpeed;
+        }
+        //Apply new rotation
+        itemRef.transform.Rotate(new Vector3(0, rotateAmount * Time.deltaTime, 0));
+    }
+
+    //Change item distance
+    private void ChangeDistance() {
+        if (Physics.Raycast(cameraRef.transform.position, cameraRef.transform.TransformDirection(Vector3.forward), out RaycastHit hit, maxPickUpDistance)) {
+            //Move the item closer to the player
+            float newDistance = hit.distance - itemRef.pickUpDistanceOffset;
+            itemHolderRef.transform.localPosition = new Vector3(0, 0, newDistance);
+            if (newDistance <= (minPickUpDistance * 2)) {
+                //Release item if too close to the player
+                ReleaseItem();
+            }
+        } else {
+            //Move the item back to its pick up distance
+            itemHolderRef.transform.localPosition = new Vector3(0, 0, pickUpDistance);
         }
     }
 
-    private void ReleaseObject() {
-        //Release object from holder
-        objectRef.transform.parent = null;
-        //Enable the physics on the object if any
-        Rigidbody rigidbody = objectRef.rigidbodyRef;
+    //Drop the item
+    private void PutDownItem() {
+        if (holdingItem == true) {
+            //Check if key is pressed
+            if (CustomInput.GetKeyDown(KeyboardController.itemPickUpKey)) {
+                ReleaseItem();
+            }
+        }
+    }
+
+    //Disconnect the item from the player
+    private void ReleaseItem() {
+        //Release item from holder
+        RemoveItemParent();
+        //Give the item reference the default layer (0)
+        itemRef.gameObject.layer = 0;
+        //Enable the physics on the item if any
+        Rigidbody rigidbody = itemRef.rigidbodyRef;
         if (rigidbody != null) {
             rigidbody.isKinematic = false;
         }
-        objectRef.held = false;
+        itemRef.held = false;
+        itemRef = null;
+        holdingItem = false;
     }
 
-    public void DropObject(bool dropAtStart) {
-        //Check if holding an object
-        if (holdingObject == true) {
-            holdingObject = false;
+    public void DropItem(bool dropAtStart) {
+        //Check if holding an item
+        if (holdingItem == true) {
+            //Save reference of item for reseting to its start location
+            PickUp tempItem = itemRef;
+            //Release item
+            ReleaseItem();
             //Drop at start location
             if (dropAtStart == true) {
-                //Release object from holder
-                objectRef.transform.parent = null;
                 //Set to start location
-                objectRef.ResetPickUp();
-                //Update held reference
-                objectRef.held = false;
-            } else { //Drop at current location
-                ReleaseObject();
+                tempItem.ResetPickUp();
             }
         }
     }

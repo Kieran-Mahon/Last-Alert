@@ -19,19 +19,20 @@ public class GameController : MonoBehaviour {
     void Start() {
         itemManagerRef.GetAllPickUps();
         ChangeGameState(GameState.GAME);
+        KeyboardController.AddKey(KeyboardController.Action.CROUCH, KeyCode.C);
     }
 
     //Update is called once per frame
     void Update() {
         if (gameState == GameState.PAUSEMENU) {
             //Unpause game
-            if (Input.GetKeyDown(KeyboardController.pauseKey)) {
+            if (CustomInput.GetKeyDown(KeyboardController.pauseKey)) {
                 UnpauseGame();
             }
 
         } else if (gameState == GameState.SETTINGMENU) {
             //Unpause game
-            if (Input.GetKeyDown(KeyboardController.pauseKey)) {
+            if (CustomInput.GetKeyDown(KeyboardController.pauseKey)) {
                 UnpauseGame();
             }
 
@@ -47,10 +48,10 @@ public class GameController : MonoBehaviour {
             playerControllerRef.MoveCamera();
 
             //Object pick up
-            pickUpControllerRef.TryMoveObject();
+            pickUpControllerRef.TryMoveItem();
 
             //Pause game
-            if (Input.GetKeyDown(KeyboardController.pauseKey)) {
+            if (CustomInput.GetKeyDown(KeyboardController.pauseKey)) {
                 PauseGame();
             }
 
@@ -62,8 +63,7 @@ public class GameController : MonoBehaviour {
 
             //Example of teleporting the player
             if (Input.GetKey(KeyCode.L)) {
-                playerControllerRef.SetLocation(new Vector3(0, 0, 0));
-                playerControllerRef.SetCameraAngle(new Vector2(0, 180));
+                playerControllerRef.ResetPlayer();
             }
             
             //Example code of scene switching to make sure it works
@@ -72,7 +72,7 @@ public class GameController : MonoBehaviour {
             }
 
         } else if (gameState == GameState.FINISHMENU) {
-            pickUpControllerRef.DropObject(true);
+            pickUpControllerRef.DropItem(true);
         }
     }
 

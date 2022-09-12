@@ -4,7 +4,9 @@ using UnityEngine;
 
 [RequireComponent(typeof(Item))]
 public class PickUp : MonoBehaviour {
-
+    //Pickup distance change offset
+    [HideInInspector]
+    public float pickUpDistanceOffset = 0.2f;
     //Used to stop un/pausing while held by the pick up controller
     [HideInInspector]
     public bool held = false;
@@ -23,6 +25,6 @@ public class PickUp : MonoBehaviour {
 
     //Call the item reset function
     public void ResetPickUp() {
-        itemRef.ResetPickUp();
+        itemRef.ResetItem();
     }
 }
