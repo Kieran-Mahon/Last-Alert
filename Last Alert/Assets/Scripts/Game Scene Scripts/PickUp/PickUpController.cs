@@ -8,7 +8,6 @@ public class PickUpController : MonoBehaviour {
     public float maxPickUpDistance = 5;
     public float minPickUpDistance = 1;
     public float rotateSpeed = 25;
-    public float collisionOffSet = 0.2f;
     public int ignoreLayer = 2;
 
     [Header("References")]
@@ -105,8 +104,9 @@ public class PickUpController : MonoBehaviour {
     private void ChangeDistance() {
         if (Physics.Raycast(cameraRef.transform.position, cameraRef.transform.TransformDirection(Vector3.forward), out RaycastHit hit, maxPickUpDistance)) {
             //Move the item closer to the player
-            itemHolderRef.transform.localPosition = new Vector3(0, 0, hit.distance - collisionOffSet);
-            if ((hit.distance - collisionOffSet) <= (minPickUpDistance * 2)) {
+            float newDistance = hit.distance - itemRef.pickUpDistanceOffset;
+            itemHolderRef.transform.localPosition = new Vector3(0, 0, newDistance);
+            if (newDistance <= (minPickUpDistance * 2)) {
                 //Release item if too close to the player
                 ReleaseItem();
             }
