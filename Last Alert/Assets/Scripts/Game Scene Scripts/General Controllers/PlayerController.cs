@@ -210,6 +210,8 @@ public class PlayerController : MonoBehaviour {
         position.z = data.position[2];
 
         SetLocation(position);
+    }
+
     public void ResetPlayer() {
         //TEMP CODE NEEDS TO BE REPLACED WITH CHECKPOINT SYSTEM'S LAST CHECKPOINT
         SetLocation(new Vector3(0, 0, 0));
