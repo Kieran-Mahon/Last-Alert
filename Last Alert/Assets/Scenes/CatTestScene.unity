@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 89350914}
   - component: {fileID: 89350913}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txtJumpKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -406,7 +406,6 @@ GameObject:
   - component: {fileID: 161078472}
   - component: {fileID: 161078474}
   - component: {fileID: 161078473}
-  - component: {fileID: 161078475}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -476,29 +475,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 161078471}
   m_CullTransparentMesh: 1
---- !u!114 &161078475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 161078471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9daac7a73ed1d5a47806e4ca83bf9f33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pauseText: {fileID: 0}
-  forwardText: {fileID: 0}
-  backwardText: {fileID: 0}
-  leftText: {fileID: 0}
-  rightText: {fileID: 0}
-  jumpText: {fileID: 0}
-  sprintText: {fileID: 0}
-  crouchText: {fileID: 0}
-  pickUpDropText: {fileID: 0}
-  rotateLeftText: {fileID: 0}
-  rotateRightText: {fileID: 0}
 --- !u!1 &169971257
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,7 +700,7 @@ GameObject:
   - component: {fileID: 237551197}
   - component: {fileID: 237551196}
   m_Layer: 5
-  m_Name: Button
+  m_Name: btnRotateRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -794,7 +770,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 237551197}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1806928594}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: CurrentKey
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 237551194}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &237551197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,7 +833,7 @@ GameObject:
   - component: {fileID: 249604387}
   - component: {fileID: 249604386}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txtRotateLeftKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1192,7 +1180,7 @@ GameObject:
   - component: {fileID: 306359604}
   - component: {fileID: 306359603}
   m_Layer: 5
-  m_Name: Button
+  m_Name: btnSprint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1262,7 +1250,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 306359604}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1806928594}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: CurrentKey
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 306359601}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &306359604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2130,7 +2130,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 444039556}
   m_OnClick:
     m_PersistentCalls:
@@ -3360,7 +3360,7 @@ GameObject:
   - component: {fileID: 668676238}
   - component: {fileID: 668676237}
   m_Layer: 5
-  m_Name: Button
+  m_Name: btnCrouch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3430,7 +3430,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 668676238}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1806928594}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: CurrentKey
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 668676235}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &668676238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3888,7 +3900,7 @@ GameObject:
   - component: {fileID: 710676250}
   - component: {fileID: 710676249}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txtPauseKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4091,7 +4103,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 759241939}
   m_OnClick:
     m_PersistentCalls:
@@ -4146,7 +4158,7 @@ GameObject:
   - component: {fileID: 783062307}
   - component: {fileID: 783062306}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txtForwardKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4282,7 +4294,7 @@ GameObject:
   - component: {fileID: 785354840}
   - component: {fileID: 785354839}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txtRotateRightKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4581,7 +4593,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -156.00006}
+  m_AnchoredPosition: {x: 0, y: -156.00015}
   m_SizeDelta: {x: 845, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &855612890
@@ -4636,7 +4648,7 @@ GameObject:
   - component: {fileID: 857461977}
   - component: {fileID: 857461976}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txtRightKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4772,7 +4784,7 @@ GameObject:
   - component: {fileID: 884134636}
   - component: {fileID: 884134635}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txtSprintKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5111,7 +5123,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 924882528}
   m_OnClick:
     m_PersistentCalls:
@@ -5507,7 +5519,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1010952017}
   m_OnClick:
     m_PersistentCalls:
@@ -5905,7 +5917,7 @@ GameObject:
   - component: {fileID: 1115291814}
   - component: {fileID: 1115291813}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txtBackwardKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6126,7 +6138,7 @@ RectTransform:
   - {fileID: 1945753644}
   - {fileID: 161078472}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6221,7 +6233,7 @@ GameObject:
   - component: {fileID: 1240635838}
   - component: {fileID: 1240635837}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txtCrouchKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6892,7 +6904,7 @@ GameObject:
   - component: {fileID: 1332553572}
   - component: {fileID: 1332553571}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txtPickUpDropKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7521,7 +7533,7 @@ GameObject:
   - component: {fileID: 1487998130}
   - component: {fileID: 1487998129}
   m_Layer: 5
-  m_Name: Button
+  m_Name: btnJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7591,7 +7603,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1487998130}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1806928594}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: CurrentKey
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1487998127}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1487998130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7901,7 +7925,7 @@ GameObject:
   - component: {fileID: 1522125819}
   - component: {fileID: 1522125818}
   m_Layer: 5
-  m_Name: Button
+  m_Name: btnPause
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7971,7 +7995,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1522125819}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1806928594}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: CurrentKey
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1522125816}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1522125819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8022,7 +8058,7 @@ GameObject:
   - component: {fileID: 1525699764}
   - component: {fileID: 1525699763}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txtLeftKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8235,7 +8271,7 @@ GameObject:
   - component: {fileID: 1560268180}
   - component: {fileID: 1560268179}
   m_Layer: 5
-  m_Name: Button
+  m_Name: btnRotateLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8305,7 +8341,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1560268180}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1806928594}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: CurrentKey
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1560268177}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1560268180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8545,7 +8593,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1575707953
 GameObject:
@@ -8560,7 +8608,7 @@ GameObject:
   - component: {fileID: 1575707956}
   - component: {fileID: 1575707955}
   m_Layer: 5
-  m_Name: Button
+  m_Name: btnPickUpDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8630,7 +8678,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1575707956}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1806928594}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: CurrentKey
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1575707953}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1575707956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9266,6 +9326,62 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1801486678}
   m_CullTransparentMesh: 1
+--- !u!1 &1806928593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1806928595}
+  - component: {fileID: 1806928594}
+  m_Layer: 0
+  m_Name: SettingsScript
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1806928594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806928593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9daac7a73ed1d5a47806e4ca83bf9f33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentKey: {fileID: 0}
+  pauseText: {fileID: 710676249}
+  forwardText: {fileID: 783062306}
+  backwardText: {fileID: 1115291813}
+  leftText: {fileID: 1525699763}
+  rightText: {fileID: 857461976}
+  jumpText: {fileID: 89350913}
+  sprintText: {fileID: 884134635}
+  crouchText: {fileID: 1240635837}
+  pickUpDropText: {fileID: 1332553571}
+  rotateLeftText: {fileID: 249604386}
+  rotateRightText: {fileID: 785354839}
+--- !u!4 &1806928595
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806928593}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 130.74464, y: 117.91462, z: 0.6511018}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1819689377
 GameObject:
   m_ObjectHideFlags: 0

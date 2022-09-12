@@ -36,7 +36,7 @@ public static class KeyboardController {
             case Action.ITEMROTATERIGHT:
                 itemRotateRightKey = AddToArray(itemRotateRightKey, newKeyCode);
                 break;
-            case Action.PAUSEKEY:
+            case Action.PAUSE:
                 pauseKey = AddToArray(pauseKey, newKeyCode);
                 break;
             default:
@@ -89,7 +89,7 @@ public static class KeyboardController {
             case Action.ITEMROTATERIGHT:
                 itemRotateRightKey = RemoveFromArray(itemRotateRightKey, oldKeyCode);
                 break;
-            case Action.PAUSEKEY:
+            case Action.PAUSE:
                 pauseKey = RemoveFromArray(pauseKey, oldKeyCode);
                 break;
             default:
@@ -153,12 +153,22 @@ public static class KeyboardController {
             case Action.ITEMROTATERIGHT:
                 itemRotateRightKey = new KeyCode[] { };
                 break;
-            case Action.PAUSEKEY:
+            case Action.PAUSE:
                 pauseKey = new KeyCode[] { };
                 break;
             default:
                 break;
         }
+    }
+
+    public static void ClearAllKeys() {
+        ClearKey(Action.RUN);
+        ClearKey(Action.JUMP);
+        ClearKey(Action.CROUCH);
+        ClearKey(Action.RUN);
+        ClearKey(Action.RUN);
+        ClearKey(Action.RUN);
+        ClearKey(Action.PAUSE);
     }
 
     //Returns true if the key is in use
@@ -195,6 +205,6 @@ public static class KeyboardController {
         ITEMPICKUP,
         ITEMROTATELEFT,
         ITEMROTATERIGHT,
-        PAUSEKEY
+        PAUSE
     }
 }
