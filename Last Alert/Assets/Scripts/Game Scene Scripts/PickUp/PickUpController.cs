@@ -12,6 +12,10 @@ public class PickUpController : MonoBehaviour {
 
     private PickUp objectRef;
 
+    void Start() {
+        GameReferenceGetter.pickUpControllerRef = this;
+    }
+
     public void TryMoveObject() {
         //Check if no objects are held
         if (holdingObject == false) {
