@@ -24,8 +24,8 @@ public class PlayerController : MonoBehaviour {
     public GameObject cameraRef;
     public float mouseXSensitivity = 1;
     public float mouseYSensitivity = 1;
-    public bool mouseXInverted = false;
-    public bool mouseYInverted = false;
+    public static bool mouseXInverted = false;
+    public static bool mouseYInverted = false;
 
     [Header("Physics")]
     public float pushForce;

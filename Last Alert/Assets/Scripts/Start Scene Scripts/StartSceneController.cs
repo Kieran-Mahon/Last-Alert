@@ -11,6 +11,7 @@ public class StartSceneController : MonoBehaviour {
 
     //Settings reference
     public GameObject settingsUI;
+    public GameObject settingsScript;
 
     //References
     //UI controller reference
@@ -44,10 +45,12 @@ public class StartSceneController : MonoBehaviour {
             MouseController.UnlockMouse();
             homeMenu.SetActive(true);
             settingsUI.SetActive(false);
+            settingsScript.SetActive(false);
 
         } else if (newStartState == StartState.SETTINGMENU) {
             MouseController.UnlockMouse();
             settingsUI.SetActive(true);
+            settingsScript.SetActive(true);
             homeMenu.SetActive(false);
 
         } else if (newStartState == StartState.CUTSCENE) {

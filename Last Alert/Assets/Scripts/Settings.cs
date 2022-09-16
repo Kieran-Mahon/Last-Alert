@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Settings : MonoBehaviour
 {
+    public GameObject SceneScript; //reference to current scene controller
+
+    public Toggle mouseXInvert;
+    public Toggle mouseYInvert;
+
     public GameObject currentKey = null;
+    public KeyCode[] mouseKeys = { KeyCode.Mouse0, KeyCode.Mouse1, KeyCode.Mouse2 };
 
     public TextMeshProUGUI pauseText;
     public TextMeshProUGUI forwardText;
@@ -22,6 +29,8 @@ public class Settings : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mouseXInvert.onValueChanged.AddListener(delegate {InvertMouseX(mouseXInvert);});
+        mouseYInvert.onValueChanged.AddListener(delegate {InvertMouseY(mouseYInvert);});
         UpdateAllButtonText();       
     }
 
@@ -31,6 +40,37 @@ public class Settings : MonoBehaviour
         
     }
 
+    //leave settings
+    // public void BackButton(){
+    //     if(SceneScript.name == "StartSceneController"){
+    //         StartSceneController.ChangeStartState(StartSceneController.StartState.HOMEMENU);
+    //     }else if(SceneScript.name == "GameController"){
+    //         GameController.ChangeGameState(GameController.GameState.PAUSEMENU);
+    //     }else{
+    //         Debug.Log("failed to access scene script");
+    //     }
+    // }
+
+    //mouse inversion settings
+    public void InvertMouseX(Toggle selectedToggle){
+       if(selectedToggle.isOn){
+            PlayerController.mouseXInverted = true;
+        }else{
+            PlayerController.mouseXInverted = false;
+        }
+
+        Debug.Log(PlayerController.mouseXInverted);
+    }
+
+    public void InvertMouseY(Toggle selectedToggle){
+        if(selectedToggle.isOn){
+            PlayerController.mouseYInverted = true;
+        }else{
+            PlayerController.mouseYInverted = false;
+        }
+    }
+
+    //keybind settings
     public void RestoreDefaultKeyBinds(){
         ChangeKeyBind(KeyboardController.Action.PAUSE, KeyCode.Escape);
         ChangeKeyBind(KeyboardController.Action.JUMP, KeyCode.Space);
@@ -68,41 +108,64 @@ public class Settings : MonoBehaviour
     {
         if(currentKey != null){
             Event e = Event.current;
-            if(e.isKey){
-                switch(currentKey.name){
-                    case "btnPause":
-                        ChangeKeyBind(KeyboardController.Action.PAUSE, e.keyCode);
-                        UpdateButtonText(pauseText, KeyboardController.pauseKey[0].ToString());
-                        break;
-                    case "btnJump":
-                        ChangeKeyBind(KeyboardController.Action.JUMP, e.keyCode);
-                        UpdateButtonText(jumpText, KeyboardController.jumpKey[0].ToString());
-                        break;
-                    case "btnSprint":
-                        ChangeKeyBind(KeyboardController.Action.RUN, e.keyCode);
-                        UpdateButtonText(sprintText, KeyboardController.runKey[0].ToString());
-                        break;
-                    case "btnCrouch":
-                        ChangeKeyBind(KeyboardController.Action.CROUCH, e.keyCode);
-                        UpdateButtonText(crouchText, KeyboardController.crouchKey[0].ToString());
-                        break;
-                    case "btnPickUpDrop":
-                        ChangeKeyBind(KeyboardController.Action.ITEMPICKUP, e.keyCode);
-                        UpdateButtonText(pickUpDropText, KeyboardController.itemPickUpKey[0].ToString());
-                        break;
-                    case "btnRotateLeft":
-                        ChangeKeyBind(KeyboardController.Action.ITEMROTATELEFT, e.keyCode);
-                        UpdateButtonText(rotateLeftText, KeyboardController.itemRotateLeftKey[0].ToString());
-                        break;
-                    case "btnRotateRight":
-                        ChangeKeyBind(KeyboardController.Action.ITEMROTATERIGHT, e.keyCode);
-                        UpdateButtonText(rotateRightText, KeyboardController.itemRotateRightKey[0].ToString());
-                        break;
-                    default:
-                        break;
-                }
+            if(e.isKey || e.isMouse){
+                UpdateKeyBind(e);
                 currentKey = null;
             }
+        }
+    }
+
+    public void UpdateKeyBind(Event e){
+        KeyCode newKey = KeyCode.Mouse3;
+
+        //mouse click
+        if (e.isMouse){
+            if (e.type == EventType.MouseDown){
+                for (int i = 0; i < mouseKeys.Length; ++i){
+                    if (Input.GetKeyDown(mouseKeys[i])){
+                        newKey = mouseKeys[i];
+                        break;
+                    }
+                }
+            }
+        }
+        //key press
+        else if (e.isKey){
+            newKey = e.keyCode;
+        }
+
+        //assign new keybind
+        switch(currentKey.name){
+            case "btnPause":
+                ChangeKeyBind(KeyboardController.Action.PAUSE, newKey);
+                UpdateButtonText(pauseText, KeyboardController.pauseKey[0].ToString());
+                break;
+            case "btnJump":
+                ChangeKeyBind(KeyboardController.Action.JUMP, newKey);
+                UpdateButtonText(jumpText, KeyboardController.jumpKey[0].ToString());
+                break;
+            case "btnSprint":
+                ChangeKeyBind(KeyboardController.Action.RUN, newKey);
+                UpdateButtonText(sprintText, KeyboardController.runKey[0].ToString());
+                break;
+            case "btnCrouch":
+                ChangeKeyBind(KeyboardController.Action.CROUCH, newKey);
+                UpdateButtonText(crouchText, KeyboardController.crouchKey[0].ToString());
+                break;
+            case "btnPickUpDrop":
+                ChangeKeyBind(KeyboardController.Action.ITEMPICKUP, newKey);
+                UpdateButtonText(pickUpDropText, KeyboardController.itemPickUpKey[0].ToString());
+                break;
+            case "btnRotateLeft":
+                ChangeKeyBind(KeyboardController.Action.ITEMROTATELEFT, newKey);
+                UpdateButtonText(rotateLeftText, KeyboardController.itemRotateLeftKey[0].ToString());
+                break;
+            case "btnRotateRight":
+                ChangeKeyBind(KeyboardController.Action.ITEMROTATERIGHT, newKey);
+                UpdateButtonText(rotateRightText, KeyboardController.itemRotateRightKey[0].ToString());
+                break;
+            default:
+                break;
         }
     }
 

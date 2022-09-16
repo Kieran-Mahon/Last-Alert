@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour {
     public ItemManager itemManagerRef; //Manages all pickup objects in the scene
     public GameObject pauseScreen;
     public GameObject settingsUI;
+    public GameObject settingsScript;
 
     //Start is called before the first frame update
     void Start() {
@@ -100,18 +101,24 @@ public class GameController : MonoBehaviour {
         if (newGameState == GameState.PAUSEMENU) {
             pauseScreen.SetActive(true);
             settingsUI.SetActive(false);
+            settingsScript.SetActive(false);
             MouseController.UnlockMouse();
         } else if (newGameState == GameState.SETTINGMENU) {
             settingsUI.SetActive(true);
+            settingsScript.SetActive(true);
             pauseScreen.SetActive(false);
             MouseController.UnlockMouse();
         } else if (newGameState == GameState.CUTSCENE) {
 
         } else if (newGameState == GameState.TUTORIAL) {
+            pauseScreen.SetActive(false);
+            settingsUI.SetActive(false);
+            settingsScript.SetActive(false);
             MouseController.LockMouse();
         } else if (newGameState == GameState.GAME) {
             pauseScreen.SetActive(false);
             settingsUI.SetActive(false);
+            settingsScript.SetActive(false);
             MouseController.LockMouse();
         } else if (newGameState == GameState.FINISHMENU) {
             MouseController.UnlockMouse();
