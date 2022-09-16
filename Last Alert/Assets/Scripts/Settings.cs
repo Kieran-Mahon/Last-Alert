@@ -58,8 +58,6 @@ public class Settings : MonoBehaviour
         }else{
             PlayerController.mouseXInverted = false;
         }
-
-        Debug.Log(PlayerController.mouseXInverted);
     }
 
     public void InvertMouseY(Toggle selectedToggle){
