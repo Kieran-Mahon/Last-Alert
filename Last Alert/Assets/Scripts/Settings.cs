@@ -27,8 +27,8 @@ public class Settings : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        mouseXInvert.onValueChanged.AddListener(delegate { InvertMouseX(mouseXInvert); });
-        mouseYInvert.onValueChanged.AddListener(delegate { InvertMouseY(mouseYInvert); });
+        mouseXInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
+        mouseYInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
         UpdateAllButtonText();
     }
 
@@ -38,27 +38,27 @@ public class Settings : MonoBehaviour {
     }
 
     //leave settings
-    // public void BackButton(){
-    //     if(SceneScript.name == "StartSceneController"){
-    //         StartSceneController.ChangeStartState(StartSceneController.StartState.HOMEMENU);
-    //     }else if(SceneScript.name == "GameController"){
-    //         GameController.ChangeGameState(GameController.GameState.PAUSEMENU);
-    //     }else{
-    //         Debug.Log("failed to access scene script");
-    //     }
-    // }
+    public void BackButton() {
+        if (SceneScript.GetComponent<StartSceneController>() != null) { //check if from Start Menu
+            SceneScript.GetComponent<StartSceneController>().ChangeStartState(StartState.HOMEMENU);
+
+        } else if (SceneScript.GetComponent<GameController>() != null) { //check if from Game Scene
+            SceneScript.GetComponent<GameController>().ChangeGameState(GameState.PAUSEMENU);
+
+        } else {
+            Debug.Log("Failed to find Scene Script!");
+        }
+    }
 
     //mouse inversion settings
-    public void InvertMouseX(Toggle selectedToggle) {
-        if (selectedToggle.isOn) {
+    public void InvertMouse() {
+         if (mouseXInvert.isOn) {
             PlayerController.mouseXInverted = true;
         } else {
             PlayerController.mouseXInverted = false;
         }
-    }
 
-    public void InvertMouseY(Toggle selectedToggle) {
-        if (selectedToggle.isOn) {
+        if (mouseYInvert.isOn) {
             PlayerController.mouseYInverted = true;
         } else {
             PlayerController.mouseYInverted = false;
