@@ -40,15 +40,15 @@ public class PlayerController : MonoBehaviour {
     private bool isCrouching = false;
 
     void Start() {
-        loadPlayer();
-
         transformRef = GetComponent<Transform>();
         controllerRef = GetComponent<CharacterController>();
+
+        loadPlayer();
     }
     
     public void MovePlayer() {
         //Player crouch
-        if (CustomInput.GetKey(KeyboardController.crouchKey)) {
+        if (Input.GetKey(KeyboardController.crouchKey)) {
             //Signal the player is crouching
             isCrouching = true;
             //Update controller height and camera
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour {
         controllerRef.center = new Vector3(0, controllerRef.height / 2, 0);
 
         //Get speed
-        if (CustomInput.GetKey(KeyboardController.runKey)) {
+        if (Input.GetKey(KeyboardController.runKey)) {
             speed = runSpeed;
         } else {
             speed = walkSpeed;
@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour {
             moveVector = transformRef.TransformDirection(new Vector3(xInput, -0.1f, yInput));
 
             //Check for jump key down
-            if (CustomInput.GetKeyDown(KeyboardController.jumpKey)) {
+            if (Input.GetKeyDown(KeyboardController.jumpKey)) {
                 moveVector.y = jumpSpeed;
             }
         } else {

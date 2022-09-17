@@ -33,7 +33,7 @@ public class PickUpController : MonoBehaviour {
 
     private void PickUpItem() {
         //Check if key is pressed
-        if (CustomInput.GetKeyDown(KeyboardController.itemPickUpKey)) {
+        if (Input.GetKeyDown(KeyboardController.itemPickUpKey)) {
             //See if there is an item in front of the player
             if (Physics.Raycast(cameraRef.transform.position, cameraRef.transform.TransformDirection(Vector3.forward), out RaycastHit hit, maxPickUpDistance)) {
                 //Make sure the item is not too close to the player
@@ -89,11 +89,11 @@ public class PickUpController : MonoBehaviour {
     private void RotateItem() {
         float rotateAmount = 0;
         //Rotate the item left
-        if (CustomInput.GetKey(KeyboardController.itemRotateLeftKey)) {
+        if (Input.GetKey(KeyboardController.itemRotateLeftKey)) {
             rotateAmount += rotateSpeed;
         }
         //Rotate the item right
-        if (CustomInput.GetKey(KeyboardController.itemRotateRightKey)) {
+        if (Input.GetKey(KeyboardController.itemRotateRightKey)) {
             rotateAmount -= rotateSpeed;
         }
         //Apply new rotation
@@ -120,7 +120,7 @@ public class PickUpController : MonoBehaviour {
     private void PutDownItem() {
         if (holdingItem == true) {
             //Check if key is pressed
-            if (CustomInput.GetKeyDown(KeyboardController.itemPickUpKey)) {
+            if (Input.GetKeyDown(KeyboardController.itemPickUpKey)) {
                 ReleaseItem();
             }
         }

@@ -12,28 +12,27 @@ public class GameController : MonoBehaviour {
     public PickUpController pickUpControllerRef;
     public WinController winControllerRef;
     public ItemManager itemManagerRef; //Manages all pickup objects in the scene
+    public Settings settingsRef;
     public GameObject pauseScreen;
     public GameObject settingsUI;
-    public GameObject settingsScript;
 
     //Start is called before the first frame update
     void Start() {
         itemManagerRef.GetAllPickUps();
         ChangeGameState(GameState.GAME);
-        KeyboardController.AddKey(KeyboardController.Action.CROUCH, KeyCode.C);
     }
 
     //Update is called once per frame
     void Update() {
         if (gameState == GameState.PAUSEMENU) {
             //Unpause game
-            if (CustomInput.GetKeyDown(KeyboardController.pauseKey)) {
+            if (Input.GetKeyDown(KeyboardController.pauseKey)) {
                 UnpauseGame();
             }
 
         } else if (gameState == GameState.SETTINGMENU) {
             //Unpause game
-            if (CustomInput.GetKeyDown(KeyboardController.pauseKey)) {
+            if (Input.GetKeyDown(KeyboardController.pauseKey)) {
                 UnpauseGame();
             }
 
@@ -52,7 +51,7 @@ public class GameController : MonoBehaviour {
             pickUpControllerRef.TryMoveItem();
 
             //Pause game
-            if (CustomInput.GetKeyDown(KeyboardController.pauseKey)) {
+            if (Input.GetKeyDown(KeyboardController.pauseKey)) {
                 PauseGame();
             }
 
@@ -101,11 +100,11 @@ public class GameController : MonoBehaviour {
         if (newGameState == GameState.PAUSEMENU) {
             pauseScreen.SetActive(true);
             settingsUI.SetActive(false);
-            settingsScript.SetActive(false);
+            settingsRef.enabled = false;
             MouseController.UnlockMouse();
         } else if (newGameState == GameState.SETTINGMENU) {
             settingsUI.SetActive(true);
-            settingsScript.SetActive(true);
+            settingsRef.enabled = true;
             pauseScreen.SetActive(false);
             MouseController.UnlockMouse();
         } else if (newGameState == GameState.CUTSCENE) {
@@ -113,12 +112,12 @@ public class GameController : MonoBehaviour {
         } else if (newGameState == GameState.TUTORIAL) {
             pauseScreen.SetActive(false);
             settingsUI.SetActive(false);
-            settingsScript.SetActive(false);
+            settingsRef.enabled = false;
             MouseController.LockMouse();
         } else if (newGameState == GameState.GAME) {
             pauseScreen.SetActive(false);
             settingsUI.SetActive(false);
-            settingsScript.SetActive(false);
+            settingsRef.enabled = false;
             MouseController.LockMouse();
         } else if (newGameState == GameState.FINISHMENU) {
             MouseController.UnlockMouse();
