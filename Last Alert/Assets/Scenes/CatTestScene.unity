@@ -1388,7 +1388,7 @@ GameObject:
   - component: {fileID: 337903701}
   - component: {fileID: 337903702}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: sldVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5650,7 +5650,7 @@ GameObject:
   - component: {fileID: 1037010307}
   - component: {fileID: 1037010308}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: sldMouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9570,6 +9570,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneScript: {fileID: 0}
+  volume: {fileID: 337903702}
+  mouseSensitivity: {fileID: 1037010308}
   mouseXInvert: {fileID: 503918579}
   mouseYInvert: {fileID: 1836516393}
   currentKey: {fileID: 0}

@@ -7,6 +7,9 @@ using TMPro;
 public class Settings : MonoBehaviour {
     public GameObject SceneScript; //reference to current scene controller
 
+    public Slider volume;
+    public Slider mouseSensitivity;
+
     public Toggle mouseXInvert;
     public Toggle mouseYInvert;
 
@@ -49,6 +52,9 @@ public class Settings : MonoBehaviour {
             Debug.Log("Failed to find Scene Script!");
         }
     }
+
+    //slider settings
+    //Max's code area (Y)
 
     //mouse inversion settings
     public void InvertMouse() {
