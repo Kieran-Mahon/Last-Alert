@@ -46,7 +46,7 @@ public class TutorialController : MonoBehaviour {
             playerControllerRef.MoveCamera();
 
             //Object pick up
-            pickUpControllerRef.TryMoveObject();
+            pickUpControllerRef.TryMoveItem();
 
             //Pause game
             if (Input.GetKeyDown(KeyboardController.pauseKey)) {
@@ -98,7 +98,7 @@ public class TutorialController : MonoBehaviour {
         } else if (newTutorialState == TutorialState.COMPLETED) {
             MouseController.UnlockMouse();
             HideAllScreens();
-            pickUpControllerRef.DropObject(true);
+            pickUpControllerRef.DropItem(true);
             tutorialCompletedScreen.SetActive(true);
         }
     }

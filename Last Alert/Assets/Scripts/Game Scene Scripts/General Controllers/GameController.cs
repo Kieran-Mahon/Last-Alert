@@ -71,10 +71,9 @@ public class GameController : MonoBehaviour {
                 SceneController.SwitchToStartScene();
             }
         } else if (gameState == GameState.GAMEWIN) {
-            pickUpControllerRef.DropObject(true);
-
+            
         } else if (gameState == GameState.GAMEOVER) {
-            pickUpControllerRef.DropObject(true);
+            
         }
     }
 
@@ -108,6 +107,7 @@ public class GameController : MonoBehaviour {
             HideAllScreens();
             settingsUI.SetActive(true);
             settingsRef.enabled = true;
+            MouseController.UnlockMouse();
         } else if (newGameState == GameState.CUTSCENE) {
             
         } else if (newGameState == GameState.GAME) {
@@ -115,13 +115,15 @@ public class GameController : MonoBehaviour {
             settingsRef.enabled = false;
             MouseController.LockMouse();
         } else if (newGameState == GameState.GAMEWIN) {
-            MouseController.UnlockMouse();
             HideAllScreens();
             gameWinScreen.SetActive(true);
-        } else if (newGameState == GameState.GAMEOVER) {
             MouseController.UnlockMouse();
+            pickUpControllerRef.DropItem(true);
+        } else if (newGameState == GameState.GAMEOVER) {
             HideAllScreens();
             gameOverScreen.SetActive(true);
+            MouseController.UnlockMouse();
+            pickUpControllerRef.DropItem(true);
         }
     }
     
