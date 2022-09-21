@@ -1259,6 +1259,7 @@ MonoBehaviour:
   startState: 0
   homeMenu: {fileID: 834484298}
   settingsUI: {fileID: 922406112}
+  continueBtn: {fileID: 1160103397}
 --- !u!1001 &1012021631
 PrefabInstance:
   m_ObjectHideFlags: 0
