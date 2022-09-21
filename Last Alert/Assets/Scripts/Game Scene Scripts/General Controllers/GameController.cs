@@ -7,12 +7,13 @@ public class GameController : MonoBehaviour {
     //Game state
     public GameState gameState;
 
-    //References
+    [Header("References")]
     public PlayerController playerControllerRef;
     public PickUpController pickUpControllerRef;
     public WinController winControllerRef;
     public ItemManager itemManagerRef; //Manages all pickup objects in the scene
-
+    public Settings settingsRef;
+    
     [Header("UI")]
     public GameObject pauseScreen;
     public GameObject settingsUI;
@@ -47,7 +48,7 @@ public class GameController : MonoBehaviour {
             playerControllerRef.MoveCamera();
 
             //Object pick up
-            pickUpControllerRef.TryMoveObject();
+            pickUpControllerRef.TryMoveItem();
 
             //Pause game
             if (Input.GetKeyDown(KeyboardController.pauseKey)) {
@@ -62,15 +63,13 @@ public class GameController : MonoBehaviour {
 
             //Example of teleporting the player
             if (Input.GetKey(KeyCode.L)) {
-                playerControllerRef.SetLocation(new Vector3(0, 0, 0));
-                playerControllerRef.SetCameraAngle(new Vector2(0, 180));
+                playerControllerRef.ResetPlayer();
             }
 
             //Example code of scene switching to make sure it works
             if (Input.GetKeyDown(KeyCode.J)) {
                 SceneController.SwitchToStartScene();
             }
-
         } else if (gameState == GameState.GAMEWIN) {
             pickUpControllerRef.DropObject(true);
 
@@ -103,15 +102,17 @@ public class GameController : MonoBehaviour {
         if (newGameState == GameState.PAUSEMENU) {
             HideAllScreens();
             pauseScreen.SetActive(true);
+            settingsRef.enabled = false;
             MouseController.UnlockMouse();
         } else if (newGameState == GameState.SETTINGMENU) {
             HideAllScreens();
             settingsUI.SetActive(true);
-            MouseController.UnlockMouse();
+            settingsRef.enabled = true;
         } else if (newGameState == GameState.CUTSCENE) {
             
         } else if (newGameState == GameState.GAME) {
             HideAllScreens();
+            settingsRef.enabled = false;
             MouseController.LockMouse();
         } else if (newGameState == GameState.GAMEWIN) {
             MouseController.UnlockMouse();

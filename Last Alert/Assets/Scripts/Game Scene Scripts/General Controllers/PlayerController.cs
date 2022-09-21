@@ -22,10 +22,10 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Looking")]
     public GameObject cameraRef;
-    public float mouseXSensitivity = 1;
-    public float mouseYSensitivity = 1;
-    public bool mouseXInverted = false;
-    public bool mouseYInverted = false;
+    public static float mouseXSensitivity = 1;
+    public static float mouseYSensitivity = 1;
+    public static bool mouseXInverted = false;
+    public static bool mouseYInverted = false;
 
     [Header("Physics")]
     public float pushForce;
@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour {
     [Header("Saving")]
     public bool enableSaving = true;
     public bool enableLoading = true;
-
+    
     void Start() {
         transformRef = GetComponent<Transform>();
         controllerRef = GetComponent<CharacterController>();
@@ -221,5 +221,11 @@ public class PlayerController : MonoBehaviour {
                 SetLocation(position);
             }
         }
+    }
+
+    public void ResetPlayer() {
+        //TEMP CODE NEEDS TO BE REPLACED WITH CHECKPOINT SYSTEM'S LAST CHECKPOINT
+        SetLocation(new Vector3(0, 0, 0));
+        SetCameraAngle(new Vector2(0, 180));
     }
 }

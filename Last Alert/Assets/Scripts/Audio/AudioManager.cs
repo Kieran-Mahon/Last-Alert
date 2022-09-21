@@ -23,6 +23,8 @@ public class AudioManager : MonoBehaviour
     //array of sounds
     public Sound[] sounds;
 
+    public static float volumeSetting = 0.5f;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -65,6 +67,7 @@ public class AudioManager : MonoBehaviour
         }
 
         //play sound
+        s.source.volume *= volumeSetting;
         s.source.Play();
     }
 }
