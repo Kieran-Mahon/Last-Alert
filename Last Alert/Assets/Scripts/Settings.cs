@@ -34,7 +34,9 @@ public class Settings : MonoBehaviour {
         mouseYInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
         volume.onValueChanged.AddListener(delegate { volumeChanged(); });
         mouseSensitivity.onValueChanged.AddListener(delegate { mouseSensitivityChanged(); });
-        UpdateAllButtonText();
+        
+        //set default settings
+        RestoreAllDefaults();
     }
 
     // Update is called once per frame
@@ -50,27 +52,28 @@ public class Settings : MonoBehaviour {
         } else if (SceneScript.GetComponent<GameController>() != null) { //check if from Game Scene
             SceneScript.GetComponent<GameController>().ChangeGameState(GameState.PAUSEMENU);
 
+        // } else if (SceneScript.GetComponent<TutorialController>() != null) { //check if from Tutorial Scene
+        //     SceneScript.GetComponent<TutorialController>().ChangeGameState(TutorialState.PAUSEMENU);
+
         } else {
             Debug.Log("Failed to find Scene Script!");
         }
     }
 
-    //slider settings
-    //Max's code area (Y)
+    //volume settings
     public void volumeChanged(){
-        print("Volume changed");
         AudioManager.volumeSetting = volume.value;
     }
 
+    //mouse sensitivity settings
     public void mouseSensitivityChanged(){
-        print("Sensitivity changed");
         PlayerController.mouseXSensitivity = mouseSensitivity.value;
         PlayerController.mouseYSensitivity = mouseSensitivity.value;
     }
 
     //mouse inversion settings
     public void InvertMouse() {
-         if (mouseXInvert.isOn) {
+        if (mouseXInvert.isOn) {
             PlayerController.mouseXInverted = true;
         } else {
             PlayerController.mouseXInverted = false;
@@ -84,37 +87,8 @@ public class Settings : MonoBehaviour {
     }
 
     //keybind settings
-    public void RestoreDefaultKeyBinds() {
-        ChangeKeyBind(KeyboardController.Action.PAUSE, KeyCode.Escape);
-        ChangeKeyBind(KeyboardController.Action.JUMP, KeyCode.Space);
-        ChangeKeyBind(KeyboardController.Action.RUN, KeyCode.LeftShift);
-        ChangeKeyBind(KeyboardController.Action.CROUCH, KeyCode.LeftControl);
-        ChangeKeyBind(KeyboardController.Action.ITEMPICKUP, KeyCode.Mouse0);
-        ChangeKeyBind(KeyboardController.Action.ITEMROTATELEFT, KeyCode.Q);
-        ChangeKeyBind(KeyboardController.Action.ITEMROTATERIGHT, KeyCode.E);
-
-        UpdateAllButtonText();
-    }
-
-    public void UpdateButtonText(TextMeshProUGUI buttonText, string keyBind) {
-        buttonText.text = keyBind;
-    }
-
-    public void UpdateAllButtonText() {
-        //unchangeable keybinds
-        forwardText.text = "W";
-        backwardText.text = "S";
-        leftText.text = "A";
-        rightText.text = "D";
-
-        //changeable keybinds
-        UpdateButtonText(pauseText, KeyboardController.pauseKey.ToString());
-        UpdateButtonText(jumpText, KeyboardController.jumpKey.ToString());
-        UpdateButtonText(sprintText, KeyboardController.runKey.ToString());
-        UpdateButtonText(crouchText, KeyboardController.crouchKey.ToString());
-        UpdateButtonText(pickUpDropText, KeyboardController.itemPickUpKey.ToString());
-        UpdateButtonText(rotateLeftText, KeyboardController.itemRotateLeftKey.ToString());
-        UpdateButtonText(rotateRightText, KeyboardController.itemRotateRightKey.ToString());
+    public void CurrentKey(GameObject clicked) {
+        currentKey = clicked;
     }
 
     void OnGUI() {
@@ -185,7 +159,56 @@ public class Settings : MonoBehaviour {
         KeyboardController.SetKey(control, newKey);
     }
 
-    public void CurrentKey(GameObject clicked) {
-        currentKey = clicked;
+    public void UpdateButtonText(TextMeshProUGUI buttonText, string keyBind) {
+        buttonText.text = keyBind;
+    }
+
+    public void UpdateAllButtonText() {
+        //unchangeable keybinds
+        forwardText.text = "W";
+        backwardText.text = "S";
+        leftText.text = "A";
+        rightText.text = "D";
+
+        //changeable keybinds
+        UpdateButtonText(pauseText, KeyboardController.pauseKey.ToString());
+        UpdateButtonText(jumpText, KeyboardController.jumpKey.ToString());
+        UpdateButtonText(sprintText, KeyboardController.runKey.ToString());
+        UpdateButtonText(crouchText, KeyboardController.crouchKey.ToString());
+        UpdateButtonText(pickUpDropText, KeyboardController.itemPickUpKey.ToString());
+        UpdateButtonText(rotateLeftText, KeyboardController.itemRotateLeftKey.ToString());
+        UpdateButtonText(rotateRightText, KeyboardController.itemRotateRightKey.ToString());
+    }
+
+    //default restoration
+    public void RestoreAllDefaults() {
+        //volume
+        volume.value = 0.5f;
+        AudioManager.volumeSetting = 0.5f;
+
+        //sensitivity
+        mouseSensitivity.value = 2;
+        PlayerController.mouseXSensitivity = 2;
+        PlayerController.mouseYSensitivity = 2;
+
+        //mouse inversion
+        mouseXInvert.isOn = false;
+        mouseYInvert.isOn = false;
+        InvertMouse();
+
+        //keybinds
+        RestoreDefaultKeyBinds();
+    }
+
+    public void RestoreDefaultKeyBinds() {
+        ChangeKeyBind(KeyboardController.Action.PAUSE, KeyCode.Escape);
+        ChangeKeyBind(KeyboardController.Action.JUMP, KeyCode.Space);
+        ChangeKeyBind(KeyboardController.Action.RUN, KeyCode.LeftShift);
+        ChangeKeyBind(KeyboardController.Action.CROUCH, KeyCode.LeftControl);
+        ChangeKeyBind(KeyboardController.Action.ITEMPICKUP, KeyCode.Mouse0);
+        ChangeKeyBind(KeyboardController.Action.ITEMROTATELEFT, KeyCode.Q);
+        ChangeKeyBind(KeyboardController.Action.ITEMROTATERIGHT, KeyCode.E);
+
+        UpdateAllButtonText();
     }
 }
