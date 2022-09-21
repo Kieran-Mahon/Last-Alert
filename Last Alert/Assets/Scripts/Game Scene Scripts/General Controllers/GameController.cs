@@ -12,8 +12,12 @@ public class GameController : MonoBehaviour {
     public PickUpController pickUpControllerRef;
     public WinController winControllerRef;
     public ItemManager itemManagerRef; //Manages all pickup objects in the scene
+
+    [Header("UI")]
     public GameObject pauseScreen;
     public GameObject settingsUI;
+    public GameObject gameWinScreen;
+    public GameObject gameOverScreen;
 
     //Start is called before the first frame update
     void Start() {
@@ -37,11 +41,7 @@ public class GameController : MonoBehaviour {
             }
 
         } else if (gameState == GameState.CUTSCENE) {
-
-        } else if (gameState == GameState.TUTORIAL) {
-            playerControllerRef.MovePlayer();
-            playerControllerRef.MoveCamera();
-
+            
         } else if (gameState == GameState.GAME) {
             //Move player
             playerControllerRef.MovePlayer();
@@ -59,20 +59,23 @@ public class GameController : MonoBehaviour {
             if (winControllerRef.CheckForWin()) {
                 GameWon();
             }
-            
+
 
             //Example of teleporting the player
             if (Input.GetKey(KeyCode.L)) {
                 playerControllerRef.SetLocation(new Vector3(0, 0, 0));
                 playerControllerRef.SetCameraAngle(new Vector2(0, 180));
             }
-            
+
             //Example code of scene switching to make sure it works
             if (Input.GetKeyDown(KeyCode.J)) {
                 SceneController.SwitchToStartScene();
             }
 
-        } else if (gameState == GameState.FINISHMENU) {
+        } else if (gameState == GameState.GAMEWIN) {
+            pickUpControllerRef.DropObject(true);
+
+        } else if (gameState == GameState.GAMEOVER) {
             pickUpControllerRef.DropObject(true);
         }
     }
@@ -85,13 +88,13 @@ public class GameController : MonoBehaviour {
         } else if (gameState == GameState.SETTINGMENU) {
 
         } else if (gameState == GameState.CUTSCENE) {
-
-        } else if (gameState == GameState.TUTORIAL) {
-
+            
         } else if (gameState == GameState.GAME) {
 
-        } else if (gameState == GameState.FINISHMENU) {
-
+        } else if (newGameState == GameState.GAMEWIN) {
+            
+        } else if (newGameState == GameState.GAMEOVER) {
+            
         }
 
         //CHANGE
@@ -99,24 +102,34 @@ public class GameController : MonoBehaviour {
 
         //AFTER CHANGE
         if (newGameState == GameState.PAUSEMENU) {
+            HideAllScreens();
             pauseScreen.SetActive(true);
-            settingsUI.SetActive(false);
             MouseController.UnlockMouse();
         } else if (newGameState == GameState.SETTINGMENU) {
+            HideAllScreens();
             settingsUI.SetActive(true);
-            pauseScreen.SetActive(false);
             MouseController.UnlockMouse();
         } else if (newGameState == GameState.CUTSCENE) {
-
-        } else if (newGameState == GameState.TUTORIAL) {
-            MouseController.LockMouse();
+            
         } else if (newGameState == GameState.GAME) {
-            pauseScreen.SetActive(false);
-            settingsUI.SetActive(false);
+            HideAllScreens();
             MouseController.LockMouse();
-        } else if (newGameState == GameState.FINISHMENU) {
+        } else if (newGameState == GameState.GAMEWIN) {
             MouseController.UnlockMouse();
+            HideAllScreens();
+            gameWinScreen.SetActive(true);
+        } else if (newGameState == GameState.GAMEOVER) {
+            MouseController.UnlockMouse();
+            HideAllScreens();
+            gameOverScreen.SetActive(true);
         }
+    }
+    
+    private void HideAllScreens() {
+        pauseScreen.SetActive(false);
+        settingsUI.SetActive(false);
+        gameWinScreen.SetActive(false);
+        gameOverScreen.SetActive(false);
     }
 
     //Pause functions
@@ -131,32 +144,50 @@ public class GameController : MonoBehaviour {
     }
 
     //Resume Button
-    public void ResumeGame()
-    {
+    public void ResumeGame() {
         UnpauseGame();
     }
 
     //Settings Button
-    public void OpenSettings()
-    {
+    public void OpenSettings() {
         ChangeGameState(GameState.SETTINGMENU);
     }
 
     //temporary button to return to pause menu for testing
-    public void CloseSettings()
-    {
+    public void CloseSettings() {
         ChangeGameState(GameState.PAUSEMENU);
     }
 
     //Exit Button
-    public void Exit()
-    {
+    public void Exit() {
         SceneController.SwitchToStartScene();
     }
 
     private void GameWon() {
-        ChangeGameState(GameState.FINISHMENU);
-        print("GAME WON");
+        ChangeGameState(GameState.GAMEWIN);
+    }
+
+    public void GameOver() {
+        ChangeGameState(GameState.GAMEOVER);
+    }
+
+    public void saveData(){
+        playerControllerRef.savePlayer();
+    }
+
+    public void loadData(){
+        playerControllerRef.loadPlayer();
+
+        if(playerControllerRef != null){
+            print("SaveExists data loading...");
+            PlayerData data = SaveSystem.load();
+            if(data == null){
+                SaveSystem.save(playerControllerRef.transform, false);
+                data = SaveSystem.load();
+            }
+            
+            bool yeet = data.saveExists;
+        }
     }
 }
 
@@ -165,7 +196,7 @@ public enum GameState {
     PAUSEMENU,
     SETTINGMENU,
     CUTSCENE,
-    TUTORIAL,
     GAME,
-    FINISHMENU
+    GAMEWIN,
+    GAMEOVER
 }

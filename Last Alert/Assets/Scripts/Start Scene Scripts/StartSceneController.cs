@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StartSceneController : MonoBehaviour {
-    //Game state
+    //Start state
     public StartState startState;
 
     //Home reference
@@ -15,11 +16,17 @@ public class StartSceneController : MonoBehaviour {
     //References
     //UI controller reference
     //etc. etc..
-
+    public Button continueBtn;
 
     // Start is called before the first frame update
     void Start() {
         ChangeStartState(StartState.HOMEMENU);
+
+        print("SaveExists data loading...");
+        PlayerData data = SaveSystem.load();
+        if(data != null){
+            continueBtn.interactable = true;
+        }
     }
 
     // Update is called once per frame
@@ -58,33 +65,33 @@ public class StartSceneController : MonoBehaviour {
     }
 
     //New Game Button
-    public void NewGame()
-    {
+    public void NewGame() {
+        //SceneController.SwitchToGameScene();
+        //SceneController.SwitchToTutorialScene();
+        SaveSystem.save(null, true);
         SceneController.SwitchToGameScene();
+
     }
 
     //Continue Button
-    public void ContinueGame()
-    {
+    public void ContinueGame() {
         //continues game from last checkpoint save (if available)
-        Debug.Log("Continue");
+        //SceneController.SwitchToTutorialScene();
+        SceneController.SwitchToGameScene();
     }
 
     //Settings Button
-    public void OpenSettings()
-    {
+    public void OpenSettings() {
         ChangeStartState(StartState.SETTINGMENU);
     }
 
     //temporary button to return to home menu for testing
-    public void CloseSettings()
-    {
+    public void CloseSettings() {
         ChangeStartState(StartState.HOMEMENU);
     }
 
     //Quit Button
-    public void Quit()
-    {
+    public void Quit() {
         Application.Quit();
         Debug.Log("Quit");
     }
