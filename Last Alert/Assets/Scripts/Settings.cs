@@ -32,6 +32,8 @@ public class Settings : MonoBehaviour {
     void Start() {
         mouseXInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
         mouseYInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
+        volume.onValueChanged.AddListener(delegate { volumeChanged(); });
+        mouseSensitivity.onValueChanged.AddListener(delegate { mouseSensitivityChanged(); });
         UpdateAllButtonText();
     }
 
@@ -55,6 +57,16 @@ public class Settings : MonoBehaviour {
 
     //slider settings
     //Max's code area (Y)
+    public void volumeChanged(){
+        print("Volume changed");
+        AudioManager.volumeSetting = volume.value;
+    }
+
+    public void mouseSensitivityChanged(){
+        print("Sensitivity changed");
+        PlayerController.mouseXSensitivity = mouseSensitivity.value;
+        PlayerController.mouseYSensitivity = mouseSensitivity.value;
+    }
 
     //mouse inversion settings
     public void InvertMouse() {

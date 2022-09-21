@@ -22,8 +22,8 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Looking")]
     public GameObject cameraRef;
-    public float mouseXSensitivity = 1;
-    public float mouseYSensitivity = 1;
+    public static float mouseXSensitivity = 1;
+    public static float mouseYSensitivity = 1;
     public static bool mouseXInverted = false;
     public static bool mouseYInverted = false;
 
