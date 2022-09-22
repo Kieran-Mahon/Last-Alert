@@ -72,6 +72,8 @@ public class StartSceneController : MonoBehaviour {
         //SceneController.SwitchToGameScene();
         //SceneController.SwitchToTutorialScene();
         SaveSystem.save(null);
+        AudioManager.instance.Pause("homeTheme");
+        AudioManager.instance.Play("gameBackground");
         SceneController.SwitchToGameScene();
 
     }
@@ -80,7 +82,10 @@ public class StartSceneController : MonoBehaviour {
     public void ContinueGame() {
         //continues game from last checkpoint save (if available)
         //SceneController.SwitchToTutorialScene();
+        AudioManager.instance.Pause("homeTheme");
+        AudioManager.instance.Play("gameBackground");
         SceneController.SwitchToGameScene();
+        
     }
 
     //Settings Button

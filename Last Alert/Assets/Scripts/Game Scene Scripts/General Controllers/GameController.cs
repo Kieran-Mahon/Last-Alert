@@ -137,11 +137,13 @@ public class GameController : MonoBehaviour {
     //Pause functions
     public void PauseGame() {
         ChangeGameState(GameState.PAUSEMENU);
+        AudioManager.instance.PauseAll();
         itemManagerRef.PauseAll();
     }
 
     public void UnpauseGame() {
         ChangeGameState(GameState.GAME);
+        AudioManager.instance.Play("gameBackground");
         itemManagerRef.UnpauseAll();
     }
 
@@ -162,6 +164,7 @@ public class GameController : MonoBehaviour {
 
     //Exit Button
     public void Exit() {
+        AudioManager.instance.Play("homeTheme");
         SceneController.SwitchToStartScene();
     }
 

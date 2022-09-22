@@ -63,6 +63,7 @@ public class Settings : MonoBehaviour {
     //volume settings
     public void volumeChanged(){
         AudioManager.volumeSetting = volume.value;
+        AudioManager.instance.UpdateVolume();
     }
 
     //mouse sensitivity settings
