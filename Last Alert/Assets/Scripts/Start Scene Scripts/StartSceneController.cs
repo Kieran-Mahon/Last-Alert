@@ -12,6 +12,7 @@ public class StartSceneController : MonoBehaviour {
 
     //Settings reference
     public GameObject settingsUI;
+    public Settings settingRef;
 
     //References
     //UI controller reference
@@ -22,7 +23,7 @@ public class StartSceneController : MonoBehaviour {
     void Start() {
         ChangeStartState(StartState.HOMEMENU);
 
-        print("SaveExists data loading...");
+        print("data loading...");
         PlayerData data = SaveSystem.load();
         if(data != null){
             continueBtn.interactable = true;
@@ -51,10 +52,12 @@ public class StartSceneController : MonoBehaviour {
             MouseController.UnlockMouse();
             homeMenu.SetActive(true);
             settingsUI.SetActive(false);
+            settingRef.enabled = false;
 
         } else if (newStartState == StartState.SETTINGMENU) {
             MouseController.UnlockMouse();
             settingsUI.SetActive(true);
+            settingRef.enabled = true;
             homeMenu.SetActive(false);
 
         } else if (newStartState == StartState.CUTSCENE) {
@@ -68,7 +71,9 @@ public class StartSceneController : MonoBehaviour {
     public void NewGame() {
         //SceneController.SwitchToGameScene();
         //SceneController.SwitchToTutorialScene();
-        SaveSystem.save(null, true);
+        SaveSystem.save(null);
+        AudioManager.instance.Pause("homeTheme");
+        AudioManager.instance.Play("gameBackground");
         SceneController.SwitchToGameScene();
 
     }
@@ -77,7 +82,10 @@ public class StartSceneController : MonoBehaviour {
     public void ContinueGame() {
         //continues game from last checkpoint save (if available)
         //SceneController.SwitchToTutorialScene();
+        AudioManager.instance.Pause("homeTheme");
+        AudioManager.instance.Play("gameBackground");
         SceneController.SwitchToGameScene();
+        
     }
 
     //Settings Button
@@ -93,7 +101,7 @@ public class StartSceneController : MonoBehaviour {
     //Quit Button
     public void Quit() {
         Application.Quit();
-        Debug.Log("Quit");
+        print("Quit");
     }
 }
 

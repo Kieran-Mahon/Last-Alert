@@ -7,12 +7,13 @@ public class GameController : MonoBehaviour {
     //Game state
     public GameState gameState;
 
-    //References
+    [Header("References")]
     public PlayerController playerControllerRef;
     public PickUpController pickUpControllerRef;
     public WinController winControllerRef;
     public ItemManager itemManagerRef; //Manages all pickup objects in the scene
-
+    public Settings settingsRef;
+    
     [Header("UI")]
     public GameObject pauseScreen;
     public GameObject settingsUI;
@@ -36,10 +37,10 @@ public class GameController : MonoBehaviour {
 
         } else if (gameState == GameState.SETTINGMENU) {
             //Unpause game
-            if (Input.GetKeyDown(KeyboardController.pauseKey)) {
+            /*if (Input.GetKeyDown(KeyboardController.pauseKey)) {
                 UnpauseGame();
-            }
-
+            }*/
+            
         } else if (gameState == GameState.CUTSCENE) {
             
         } else if (gameState == GameState.GAME) {
@@ -48,7 +49,7 @@ public class GameController : MonoBehaviour {
             playerControllerRef.MoveCamera();
 
             //Object pick up
-            pickUpControllerRef.TryMoveObject();
+            pickUpControllerRef.TryMoveItem();
 
             //Pause game
             if (Input.GetKeyDown(KeyboardController.pauseKey)) {
@@ -63,20 +64,17 @@ public class GameController : MonoBehaviour {
 
             //Example of teleporting the player
             if (Input.GetKey(KeyCode.L)) {
-                playerControllerRef.SetLocation(new Vector3(0, 0, 0));
-                playerControllerRef.SetCameraAngle(new Vector2(0, 180));
+                playerControllerRef.ResetPlayer();
             }
 
             //Example code of scene switching to make sure it works
             if (Input.GetKeyDown(KeyCode.J)) {
                 SceneController.SwitchToStartScene();
             }
-
         } else if (gameState == GameState.GAMEWIN) {
-            pickUpControllerRef.DropObject(true);
-
+            
         } else if (gameState == GameState.GAMEOVER) {
-            pickUpControllerRef.DropObject(true);
+            
         }
     }
 
@@ -86,15 +84,15 @@ public class GameController : MonoBehaviour {
         if (gameState == GameState.PAUSEMENU) {
 
         } else if (gameState == GameState.SETTINGMENU) {
-
-        } else if (gameState == GameState.CUTSCENE) {
             
+        } else if (gameState == GameState.CUTSCENE) {
+
         } else if (gameState == GameState.GAME) {
 
         } else if (newGameState == GameState.GAMEWIN) {
-            
+
         } else if (newGameState == GameState.GAMEOVER) {
-            
+
         }
 
         //CHANGE
@@ -104,24 +102,29 @@ public class GameController : MonoBehaviour {
         if (newGameState == GameState.PAUSEMENU) {
             HideAllScreens();
             pauseScreen.SetActive(true);
+            settingsRef.enabled = false;
             MouseController.UnlockMouse();
         } else if (newGameState == GameState.SETTINGMENU) {
             HideAllScreens();
             settingsUI.SetActive(true);
+            settingsRef.enabled = true;
             MouseController.UnlockMouse();
         } else if (newGameState == GameState.CUTSCENE) {
             
         } else if (newGameState == GameState.GAME) {
             HideAllScreens();
+            settingsRef.enabled = false;
             MouseController.LockMouse();
         } else if (newGameState == GameState.GAMEWIN) {
-            MouseController.UnlockMouse();
             HideAllScreens();
             gameWinScreen.SetActive(true);
-        } else if (newGameState == GameState.GAMEOVER) {
             MouseController.UnlockMouse();
+            pickUpControllerRef.DropItem(true);
+        } else if (newGameState == GameState.GAMEOVER) {
             HideAllScreens();
             gameOverScreen.SetActive(true);
+            MouseController.UnlockMouse();
+            pickUpControllerRef.DropItem(true);
         }
     }
     
@@ -135,11 +138,13 @@ public class GameController : MonoBehaviour {
     //Pause functions
     public void PauseGame() {
         ChangeGameState(GameState.PAUSEMENU);
+        AudioManager.instance.PauseAll();
         itemManagerRef.PauseAll();
     }
 
     public void UnpauseGame() {
         ChangeGameState(GameState.GAME);
+        AudioManager.instance.Play("gameBackground");
         itemManagerRef.UnpauseAll();
     }
 
@@ -160,6 +165,7 @@ public class GameController : MonoBehaviour {
 
     //Exit Button
     public void Exit() {
+        AudioManager.instance.Play("homeTheme");
         SceneController.SwitchToStartScene();
     }
 
@@ -176,17 +182,14 @@ public class GameController : MonoBehaviour {
     }
 
     public void loadData(){
-        playerControllerRef.loadPlayer();
-
         if(playerControllerRef != null){
-            print("SaveExists data loading...");
+            playerControllerRef.loadPlayer();
+
             PlayerData data = SaveSystem.load();
             if(data == null){
-                SaveSystem.save(playerControllerRef.transform, false);
+                SaveSystem.save(playerControllerRef.transform);
                 data = SaveSystem.load();
             }
-            
-            bool yeet = data.saveExists;
         }
     }
 }
