@@ -38,12 +38,17 @@ public class PlayerController : MonoBehaviour {
     private Vector3 crouchingVelocityV3 = Vector3.zero;
     private float crouchingVelocityF = 0;
     private bool isCrouching = false;
+
+    [Header("Saving")]
+    public bool loadPlayer = true;
     
     void Start() {
         transformRef = GetComponent<Transform>();
         controllerRef = GetComponent<CharacterController>();
 
-        loadPlayer();
+        if (loadPlayer) {
+            loadPlayer();
+        }
     }
     
     public void MovePlayer() {
