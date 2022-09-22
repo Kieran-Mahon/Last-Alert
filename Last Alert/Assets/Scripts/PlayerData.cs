@@ -8,15 +8,13 @@ using UnityEngine;
 public class PlayerData
 {
     public float[] position;
-    public bool saveExists;
 
     public float timer;
 
     //constructor
-    public PlayerData(Transform player, bool saveExists)
+    public PlayerData(Transform player)
     {
         this.position = new float[3];
-        this.saveExists = true;
 
         if (player != null)
         {

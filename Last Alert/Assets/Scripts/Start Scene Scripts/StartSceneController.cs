@@ -23,7 +23,7 @@ public class StartSceneController : MonoBehaviour {
     void Start() {
         ChangeStartState(StartState.HOMEMENU);
 
-        print("SaveExists data loading...");
+        print("data loading...");
         PlayerData data = SaveSystem.load();
         if(data != null){
             continueBtn.interactable = true;
@@ -71,7 +71,7 @@ public class StartSceneController : MonoBehaviour {
     public void NewGame() {
         //SceneController.SwitchToGameScene();
         //SceneController.SwitchToTutorialScene();
-        SaveSystem.save(null, true);
+        SaveSystem.save(null);
         SceneController.SwitchToGameScene();
 
     }

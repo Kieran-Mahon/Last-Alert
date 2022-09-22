@@ -178,17 +178,14 @@ public class GameController : MonoBehaviour {
     }
 
     public void loadData(){
-        playerControllerRef.loadPlayer();
-
         if(playerControllerRef != null){
-            print("SaveExists data loading...");
+            playerControllerRef.loadPlayer();
+
             PlayerData data = SaveSystem.load();
             if(data == null){
-                SaveSystem.save(playerControllerRef.transform, false);
+                SaveSystem.save(playerControllerRef.transform);
                 data = SaveSystem.load();
             }
-            
-            bool yeet = data.saveExists;
         }
     }
 }
