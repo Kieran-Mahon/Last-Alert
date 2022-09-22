@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class KeyboardController {
+public class KeyboardController : MonoBehaviour {
+
+    public static KeyboardController instance;
+
     //Movement keys
     public static KeyCode runKey = KeyCode.LeftShift;
     public static KeyCode jumpKey = KeyCode.Space;
@@ -14,6 +17,15 @@ public static class KeyboardController {
     //Pause key
     public static KeyCode pauseKey = KeyCode.Escape;
 
+    private void Start() {
+        if (instance == null) {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        } else {
+            Destroy(this);
+        }
+    }
+    
     //Add a key to an action
     public static bool SetKey(Action action, KeyCode newKeyCode) {
         //Check if the new key is already in use

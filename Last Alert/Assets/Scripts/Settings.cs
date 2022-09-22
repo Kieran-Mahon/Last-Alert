@@ -34,9 +34,10 @@ public class Settings : MonoBehaviour {
         mouseYInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
         volume.onValueChanged.AddListener(delegate { volumeChanged(); });
         mouseSensitivity.onValueChanged.AddListener(delegate { mouseSensitivityChanged(); });
-        
+
         //set default settings
-        RestoreAllDefaults();
+        //RestoreAllDefaults();
+        UpdateAllButtonText();
     }
 
     // Update is called once per frame
@@ -48,25 +49,20 @@ public class Settings : MonoBehaviour {
     public void BackButton() {
         if (SceneScript.GetComponent<StartSceneController>() != null) { //check if from Start Menu
             SceneScript.GetComponent<StartSceneController>().ChangeStartState(StartState.HOMEMENU);
-
         } else if (SceneScript.GetComponent<GameController>() != null) { //check if from Game Scene
             SceneScript.GetComponent<GameController>().ChangeGameState(GameState.PAUSEMENU);
-
-        // } else if (SceneScript.GetComponent<TutorialController>() != null) { //check if from Tutorial Scene
-        //     SceneScript.GetComponent<TutorialController>().ChangeGameState(TutorialState.PAUSEMENU);
-
-        } else {
-            Debug.Log("Failed to find Scene Script!");
+        } else if (SceneScript.GetComponent<TutorialController>() != null) { //check if from Tutorial Scene
+            SceneScript.GetComponent<TutorialController>().ChangeTutorialState(TutorialState.PAUSEMENU);
         }
     }
 
     //volume settings
-    public void volumeChanged(){
+    public void volumeChanged() {
         AudioManager.volumeSetting = volume.value;
     }
 
     //mouse sensitivity settings
-    public void mouseSensitivityChanged(){
+    public void mouseSensitivityChanged() {
         PlayerController.mouseXSensitivity = mouseSensitivity.value;
         PlayerController.mouseYSensitivity = mouseSensitivity.value;
     }

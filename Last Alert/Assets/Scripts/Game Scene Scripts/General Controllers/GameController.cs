@@ -36,10 +36,10 @@ public class GameController : MonoBehaviour {
 
         } else if (gameState == GameState.SETTINGMENU) {
             //Unpause game
-            if (Input.GetKeyDown(KeyboardController.pauseKey)) {
+            /*if (Input.GetKeyDown(KeyboardController.pauseKey)) {
                 UnpauseGame();
-            }
-
+            }*/
+            
         } else if (gameState == GameState.CUTSCENE) {
             
         } else if (gameState == GameState.GAME) {
@@ -83,15 +83,15 @@ public class GameController : MonoBehaviour {
         if (gameState == GameState.PAUSEMENU) {
 
         } else if (gameState == GameState.SETTINGMENU) {
-
-        } else if (gameState == GameState.CUTSCENE) {
             
+        } else if (gameState == GameState.CUTSCENE) {
+
         } else if (gameState == GameState.GAME) {
 
         } else if (newGameState == GameState.GAMEWIN) {
-            
+
         } else if (newGameState == GameState.GAMEOVER) {
-            
+
         }
 
         //CHANGE
