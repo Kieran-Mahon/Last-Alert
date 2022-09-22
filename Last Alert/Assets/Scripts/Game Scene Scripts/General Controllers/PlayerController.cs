@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour {
         transformRef = GetComponent<Transform>();
         controllerRef = GetComponent<CharacterController>();
 
-        loadPlayer();
+        //loadPlayer();
     }
     
     public void MovePlayer() {
