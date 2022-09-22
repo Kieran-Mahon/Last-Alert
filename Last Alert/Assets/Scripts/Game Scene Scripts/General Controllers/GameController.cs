@@ -137,11 +137,13 @@ public class GameController : MonoBehaviour {
     //Pause functions
     public void PauseGame() {
         ChangeGameState(GameState.PAUSEMENU);
+        AudioManager.instance.PauseAll();
         itemManagerRef.PauseAll();
     }
 
     public void UnpauseGame() {
         ChangeGameState(GameState.GAME);
+        AudioManager.instance.Play("gameBackground");
         itemManagerRef.UnpauseAll();
     }
 
@@ -162,6 +164,7 @@ public class GameController : MonoBehaviour {
 
     //Exit Button
     public void Exit() {
+        AudioManager.instance.Play("homeTheme");
         SceneController.SwitchToStartScene();
     }
 
@@ -178,17 +181,14 @@ public class GameController : MonoBehaviour {
     }
 
     public void loadData(){
-        playerControllerRef.loadPlayer();
-
         if(playerControllerRef != null){
-            print("SaveExists data loading...");
+            playerControllerRef.loadPlayer();
+
             PlayerData data = SaveSystem.load();
             if(data == null){
-                SaveSystem.save(playerControllerRef.transform, false);
+                SaveSystem.save(playerControllerRef.transform);
                 data = SaveSystem.load();
             }
-            
-            bool yeet = data.saveExists;
         }
     }
 }

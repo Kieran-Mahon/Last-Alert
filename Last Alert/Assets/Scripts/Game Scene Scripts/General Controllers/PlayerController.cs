@@ -38,10 +38,6 @@ public class PlayerController : MonoBehaviour {
     private Vector3 crouchingVelocityV3 = Vector3.zero;
     private float crouchingVelocityF = 0;
     private bool isCrouching = false;
-
-    [Header("Saving")]
-    public bool enableSaving = true;
-    public bool enableLoading = true;
     
     void Start() {
         transformRef = GetComponent<Transform>();
@@ -197,29 +193,25 @@ public class PlayerController : MonoBehaviour {
 
 
     public void savePlayer(){
-        if(enableSaving){
-            print("player data saved...");
-            SaveSystem.save(transform, true);
-        }
+        print("player data saved...");
+        SaveSystem.save(transform);
     }
 
     public void loadPlayer(){
-        if(enableLoading){
-            print("player data loading...");
-            PlayerData data = SaveSystem.load();
-            if(data == null){
-                SaveSystem.save(transform, true);
-                data = SaveSystem.load();
-            }
+        print("player data loading...");
+        PlayerData data = SaveSystem.load();
+        if(data == null){
+            SaveSystem.save(transform);
+            data = SaveSystem.load();
+        }
 
-            Vector3 position;
-            position.x = data.position[0];
-            position.y = data.position[1];
-            position.z = data.position[2];
+        Vector3 position;
+        position.x = data.position[0];
+        position.y = data.position[1];
+        position.z = data.position[2];
 
-            if(position != null){
-                SetLocation(position);
-            }
+        if(position != null){
+            SetLocation(position);
         }
     }
 
