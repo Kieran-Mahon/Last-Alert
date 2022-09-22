@@ -17,7 +17,7 @@ public class TutorialKeyPad : MonoBehaviour {
             //Check if of type pickup and if so drop if the player is holding it
             if (wantedItem.GetComponent<PickUp>() != null) {
                 if (wantedItem.GetComponent<PickUp>().held == true) {
-                    GameReferenceGetter.pickUpControllerRef.DropItem(false);
+                    GameReferenceGetter.pickUpControllerRef.DropObject(false);
                 }
             }
 
