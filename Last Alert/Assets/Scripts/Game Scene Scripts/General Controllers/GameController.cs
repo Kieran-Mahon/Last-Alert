@@ -178,12 +178,12 @@ public class GameController : MonoBehaviour {
     }
 
     public void saveData(){
-        playerControllerRef.savePlayer();
+        playerControllerRef.SavePlayer();
     }
 
     public void loadData(){
         if(playerControllerRef != null){
-            playerControllerRef.loadPlayer();
+            playerControllerRef.LoadPlayer();
 
             PlayerData data = SaveSystem.load();
             if(data == null){

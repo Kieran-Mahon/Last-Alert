@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour {
         controllerRef = GetComponent<CharacterController>();
 
         if (loadPlayer) {
-            loadPlayer();
+            LoadPlayer();
         }
     }
     
@@ -197,15 +197,15 @@ public class PlayerController : MonoBehaviour {
 
 
 
-    public void savePlayer(){
+    public void SavePlayer(){
         print("player data saved...");
         SaveSystem.save(transform);
     }
 
-    public void loadPlayer(){
+    public void LoadPlayer() {
         print("player data loading...");
         PlayerData data = SaveSystem.load();
-        if(data == null){
+        if (data == null) {
             SaveSystem.save(transform);
             data = SaveSystem.load();
         }
@@ -215,7 +215,7 @@ public class PlayerController : MonoBehaviour {
         position.y = data.position[1];
         position.z = data.position[2];
 
-        if(position != null){
+        if (position != null) {
             SetLocation(position);
         }
     }
