@@ -1,5 +1,7 @@
 # Last-Alert
 
+[Testing of code should be done on Unity]
+
 > Start on the "StartScene". When you click "New Game" from here it will take you to the temporary "GameScene". This is in order to show the save functionality.
 	- The transparent red cube in this scene is a save zone
 	- Once a save is created, the continue button back on the Home Menu will be enabled.
