@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.023523197, g: 0.029418923, b: 0.022876494, a: 1}
+  m_IndirectSpecularColor: {r: 0.023522666, g: 0.029417532, b: 0.022874035, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -199,7 +199,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: -25
+  m_AdditionalShaderChannelsFlag: -1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -515,7 +515,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1598606482}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: CurrentKey
         m_Mode: 2
@@ -1376,7 +1376,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1598606482}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: CurrentKey
         m_Mode: 2
@@ -5753,7 +5753,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1598606482}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: BackButton
         m_Mode: 1
@@ -7424,7 +7424,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1598606482}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: CurrentKey
         m_Mode: 2
@@ -8299,7 +8299,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1598606482}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: CurrentKey
         m_Mode: 2
@@ -8433,7 +8433,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1598606482}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: CurrentKey
         m_Mode: 2
@@ -8508,7 +8508,7 @@ RectTransform:
   m_GameObject: {fileID: 1569972391}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1392770159}
@@ -8867,7 +8867,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1598606482}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: CurrentKey
         m_Mode: 2
@@ -12100,7 +12100,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1598606482}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: RestoreAllDefaults
         m_Mode: 1
@@ -12234,7 +12234,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1598606482}
         m_TargetAssemblyTypeName: Settings, Assembly-CSharp
         m_MethodName: CurrentKey
         m_Mode: 2

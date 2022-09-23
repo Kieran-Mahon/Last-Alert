@@ -35,14 +35,38 @@ public class Settings : MonoBehaviour {
         volume.onValueChanged.AddListener(delegate { volumeChanged(); });
         mouseSensitivity.onValueChanged.AddListener(delegate { mouseSensitivityChanged(); });
 
-        //set default settings
-        //RestoreAllDefaults();
-        UpdateAllButtonText();
+        //update settings ui
+        ShowCurrentSettings();
     }
 
     // Update is called once per frame
     void Update() {
 
+    }
+
+    //updates settings ui
+    public void ShowCurrentSettings() {
+        //volume
+        volume.value = AudioManager.volumeSetting;
+
+        //sensitivity
+        mouseSensitivity.value = PlayerController.mouseXSensitivity;
+
+        //mouse inversion
+        if (PlayerController.mouseXInverted == false) {
+            mouseXInvert.isOn = false;
+        } else {
+            mouseXInvert.isOn = true;
+        }
+
+        if (PlayerController.mouseYInverted == false) {
+            mouseYInvert.isOn = false;
+        } else {
+            mouseYInvert.isOn = true;
+        }
+
+        //keybinds
+        UpdateAllButtonText();
     }
 
     //leave settings
