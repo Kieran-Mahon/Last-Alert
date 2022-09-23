@@ -22,8 +22,8 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Looking")]
     public GameObject cameraRef;
-    public static float mouseXSensitivity = 1;
-    public static float mouseYSensitivity = 1;
+    public static float mouseXSensitivity = 2;
+    public static float mouseYSensitivity = 2;
     public static bool mouseXInverted = false;
     public static bool mouseYInverted = false;
 
@@ -40,14 +40,15 @@ public class PlayerController : MonoBehaviour {
     private bool isCrouching = false;
 
     [Header("Saving")]
-    public bool enableSaving = true;
-    public bool enableLoading = true;
+    public bool loadPlayer = true;
     
     void Start() {
         transformRef = GetComponent<Transform>();
         controllerRef = GetComponent<CharacterController>();
 
-        //loadPlayer();
+        if (loadPlayer) {
+            LoadPlayer();
+        }
     }
     
     public void MovePlayer() {
@@ -196,30 +197,26 @@ public class PlayerController : MonoBehaviour {
 
 
 
-    public void savePlayer(){
-        if(enableSaving){
-            print("player data saved...");
-            SaveSystem.save(transform, true);
-        }
+    public void SavePlayer(){
+        print("player data saved...");
+        SaveSystem.save(transform);
     }
 
-    public void loadPlayer(){
-        if(enableLoading){
-            print("player data loading...");
-            PlayerData data = SaveSystem.load();
-            if(data == null){
-                SaveSystem.save(transform, true);
-                data = SaveSystem.load();
-            }
+    public void LoadPlayer() {
+        print("player data loading...");
+        PlayerData data = SaveSystem.load();
+        if (data == null) {
+            SaveSystem.save(transform);
+            data = SaveSystem.load();
+        }
 
-            Vector3 position;
-            position.x = data.position[0];
-            position.y = data.position[1];
-            position.z = data.position[2];
+        Vector3 position;
+        position.x = data.position[0];
+        position.y = data.position[1];
+        position.z = data.position[2];
 
-            if(position != null){
-                SetLocation(position);
-            }
+        if (position != null) {
+            SetLocation(position);
         }
     }
 

@@ -23,7 +23,7 @@ public class StartSceneController : MonoBehaviour {
     void Start() {
         ChangeStartState(StartState.HOMEMENU);
 
-        print("SaveExists data loading...");
+        print("data loading...");
         PlayerData data = SaveSystem.load();
         if(data != null){
             continueBtn.interactable = true;
@@ -33,11 +33,6 @@ public class StartSceneController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (startState == StartState.HOMEMENU) {
-
-            //Example code of scene switching to make sure it works
-            if (Input.GetKeyDown(KeyCode.J)) {
-                SceneController.SwitchToGameScene();
-            }
 
         } else if (startState == StartState.SETTINGMENU) {
 
@@ -69,10 +64,11 @@ public class StartSceneController : MonoBehaviour {
 
     //New Game Button
     public void NewGame() {
-        //SceneController.SwitchToGameScene();
-        //SceneController.SwitchToTutorialScene();
-        SaveSystem.save(null, true);
+        SaveSystem.save(null);
+        AudioManager.instance.Pause("homeTheme");
+        AudioManager.instance.Play("gameBackground");
         SceneController.SwitchToGameScene();
+        //SceneController.SwitchToTutorialScene();
 
     }
 
@@ -80,6 +76,8 @@ public class StartSceneController : MonoBehaviour {
     public void ContinueGame() {
         //continues game from last checkpoint save (if available)
         //SceneController.SwitchToTutorialScene();
+        AudioManager.instance.Pause("homeTheme");
+        AudioManager.instance.Play("gameBackground");
         SceneController.SwitchToGameScene();
     }
 

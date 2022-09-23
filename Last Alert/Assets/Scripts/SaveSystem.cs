@@ -10,13 +10,13 @@ public static class SaveSystem
          1. First get reference to the players transform.
          2. call SaveSystem.save(transform, true);
     */
-    public static void save(Transform player, bool saveExists)
+    public static void save(Transform player)
     {
         string path = Application.persistentDataPath + "/data.abc";
         BinaryFormatter formatter = new BinaryFormatter();
 
         FileStream stream = new FileStream(path, FileMode.Create);
-        PlayerData data = new PlayerData(player, saveExists);
+        PlayerData data = new PlayerData(player);
 
         formatter.Serialize(stream, data);
         stream.Close();
@@ -52,7 +52,6 @@ public static class SaveSystem
         }
         else
         {
-            Debug.LogError("save file does not exist! : " + path);
             return null;
         }
     }

@@ -35,11 +35,7 @@ public class GameController : MonoBehaviour {
             }
 
         } else if (gameState == GameState.SETTINGMENU) {
-            //Unpause game
-            /*if (Input.GetKeyDown(KeyboardController.pauseKey)) {
-                UnpauseGame();
-            }*/
-            
+
         } else if (gameState == GameState.CUTSCENE) {
             
         } else if (gameState == GameState.GAME) {
@@ -59,17 +55,7 @@ public class GameController : MonoBehaviour {
             if (winControllerRef.CheckForWin()) {
                 GameWon();
             }
-
-
-            //Example of teleporting the player
-            if (Input.GetKey(KeyCode.L)) {
-                playerControllerRef.ResetPlayer();
-            }
-
-            //Example code of scene switching to make sure it works
-            if (Input.GetKeyDown(KeyCode.J)) {
-                SceneController.SwitchToStartScene();
-            }
+            
         } else if (gameState == GameState.GAMEWIN) {
             
         } else if (gameState == GameState.GAMEOVER) {
@@ -137,11 +123,13 @@ public class GameController : MonoBehaviour {
     //Pause functions
     public void PauseGame() {
         ChangeGameState(GameState.PAUSEMENU);
+        AudioManager.instance.PauseAll();
         itemManagerRef.PauseAll();
     }
 
     public void UnpauseGame() {
         ChangeGameState(GameState.GAME);
+        AudioManager.instance.Play("gameBackground");
         itemManagerRef.UnpauseAll();
     }
 
@@ -162,6 +150,7 @@ public class GameController : MonoBehaviour {
 
     //Exit Button
     public void Exit() {
+        AudioManager.instance.Play("homeTheme");
         SceneController.SwitchToStartScene();
     }
 
@@ -173,22 +162,19 @@ public class GameController : MonoBehaviour {
         ChangeGameState(GameState.GAMEOVER);
     }
 
-    public void saveData(){
-        playerControllerRef.savePlayer();
+    public void SaveData(){
+        playerControllerRef.SavePlayer();
     }
 
-    public void loadData(){
-        playerControllerRef.loadPlayer();
-
+    public void LoadData(){
         if(playerControllerRef != null){
-            print("SaveExists data loading...");
+            playerControllerRef.LoadPlayer();
+
             PlayerData data = SaveSystem.load();
             if(data == null){
-                SaveSystem.save(playerControllerRef.transform, false);
+                SaveSystem.save(playerControllerRef.transform);
                 data = SaveSystem.load();
             }
-            
-            bool yeet = data.saveExists;
         }
     }
 }

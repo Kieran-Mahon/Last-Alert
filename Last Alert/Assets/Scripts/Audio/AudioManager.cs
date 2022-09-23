@@ -55,6 +55,12 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void UpdateVolume(){
+        foreach(Sound s in sounds){
+            s.source.volume = s.volume*volumeSetting;
+        }
+    }
+
     //function to find a sound by name and then play it
     public void Play(string name)
     {
@@ -67,7 +73,25 @@ public class AudioManager : MonoBehaviour
         }
 
         //play sound
-        s.source.volume *= volumeSetting;
         s.source.Play();
+    }
+
+    public void Pause(string name){
+        //search for sound
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        if(s == null){
+            //no sound by this name is found
+            Debug.LogWarning("Sound: " + name + " not found!");
+            return;
+        }
+
+        //play sound
+        s.source.Pause();
+    }
+
+    public void PauseAll(){
+        foreach(Sound s in sounds){
+            s.source.Pause();
+        }
     }
 }

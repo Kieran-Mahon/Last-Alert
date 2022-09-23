@@ -12,6 +12,7 @@ public class TutorialController : MonoBehaviour {
     public PickUpController pickUpControllerRef;
     public WinController winControllerRef;
     public ItemManager itemManagerRef; //Manages all pickup objects in the scene
+    public Settings settingsRef;
 
     [Header("UI")]
     public GameObject pauseScreen;
@@ -85,15 +86,18 @@ public class TutorialController : MonoBehaviour {
         if (newTutorialState == TutorialState.PAUSEMENU) {
             HideAllScreens();
             pauseScreen.SetActive(true);
+            settingsRef.enabled = false;
             MouseController.UnlockMouse();
         } else if (newTutorialState == TutorialState.SETTINGMENU) {
             HideAllScreens();
             settingsUI.SetActive(true);
+            settingsRef.enabled = true;
             MouseController.UnlockMouse();
         } else if (newTutorialState == TutorialState.CUTSCENE) {
 
         } else if (newTutorialState == TutorialState.TUTORIAL) {
             HideAllScreens();
+            settingsRef.enabled = false;
             MouseController.LockMouse();
         } else if (newTutorialState == TutorialState.COMPLETED) {
             MouseController.UnlockMouse();
