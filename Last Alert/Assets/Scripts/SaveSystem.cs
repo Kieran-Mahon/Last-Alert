@@ -52,7 +52,6 @@ public static class SaveSystem
         }
         else
         {
-            Debug.LogError("save file does not exist! : " + path);
             return null;
         }
     }
