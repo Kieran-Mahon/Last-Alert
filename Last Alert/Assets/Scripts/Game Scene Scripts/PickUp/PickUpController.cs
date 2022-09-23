@@ -18,6 +18,10 @@ public class PickUpController : MonoBehaviour {
     private PickUp itemRef;
     private float pickUpDistance;
 
+    void Start() {
+        GameReferenceGetter.pickUpControllerRef = this;
+    }
+
     public void TryMoveItem() {
         //Check if no items are held
         if (holdingItem == false) {
@@ -106,7 +110,7 @@ public class PickUpController : MonoBehaviour {
             //Move the item closer to the player
             float newDistance = hit.distance - itemRef.pickUpDistanceOffset;
             itemHolderRef.transform.localPosition = new Vector3(0, 0, newDistance);
-            if (newDistance <= (minPickUpDistance * 2)) {
+            if (newDistance <= (minPickUpDistance * 1)) {
                 //Release item if too close to the player
                 ReleaseItem();
             }

@@ -22,7 +22,6 @@ public class GameController : MonoBehaviour {
 
     //Start is called before the first frame update
     void Start() {
-        GameReferenceGetter.gameControllerRef = this;
         itemManagerRef.GetAllPickUps();
         ChangeGameState(GameState.GAME);
     }
@@ -36,11 +35,7 @@ public class GameController : MonoBehaviour {
             }
 
         } else if (gameState == GameState.SETTINGMENU) {
-            //Unpause game
-            /*if (Input.GetKeyDown(KeyboardController.pauseKey)) {
-                UnpauseGame();
-            }*/
-            
+
         } else if (gameState == GameState.CUTSCENE) {
             
         } else if (gameState == GameState.GAME) {
@@ -60,17 +55,7 @@ public class GameController : MonoBehaviour {
             if (winControllerRef.CheckForWin()) {
                 GameWon();
             }
-
-
-            //Example of teleporting the player
-            if (Input.GetKey(KeyCode.L)) {
-                playerControllerRef.ResetPlayer();
-            }
-
-            //Example code of scene switching to make sure it works
-            if (Input.GetKeyDown(KeyCode.J)) {
-                SceneController.SwitchToStartScene();
-            }
+            
         } else if (gameState == GameState.GAMEWIN) {
             
         } else if (gameState == GameState.GAMEOVER) {
@@ -177,11 +162,11 @@ public class GameController : MonoBehaviour {
         ChangeGameState(GameState.GAMEOVER);
     }
 
-    public void saveData(){
+    public void SaveData(){
         playerControllerRef.SavePlayer();
     }
 
-    public void loadData(){
+    public void LoadData(){
         if(playerControllerRef != null){
             playerControllerRef.LoadPlayer();
 

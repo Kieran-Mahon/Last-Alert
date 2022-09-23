@@ -34,11 +34,6 @@ public class StartSceneController : MonoBehaviour {
     void Update() {
         if (startState == StartState.HOMEMENU) {
 
-            //Example code of scene switching to make sure it works
-            if (Input.GetKeyDown(KeyCode.J)) {
-                SceneController.SwitchToGameScene();
-            }
-
         } else if (startState == StartState.SETTINGMENU) {
 
         } else if (startState == StartState.CUTSCENE) {
@@ -69,12 +64,11 @@ public class StartSceneController : MonoBehaviour {
 
     //New Game Button
     public void NewGame() {
-        //SceneController.SwitchToGameScene();
-        //SceneController.SwitchToTutorialScene();
         SaveSystem.save(null);
         AudioManager.instance.Pause("homeTheme");
         AudioManager.instance.Play("gameBackground");
         SceneController.SwitchToGameScene();
+        //SceneController.SwitchToTutorialScene();
 
     }
 
@@ -85,7 +79,6 @@ public class StartSceneController : MonoBehaviour {
         AudioManager.instance.Pause("homeTheme");
         AudioManager.instance.Play("gameBackground");
         SceneController.SwitchToGameScene();
-        
     }
 
     //Settings Button

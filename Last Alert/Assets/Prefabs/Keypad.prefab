@@ -4848,6 +4848,8 @@ MonoBehaviour:
   condition: {fileID: 8635839121859101872}
   newPos: {x: 0, y: 0, z: 0}
   newRot: {x: 0, y: 0, z: 0}
+  animatorRef: {fileID: 0}
+  animatorBoolName: 
 --- !u!1 &935873631428487911
 GameObject:
   m_ObjectHideFlags: 0
@@ -5562,8 +5564,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5456425008945728690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.616, y: 0.704, z: -1.432}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 0.75}
+  m_LocalPosition: {x: -1.616, y: 0.93, z: -1.432}
+  m_LocalScale: {x: 1.5, y: 1.91, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 935873631339936006}
