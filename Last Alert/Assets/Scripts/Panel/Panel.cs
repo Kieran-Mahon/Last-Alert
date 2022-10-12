@@ -7,7 +7,7 @@ public abstract class Panel : Result {
     //The state of the panel
     public State panelState = State.NOTCOMPLETED;
 
-    [Header("UI")]
+    [Header("Panel UI")]
     public GameObject hintUI;
     public GameObject uncompletedUI;
     public GameObject completedUI;
