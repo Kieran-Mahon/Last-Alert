@@ -1,94 +1,76 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class ColourSelectPanel : Panel {
 
     [Header("Colour Select Info")]
-    public string correctCode;
-    public string enteredCode;
-
-    [Header("Keypad UI")]
-    public TextMeshProUGUI codeLabel;
-
+    [SerializeField]
+    private ColourArea[] colourAreas;
+    
     [Header("Animations")]
-    public Animator wrongCodeAnimator;
+    public Animator wrongColoursAnimator;
 
     //Reset the panel
     public override void ResetResult() {
         completed = false;
-        //Reset the code and update it on the screen
-        enteredCode = "";
-        UpdateCodeLabel();
+
+        //Reset each area
+        foreach (ColourArea area in colourAreas) {
+            area.ResetArea();
+        }
+
         //Change to the uncompleted screen
         HideAllUI();
         uncompletedUI.SetActive(true);
     }
-
-    //Function called when key button is pressed
-    public void KeyEntered(int num) {
-        //Make sure the max num of keys is not pressed
-        if (enteredCode.Length < correctCode.Length) {
-            //Add key pressed to the entered code and update the label
-            enteredCode += num;
-            UpdateCodeLabel();
-        }
+    
+    //Change the area's colour
+    //The info variable should have a layout as below
+    //1,-1
+    //area index,amount
+    public void ChangeColour(string info) {
+        //No need for error checking as its a dev function
+        string[] details = info.Split(",");
+        //0=area index, 1=amount
+        colourAreas[int.Parse(details[0])].ChangeOption(int.Parse(details[1]));
     }
 
-    //Function used to submit the code
-    public void SubmitCode() {
-        //Check if the code is correct
-        if (enteredCode == correctCode) {
-            //Code is correct
+    //Function used to submit the colours
+    public void SubmitColours() {
+        bool allCorrect = true;
+
+        //Check if any are wrong
+        foreach (ColourArea area in colourAreas) {
+            if (area.CheckForCompleted() == false) {
+                allCorrect = false;
+            }
+        }
+        
+        if (allCorrect == true) {
+            //All colours are correct
             completed = true;
 
             //Switch screens
             HideAllUI();
             completedUI.SetActive(true);
         } else {
-            //Code is wrong
-            enteredCode = "";
-            UpdateCodeLabel();
-
-            //Display animation and hide it after 1.5 seconds
-            wrongCodeAnimator.SetBool("Show", true);
+            //Display the wrong colours animation and hide it after 1.5 seconds
+            wrongColoursAnimator.SetBool("Show", true);
             Invoke("HideAnimation", 1.5f);
         }
     }
 
     private void HideAnimation() {
-        wrongCodeAnimator.SetBool("Show", false);
+        wrongColoursAnimator.SetBool("Show", false);
     }
 
-    //Write code to label
-    private void UpdateCodeLabel() {
-        string newText = "";
-        char[] codeArray = enteredCode.ToCharArray();
+    [Serializable]
+    private class ColourArea {
 
-        //Loop through each index of the code and add it to the text
-        for (int i = 0; i < correctCode.Length; i++) {
-            //Add left border
-            newText += "[";
-
-            //Add either spacing or the character
-            if (i < codeArray.Length) {
-                newText += codeArray[i];
-            } else {
-                newText += "  ";
-            }
-
-            //Add right border
-            newText += "]";
-        }
-
-        //Set the label's text to the new text
-        codeLabel.text = newText;
-    }
-
-    private class ColourPanel {
-        public GameObject[] options;
-        public int currentOption = 0;
+        public Image display;
+        public Sprite[] options;
+        private int currentOption = 0;
         public int correctOption;
 
         //Change active option
@@ -102,6 +84,31 @@ public class ColourSelectPanel : Panel {
             } else { //Change value
                 currentOption = newOption;
             }
+
+            //Change display image
+            UpdateDisplay();
+        }
+
+        //Update display
+        private void UpdateDisplay() {
+            //If more than 0 then set it to it's sprite
+            if (options.Length > 0) {
+                display.sprite = options[currentOption];
+            } else {
+                //Show no sprite if no options
+                display.sprite = null;
+            }
+        }
+
+        //Return true if the current option is equal to the correct option
+        public bool CheckForCompleted() {
+            return (currentOption == correctOption);
+        }
+
+        //Reset the area
+        public void ResetArea() {
+            currentOption = 0;
+            UpdateDisplay();
         }
     }
 }
