@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class KeypadPanel : Panel {
+public class KeyPadPanel : Panel {
 
     [Header("Keypad Info")]
     public string correctCode;
