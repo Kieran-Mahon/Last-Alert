@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class KeypadPanel : Panel {
+public class ColourSelectPanel : Panel {
 
-    [Header("Keypad Info")]
+    [Header("Colour Select Info")]
     public string correctCode;
     public string enteredCode;
 
@@ -84,5 +84,24 @@ public class KeypadPanel : Panel {
 
         //Set the label's text to the new text
         codeLabel.text = newText;
+    }
+
+    private class ColourPanel {
+        public GameObject[] options;
+        public int currentOption = 0;
+        public int correctOption;
+
+        //Change active option
+        public void ChangeOption(int changeAmount) {
+            int newOption = currentOption + changeAmount;
+            //Reset if more
+            if (newOption > (options.Length - 1)) {
+                currentOption = 0;
+            } else if (newOption < 0) { //Set to max
+                currentOption = options.Length - 1;
+            } else { //Change value
+                currentOption = newOption;
+            }
+        }
     }
 }
