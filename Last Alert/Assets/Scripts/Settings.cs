@@ -174,6 +174,8 @@ public class Settings : MonoBehaviour {
             default:
                 break;
         }
+
+        SaveSystem.saveSettings();
     }
 
     public void ChangeKeyBind(KeyboardController.Action control, KeyCode newKey) {

@@ -21,6 +21,27 @@ public static class SaveSystem
         formatter.Serialize(stream, data);
         stream.Close();
     }
+
+    //only update the save settings by calling: SaveSystem.saveSettings();
+    public static void saveSettings()
+    {
+        string path = Application.persistentDataPath + "/data.abc";
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        FileStream stream = new FileStream(path, FileMode.Create);
+        PlayerData data = load();
+        data.runKey = (int)KeyboardController.runKey;
+        data.jumpKey = (int)KeyboardController.jumpKey;
+        data.crouchKey = (int)KeyboardController.crouchKey;
+        data.itemPickUpKey = (int)KeyboardController.itemPickUpKey;
+        data.itemRotateLeftKey = (int)KeyboardController.itemRotateLeftKey;
+        data.itemRotateRightKey = (int)KeyboardController.itemRotateRightKey;
+        data.pauseKey = (int)KeyboardController.pauseKey;
+
+        formatter.Serialize(stream, data);
+        stream.Close();
+    }
+
     public static void clearSave()
     {
         string path = Application.persistentDataPath + "/data.abc";
@@ -79,6 +100,8 @@ public static class SaveSystem
         KeyboardController.itemRotateRightKey = (KeyCode)pd.itemRotateRightKey;
         KeyboardController.pauseKey = (KeyCode)pd.pauseKey;
     }
+
+
 
     //to check if there is a current save call: SaveSystem.isSaved();
     public static bool isSaved()
