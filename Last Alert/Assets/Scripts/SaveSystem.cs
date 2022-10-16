@@ -7,36 +7,33 @@ public static class SaveSystem
 {
     /*
         To save the players state:
-         1. First get reference to the players transform.
-         2. call SaveSystem.save(transform, true);
+         1. First get reference to the players transform, and the timer.
+         2. call SaveSystem.save(transform, timer);
     */
-    public static void save(Transform player)
+    public static void save(Transform player, float timer)
     {
         string path = Application.persistentDataPath + "/data.abc";
         BinaryFormatter formatter = new BinaryFormatter();
 
         FileStream stream = new FileStream(path, FileMode.Create);
-        PlayerData data = new PlayerData(player);
+        PlayerData data = new PlayerData(player, timer);
+
+        formatter.Serialize(stream, data);
+        stream.Close();
+    }
+    public static void clearSave()
+    {
+        string path = Application.persistentDataPath + "/data.abc";
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        FileStream stream = new FileStream(path, FileMode.Create);
+        PlayerData data = new PlayerData(null, -1);
 
         formatter.Serialize(stream, data);
         stream.Close();
     }
 
-    /*
-        To load the players state:
-        1. retrieve the data:
-            PlayerData data = SaveSystem.load();
-
-            Vector3 position;
-            position.x = data.position[0];
-            position.y = data.position[1];
-            position.z = data.position[2];
-
-        2. get reference to the players transform
-        3. set the transforms position to position:
-            transform.position = position;
-    */
-    public static PlayerData load()
+    private static PlayerData load()
     {
         string path = Application.persistentDataPath + "/data.abc";
         if (File.Exists(path))
@@ -55,5 +52,42 @@ public static class SaveSystem
             return null;
         }
     }
+
+    //to get player location in aa Vector3 call: SaveSystem.getPlayerLocation();
+    public static Vector3 getPlayerLocation()
+    {
+        PlayerData pd = load();
+        return new Vector3(pd.position[0], pd.position[1], pd.position[2]);
+    }
+
+    //to get the timer as an float, call: SaveSystem.getTimer();
+    public static float getTimer()
+    {
+        PlayerData pd = load();
+        return pd.timer;
+    }
+
+    //to automatically update the keybinds call: SaveSystem.loadSettings();
+    public static void loadSettings()
+    {
+        PlayerData pd = load();
+        KeyboardController.runKey = (KeyCode)pd.runKey;
+        KeyboardController.jumpKey = (KeyCode)pd.jumpKey;
+        KeyboardController.crouchKey = (KeyCode)pd.crouchKey;
+        KeyboardController.itemPickUpKey = (KeyCode)pd.itemPickUpKey;
+        KeyboardController.itemRotateLeftKey = (KeyCode)pd.itemRotateLeftKey;
+        KeyboardController.itemRotateRightKey = (KeyCode)pd.itemRotateRightKey;
+        KeyboardController.pauseKey = (KeyCode)pd.pauseKey;
+    }
+
+    //to check if there is a current save call: SaveSystem.isSaved();
+    public static bool isSaved()
+    {
+        PlayerData pd = load();
+        return (pd != null);
+    }
+
+
+
 
 }

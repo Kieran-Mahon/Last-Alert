@@ -1076,7 +1076,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1916074310}
         m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: saveData
+        m_MethodName: SaveData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1204,7 +1204,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1916074310}
         m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: saveData
+        m_MethodName: SaveData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2922,6 +2922,7 @@ MonoBehaviour:
   pickUpControllerRef: {fileID: 660250674}
   winControllerRef: {fileID: 2025464648}
   itemManagerRef: {fileID: 1235753077}
+  settingsRef: {fileID: 0}
   pauseScreen: {fileID: 1044889024}
   settingsUI: {fileID: 1944648480}
   gameWinScreen: {fileID: 1944648480}
@@ -3388,7 +3389,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1916074310}
         m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: saveData
+        m_MethodName: SaveData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

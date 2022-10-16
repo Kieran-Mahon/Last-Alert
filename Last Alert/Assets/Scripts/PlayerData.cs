@@ -7,12 +7,27 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
-    public float[] position;
+    public float[] position = new float[] { 0.0f, 0.0f, 0.0f };
+    public float timer = 100.0f;
 
-    public float timer;
+    //KeyCodes
+    public int runKey = (int)KeyCode.LeftShift;
+    public int jumpKey = (int)KeyCode.Space;
+    public int crouchKey = (int)KeyCode.LeftControl;
+    //Pick up key
+    public int itemPickUpKey = (int)KeyCode.Mouse0;
+    public int itemRotateLeftKey = (int)KeyCode.Q;
+    public int itemRotateRightKey = (int)KeyCode.E;
+    //Pause key
+    public int pauseKey = (int)KeyCode.Escape;
+
+    public PlayerData()
+    {
+
+    }
 
     //constructor
-    public PlayerData(Transform player)
+    public PlayerData(Transform player, float timer)
     {
         this.position = new float[3];
 
@@ -29,7 +44,17 @@ public class PlayerData
             this.position[1] = 0.0f;
             this.position[2] = 0.0f;
         }
-        this.timer = 0;
+
+        this.timer = timer;
+
+        this.runKey = (int)KeyboardController.runKey;
+        this.jumpKey = (int)KeyboardController.jumpKey;
+        this.crouchKey = (int)KeyboardController.crouchKey;
+        this.itemPickUpKey = (int)KeyboardController.itemPickUpKey;
+        this.itemRotateLeftKey = (int)KeyboardController.itemRotateLeftKey;
+        this.itemRotateRightKey = (int)KeyboardController.itemRotateRightKey;
+        this.pauseKey = (int)KeyboardController.pauseKey;
+
     }
 
 }
