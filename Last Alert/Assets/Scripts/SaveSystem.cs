@@ -62,7 +62,17 @@ public static class SaveSystem
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
-            PlayerData data = formatter.Deserialize(stream) as PlayerData;
+            PlayerData data;
+
+            //if empty
+            if (stream.Length != 0)
+            {
+                data = formatter.Deserialize(stream) as PlayerData;
+            }
+            else
+            {
+                data = new PlayerData();
+            }
 
             stream.Close();
 
