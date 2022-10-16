@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Settings : MonoBehaviour {
+public class Settings : MonoBehaviour
+{
     public GameObject SceneScript; //reference to current scene controller
 
     public Slider volume;
@@ -29,7 +30,13 @@ public class Settings : MonoBehaviour {
     public TextMeshProUGUI rotateRightText;
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
+        if (SaveSystem.isSaved())
+        {
+            SaveSystem.loadSettings();
+        }
+
         mouseXInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
         mouseYInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
         volume.onValueChanged.AddListener(delegate { volumeChanged(); });
@@ -40,12 +47,14 @@ public class Settings : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
 
     }
 
     //updates settings ui
-    public void ShowCurrentSettings() {
+    public void ShowCurrentSettings()
+    {
         //volume
         volume.value = AudioManager.volumeSetting;
 
@@ -53,15 +62,21 @@ public class Settings : MonoBehaviour {
         mouseSensitivity.value = PlayerController.mouseXSensitivity;
 
         //mouse inversion
-        if (PlayerController.mouseXInverted == false) {
+        if (PlayerController.mouseXInverted == false)
+        {
             mouseXInvert.isOn = false;
-        } else {
+        }
+        else
+        {
             mouseXInvert.isOn = true;
         }
 
-        if (PlayerController.mouseYInverted == false) {
+        if (PlayerController.mouseYInverted == false)
+        {
             mouseYInvert.isOn = false;
-        } else {
+        }
+        else
+        {
             mouseYInvert.isOn = true;
         }
 
@@ -70,66 +85,90 @@ public class Settings : MonoBehaviour {
     }
 
     //leave settings
-    public void BackButton() {
-        if (SceneScript.GetComponent<StartSceneController>() != null) { //check if from Start Menu
+    public void BackButton()
+    {
+        if (SceneScript.GetComponent<StartSceneController>() != null)
+        { //check if from Start Menu
             SceneScript.GetComponent<StartSceneController>().ChangeStartState(StartState.HOMEMENU);
-        } else if (SceneScript.GetComponent<GameController>() != null) { //check if from Game Scene
+        }
+        else if (SceneScript.GetComponent<GameController>() != null)
+        { //check if from Game Scene
             SceneScript.GetComponent<GameController>().ChangeGameState(GameState.PAUSEMENU);
-        } else if (SceneScript.GetComponent<TutorialController>() != null) { //check if from Tutorial Scene
+        }
+        else if (SceneScript.GetComponent<TutorialController>() != null)
+        { //check if from Tutorial Scene
             SceneScript.GetComponent<TutorialController>().ChangeTutorialState(TutorialState.PAUSEMENU);
         }
     }
 
     //volume settings
-    public void volumeChanged() {
+    public void volumeChanged()
+    {
         AudioManager.volumeSetting = volume.value;
         AudioManager.instance.UpdateVolume();
     }
 
     //mouse sensitivity settings
-    public void mouseSensitivityChanged() {
+    public void mouseSensitivityChanged()
+    {
         PlayerController.mouseXSensitivity = mouseSensitivity.value;
         PlayerController.mouseYSensitivity = mouseSensitivity.value;
     }
 
     //mouse inversion settings
-    public void InvertMouse() {
-        if (mouseXInvert.isOn) {
+    public void InvertMouse()
+    {
+        if (mouseXInvert.isOn)
+        {
             PlayerController.mouseXInverted = true;
-        } else {
+        }
+        else
+        {
             PlayerController.mouseXInverted = false;
         }
 
-        if (mouseYInvert.isOn) {
+        if (mouseYInvert.isOn)
+        {
             PlayerController.mouseYInverted = true;
-        } else {
+        }
+        else
+        {
             PlayerController.mouseYInverted = false;
         }
     }
 
     //keybind settings
-    public void CurrentKey(GameObject clicked) {
+    public void CurrentKey(GameObject clicked)
+    {
         currentKey = clicked;
     }
 
-    void OnGUI() {
-        if (currentKey != null) {
+    void OnGUI()
+    {
+        if (currentKey != null)
+        {
             Event e = Event.current;
-            if (e.isKey || e.isMouse) {
+            if (e.isKey || e.isMouse)
+            {
                 UpdateKeyBind(e);
                 currentKey = null;
             }
         }
     }
 
-    public void UpdateKeyBind(Event e) {
+    public void UpdateKeyBind(Event e)
+    {
         KeyCode newKey = KeyCode.Mouse3;
 
         //mouse click
-        if (e.isMouse) {
-            if (e.type == EventType.MouseDown) {
-                for (int i = 0; i < mouseKeys.Length; ++i) {
-                    if (Input.GetKeyDown(mouseKeys[i])) {
+        if (e.isMouse)
+        {
+            if (e.type == EventType.MouseDown)
+            {
+                for (int i = 0; i < mouseKeys.Length; ++i)
+                {
+                    if (Input.GetKeyDown(mouseKeys[i]))
+                    {
                         newKey = mouseKeys[i];
                         break;
                     }
@@ -137,12 +176,14 @@ public class Settings : MonoBehaviour {
             }
         }
         //key press
-        else if (e.isKey) {
+        else if (e.isKey)
+        {
             newKey = e.keyCode;
         }
 
         //assign new keybind
-        switch (currentKey.name) {
+        switch (currentKey.name)
+        {
             case "btnPause":
                 ChangeKeyBind(KeyboardController.Action.PAUSE, newKey);
                 UpdateButtonText(pauseText, KeyboardController.pauseKey.ToString());
@@ -175,18 +216,22 @@ public class Settings : MonoBehaviour {
                 break;
         }
 
+        print("saving setting changes...");
         SaveSystem.saveSettings();
     }
 
-    public void ChangeKeyBind(KeyboardController.Action control, KeyCode newKey) {
+    public void ChangeKeyBind(KeyboardController.Action control, KeyCode newKey)
+    {
         KeyboardController.SetKey(control, newKey);
     }
 
-    public void UpdateButtonText(TextMeshProUGUI buttonText, string keyBind) {
+    public void UpdateButtonText(TextMeshProUGUI buttonText, string keyBind)
+    {
         buttonText.text = keyBind;
     }
 
-    public void UpdateAllButtonText() {
+    public void UpdateAllButtonText()
+    {
         //unchangeable keybinds
         forwardText.text = "W";
         backwardText.text = "S";
@@ -201,10 +246,12 @@ public class Settings : MonoBehaviour {
         UpdateButtonText(pickUpDropText, KeyboardController.itemPickUpKey.ToString());
         UpdateButtonText(rotateLeftText, KeyboardController.itemRotateLeftKey.ToString());
         UpdateButtonText(rotateRightText, KeyboardController.itemRotateRightKey.ToString());
+
     }
 
     //default restoration
-    public void RestoreAllDefaults() {
+    public void RestoreAllDefaults()
+    {
         //volume
         volume.value = 0.5f;
         AudioManager.volumeSetting = 0.5f;
@@ -223,7 +270,8 @@ public class Settings : MonoBehaviour {
         RestoreDefaultKeyBinds();
     }
 
-    public void RestoreDefaultKeyBinds() {
+    public void RestoreDefaultKeyBinds()
+    {
         ChangeKeyBind(KeyboardController.Action.PAUSE, KeyCode.Escape);
         ChangeKeyBind(KeyboardController.Action.JUMP, KeyCode.Space);
         ChangeKeyBind(KeyboardController.Action.RUN, KeyCode.LeftShift);
