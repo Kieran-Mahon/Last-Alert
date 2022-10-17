@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StartSceneController : MonoBehaviour
-{
+public class StartSceneController : MonoBehaviour {
     //Start state
     public StartState startState;
 
@@ -21,56 +20,42 @@ public class StartSceneController : MonoBehaviour
     public Button continueBtn;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         ChangeStartState(StartState.HOMEMENU);
 
         print("data loading...");
-        if (SaveSystem.isSaved())
-        {
+        if (SaveSystem.isSaved())  {
             SaveSystem.loadSettings();
             continueBtn.interactable = true;
         }
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (startState == StartState.HOMEMENU)
-        {
+    void Update() {
+        if (startState == StartState.HOMEMENU) {
 
-        }
-        else if (startState == StartState.SETTINGMENU)
-        {
+        } else if (startState == StartState.SETTINGMENU)  {
 
-        }
-        else if (startState == StartState.CUTSCENE)
-        {
+        } else if (startState == StartState.CUTSCENE) {
 
         }
     }
 
     //Actions which need to be done on the change state call
-    public void ChangeStartState(StartState newStartState)
-    {
-        if (newStartState == StartState.HOMEMENU)
-        {
+    public void ChangeStartState(StartState newStartState) {
+        if (newStartState == StartState.HOMEMENU){
             MouseController.UnlockMouse();
             homeMenu.SetActive(true);
             settingsUI.SetActive(false);
             settingRef.enabled = false;
 
-        }
-        else if (newStartState == StartState.SETTINGMENU)
-        {
+        } else if (newStartState == StartState.SETTINGMENU) {
             MouseController.UnlockMouse();
             settingsUI.SetActive(true);
             settingRef.enabled = true;
             homeMenu.SetActive(false);
 
-        }
-        else if (newStartState == StartState.CUTSCENE)
-        {
+        } else if (newStartState == StartState.CUTSCENE) {
             MouseController.UnlockMouse();
         }
         //Change state
@@ -78,8 +63,7 @@ public class StartSceneController : MonoBehaviour
     }
 
     //New Game Button
-    public void NewGame()
-    {
+    public void NewGame() {
         SaveSystem.clearSave();
         AudioManager.instance.Pause("homeTheme");
         AudioManager.instance.Play("gameBackground");
@@ -89,8 +73,7 @@ public class StartSceneController : MonoBehaviour
     }
 
     //Continue Button
-    public void ContinueGame()
-    {
+    public void ContinueGame() {
         //continues game from last checkpoint save (if available)
         //SceneController.SwitchToTutorialScene();
         AudioManager.instance.Pause("homeTheme");
@@ -99,28 +82,24 @@ public class StartSceneController : MonoBehaviour
     }
 
     //Settings Button
-    public void OpenSettings()
-    {
+    public void OpenSettings() {
         ChangeStartState(StartState.SETTINGMENU);
     }
 
     //temporary button to return to home menu for testing
-    public void CloseSettings()
-    {
+    public void CloseSettings() {
         ChangeStartState(StartState.HOMEMENU);
     }
 
     //Quit Button
-    public void Quit()
-    {
+    public void Quit() {
         Application.Quit();
         print("Quit");
     }
 }
 
 //Start scene states
-public enum StartState
-{
+public enum StartState {
     HOMEMENU,
     SETTINGMENU,
     CUTSCENE

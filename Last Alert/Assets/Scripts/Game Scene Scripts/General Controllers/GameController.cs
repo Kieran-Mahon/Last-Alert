@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
-{
+public class GameController : MonoBehaviour {
 
     //Game state
     public GameState gameState;
@@ -22,34 +21,25 @@ public class GameController : MonoBehaviour
     public GameObject gameOverScreen;
 
     //Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         itemManagerRef.GetAllPickUps();
         ChangeGameState(GameState.GAME);
     }
 
     //Update is called once per frame
-    void Update()
-    {
-        if (gameState == GameState.PAUSEMENU)
-        {
+    void Update() {
+        if (gameState == GameState.PAUSEMENU) {
             //Unpause game
-            if (Input.GetKeyDown(KeyboardController.pauseKey))
-            {
+            if (Input.GetKeyDown(KeyboardController.pauseKey)) {
                 UnpauseGame();
             }
 
-        }
-        else if (gameState == GameState.SETTINGMENU)
-        {
+        } else if (gameState == GameState.SETTINGMENU) {
 
-        }
-        else if (gameState == GameState.CUTSCENE)
-        {
+        } else if (gameState == GameState.CUTSCENE) {
 
-        }
-        else if (gameState == GameState.GAME)
-        {
+        } else if (gameState == GameState.GAME) {
+           
             //Move player
             playerControllerRef.MovePlayer();
             playerControllerRef.MoveCamera();
@@ -58,54 +48,36 @@ public class GameController : MonoBehaviour
             pickUpControllerRef.TryMoveItem();
 
             //Pause game
-            if (Input.GetKeyDown(KeyboardController.pauseKey))
-            {
+            if (Input.GetKeyDown(KeyboardController.pauseKey)) {
                 PauseGame();
             }
 
             //Check for win
-            if (winControllerRef.CheckForWin())
-            {
+            if (winControllerRef.CheckForWin()) {
                 GameWon();
             }
 
-        }
-        else if (gameState == GameState.GAMEWIN)
-        {
+        } else if (gameState == GameState.GAMEWIN) {
 
-        }
-        else if (gameState == GameState.GAMEOVER)
-        {
+        } else if (gameState == GameState.GAMEOVER) {
 
         }
     }
 
     //Actions which need to be done on the change state call
-    public void ChangeGameState(GameState newGameState)
-    {
+    public void ChangeGameState(GameState newGameState) {
         //BEFORE CHANGE
-        if (gameState == GameState.PAUSEMENU)
-        {
+        if (gameState == GameState.PAUSEMENU) {
 
-        }
-        else if (gameState == GameState.SETTINGMENU)
-        {
+        } else if (gameState == GameState.SETTINGMENU) {
 
-        }
-        else if (gameState == GameState.CUTSCENE)
-        {
+        } else if (gameState == GameState.CUTSCENE) {
 
-        }
-        else if (gameState == GameState.GAME)
-        {
+        } else if (gameState == GameState.GAME) {
 
-        }
-        else if (newGameState == GameState.GAMEWIN)
-        {
+        } else if (newGameState == GameState.GAMEWIN) {
 
-        }
-        else if (newGameState == GameState.GAMEOVER)
-        {
+        } else if (newGameState == GameState.GAMEOVER) {
 
         }
 
@@ -113,39 +85,28 @@ public class GameController : MonoBehaviour
         gameState = newGameState;
 
         //AFTER CHANGE
-        if (newGameState == GameState.PAUSEMENU)
-        {
+        if (newGameState == GameState.PAUSEMENU) {
             HideAllScreens();
             pauseScreen.SetActive(true);
             settingsRef.enabled = false;
             MouseController.UnlockMouse();
-        }
-        else if (newGameState == GameState.SETTINGMENU)
-        {
+        } else if (newGameState == GameState.SETTINGMENU) {
             HideAllScreens();
             settingsUI.SetActive(true);
             settingsRef.enabled = true;
             MouseController.UnlockMouse();
-        }
-        else if (newGameState == GameState.CUTSCENE)
-        {
+        } else if (newGameState == GameState.CUTSCENE) {
 
-        }
-        else if (newGameState == GameState.GAME)
-        {
+        } else if (newGameState == GameState.GAME) {
             HideAllScreens();
             settingsRef.enabled = false;
             MouseController.LockMouse();
-        }
-        else if (newGameState == GameState.GAMEWIN)
-        {
+        } else if (newGameState == GameState.GAMEWIN) {
             HideAllScreens();
             gameWinScreen.SetActive(true);
             MouseController.UnlockMouse();
             pickUpControllerRef.DropItem(true);
-        }
-        else if (newGameState == GameState.GAMEOVER)
-        {
+        } else if (newGameState == GameState.GAMEOVER) {
             HideAllScreens();
             gameOverScreen.SetActive(true);
             MouseController.UnlockMouse();
@@ -153,8 +114,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void HideAllScreens()
-    {
+    private void HideAllScreens() {
         pauseScreen.SetActive(false);
         settingsUI.SetActive(false);
         gameWinScreen.SetActive(false);
@@ -162,68 +122,56 @@ public class GameController : MonoBehaviour
     }
 
     //Pause functions
-    public void PauseGame()
-    {
+    public void PauseGame() {
         ChangeGameState(GameState.PAUSEMENU);
         AudioManager.instance.PauseAll();
         itemManagerRef.PauseAll();
     }
 
-    public void UnpauseGame()
-    {
+    public void UnpauseGame() {
         ChangeGameState(GameState.GAME);
         AudioManager.instance.Play("gameBackground");
         itemManagerRef.UnpauseAll();
     }
 
     //Resume Button
-    public void ResumeGame()
-    {
+    public void ResumeGame() {
         UnpauseGame();
     }
 
     //Settings Button
-    public void OpenSettings()
-    {
+    public void OpenSettings() {
         ChangeGameState(GameState.SETTINGMENU);
     }
 
     //temporary button to return to pause menu for testing
-    public void CloseSettings()
-    {
+    public void CloseSettings() {
         ChangeGameState(GameState.PAUSEMENU);
     }
 
     //Exit Button
-    public void Exit()
-    {
+    public void Exit() {
         AudioManager.instance.Play("homeTheme");
         SceneController.SwitchToStartScene();
     }
 
-    private void GameWon()
-    {
+    private void GameWon() {
         ChangeGameState(GameState.GAMEWIN);
     }
 
-    public void GameOver()
-    {
+    public void GameOver() {
         ChangeGameState(GameState.GAMEOVER);
     }
 
-    public void SaveData()
-    {
+    public void SaveData() {
         playerControllerRef.SavePlayer();
     }
 
-    public void LoadData()
-    {
-        if (playerControllerRef != null)
-        {
+    public void LoadData() {
+        if (playerControllerRef != null) {
             playerControllerRef.LoadPlayer();
 
-            if (!SaveSystem.isSaved())
-            {
+            if (!SaveSystem.isSaved()) {
                 SaveSystem.save(playerControllerRef.transform, 0.0f);
                 SaveSystem.loadSettings();
             }
@@ -232,8 +180,7 @@ public class GameController : MonoBehaviour
 }
 
 //Game scene states
-public enum GameState
-{
+public enum GameState {
     PAUSEMENU,
     SETTINGMENU,
     CUTSCENE,

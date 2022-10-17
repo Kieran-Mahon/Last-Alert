@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
 
     [Header("Crouch")]
     public float uncrouchControllerHeight = 2;
@@ -43,41 +42,30 @@ public class PlayerController : MonoBehaviour
     [Header("Saving")]
     public bool loadPlayer = true;
 
-    void Start()
-    {
+    void Start() {
         transformRef = GetComponent<Transform>();
         controllerRef = GetComponent<CharacterController>();
 
-        if (loadPlayer)
-        {
+        if (loadPlayer) {
             LoadPlayer();
         }
     }
 
-    public void MovePlayer()
-    {
+    public void MovePlayer() {
         //Player crouch
-        if (Input.GetKey(KeyboardController.crouchKey))
-        {
+        if (Input.GetKey(KeyboardController.crouchKey)) {
             //Signal the player is crouching
             isCrouching = true;
             //Update controller height and camera
             controllerRef.height = Mathf.SmoothDamp(controllerRef.height, crouchControllerHeight, ref crouchingVelocityF, crouchTime / 10);
             cameraRef.transform.localPosition = Vector3.SmoothDamp(cameraRef.transform.localPosition, new Vector3(0, crouchCameraHeight, 0), ref crouchingVelocityV3, crouchTime / 10);
-        }
-        else
-        {
+        } else {
             //Check if anything above player
-            if (SpaceAbovePlayer(new Vector3(0, crouchControllerHeight, 0)))
-            { //Middle
-                if (SpaceAbovePlayer(new Vector3(0.5f, crouchControllerHeight, 0)))
-                { //Left Top
-                    if (SpaceAbovePlayer(new Vector3(-0.5f, crouchControllerHeight, 0)))
-                    { //Right Top
-                        if (SpaceAbovePlayer(new Vector3(0, crouchControllerHeight, 0.5f)))
-                        { //Left Bottom
-                            if (SpaceAbovePlayer(new Vector3(0, crouchControllerHeight, -0.5f)))
-                            { //Right Bottom
+            if (SpaceAbovePlayer(new Vector3(0, crouchControllerHeight, 0))) { //Middle
+                if (SpaceAbovePlayer(new Vector3(0.5f, crouchControllerHeight, 0))) { //Left Top
+                    if (SpaceAbovePlayer(new Vector3(-0.5f, crouchControllerHeight, 0))) { //Right Top
+                        if (SpaceAbovePlayer(new Vector3(0, crouchControllerHeight, 0.5f))) { //Left Bottom
+                            if (SpaceAbovePlayer(new Vector3(0, crouchControllerHeight, -0.5f))) { //Right Bottom
                                 //Signal the player is no longer crouching
                                 isCrouching = false;
                                 //Update controller height and camera
@@ -94,12 +82,9 @@ public class PlayerController : MonoBehaviour
         controllerRef.center = new Vector3(0, controllerRef.height / 2, 0);
 
         //Get speed
-        if (Input.GetKey(KeyboardController.runKey))
-        {
+        if (Input.GetKey(KeyboardController.runKey)) {
             speed = runSpeed;
-        }
-        else
-        {
+        } else {
             speed = walkSpeed;
         }
 
@@ -108,27 +93,22 @@ public class PlayerController : MonoBehaviour
         float yInput = Input.GetAxis("Vertical");
 
         //Check if grounded
-        if (Physics.Raycast(transform.position, Vector3.down, 0.1f))
-        {
+        if (Physics.Raycast(transform.position, Vector3.down, 0.1f)) {
             //Move player
             moveVector = transformRef.TransformDirection(new Vector3(xInput, -0.1f, yInput));
 
             //Check for jump key down
-            if (Input.GetKeyDown(KeyboardController.jumpKey))
-            {
+            if (Input.GetKeyDown(KeyboardController.jumpKey)) {
                 moveVector.y = jumpSpeed;
             }
-        }
-        else
-        {
+        } else {
             //Allow mid air movement but change it by the lost variable
             speed = speed * midAirSpeedModifier;
             moveVector = transformRef.TransformDirection(new Vector3(xInput, moveVector.y, yInput));
         }
 
         //Apply movement modifiers (excluding mid air modifier)
-        if (isCrouching == true)
-        {
+        if (isCrouching == true) {
             speed = speed * crouchSpeedModifier;
         }
 
@@ -142,36 +122,28 @@ public class PlayerController : MonoBehaviour
         controllerRef.Move(moveVector * Time.deltaTime);
     }
 
-    private bool SpaceAbovePlayer(Vector3 pos)
-    {
+    private bool SpaceAbovePlayer(Vector3 pos) {
         return !Physics.Raycast(transform.position + pos, Vector3.up, uncrouchControllerHeight - crouchControllerHeight + 0.1f);
     }
 
-    public void MoveCamera()
-    {
+    public void MoveCamera() {
         //Camera looking
         float xInput = Input.GetAxis("Mouse X");
         float yInput = Input.GetAxis("Mouse Y");
 
         //Invert mouse x
         float rotateX;
-        if (mouseXInverted == false)
-        {
+        if (mouseXInverted == false) {
             rotateX = xInput * mouseXSensitivity;
-        }
-        else
-        {
+        } else {
             rotateX = xInput * -mouseXSensitivity;
         }
 
         //Invert mouse y
         float rotateY;
-        if (mouseYInverted == false)
-        {
+        if (mouseYInverted == false) {
             rotateY = yInput * mouseYSensitivity;
-        }
-        else
-        {
+        } else {
             rotateY = yInput * -mouseYSensitivity;
         }
 
@@ -183,13 +155,10 @@ public class PlayerController : MonoBehaviour
         cameraOffset = cameraOffset + rotateY;
 
         //Clamp the mouse value
-        if (cameraOffset > 80)
-        {
+        if (cameraOffset > 80) {
             cameraXRotation = 280;
             cameraOffset = 80;
-        }
-        else if (cameraOffset < -80)
-        {
+        } else if (cameraOffset < -80) {
             cameraXRotation = 80;
             cameraOffset = -80;
         }
@@ -199,13 +168,11 @@ public class PlayerController : MonoBehaviour
     }
 
     //Player physics
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
+    private void OnControllerColliderHit(ControllerColliderHit hit) {
         Rigidbody body = hit.collider.attachedRigidbody;
 
         //Make sure the rigidbody exists and is not kinematic
-        if ((body != null) && (body.isKinematic == false))
-        {
+        if ((body != null) && (body.isKinematic == false)) {
             //Get push direction
             Vector3 pushDirection = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
 
@@ -215,8 +182,7 @@ public class PlayerController : MonoBehaviour
     }
 
     //Set player location
-    public void SetLocation(Vector3 newLocation)
-    {
+    public void SetLocation(Vector3 newLocation) {
 
         controllerRef.enabled = false;
         transform.position = newLocation;
@@ -224,33 +190,28 @@ public class PlayerController : MonoBehaviour
     }
 
     //Set camera angle
-    public void SetCameraAngle(Vector2 newAngle)
-    {
+    public void SetCameraAngle(Vector2 newAngle) {
         transform.rotation = Quaternion.Euler(0, newAngle.y, 0);
         cameraRef.transform.localRotation = Quaternion.Euler(newAngle.x, 0, 0);
     }
 
 
 
-    public void SavePlayer()
-    {
+    public void SavePlayer()  {
         print("player data saved...");
         SaveSystem.save(transform, 0);
     }
 
-    public void LoadPlayer()
-    {
+    public void LoadPlayer() {
         print("player data loading...");
-        if (!SaveSystem.isSaved())
-        {
+        if (!SaveSystem.isSaved()) {
             SaveSystem.save(transform, 0.0f);
         }
 
         SetLocation(SaveSystem.getPlayerLocation());
     }
 
-    public void ResetPlayer()
-    {
+    public void ResetPlayer() {
         //TEMP CODE NEEDS TO BE REPLACED WITH CHECKPOINT SYSTEM'S LAST CHECKPOINT
         SetLocation(new Vector3(0, 0, 0));
         SetCameraAngle(new Vector2(0, 180));
