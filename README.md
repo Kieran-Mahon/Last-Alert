@@ -1,23 +1,24 @@
-[Name:]
+[Name]
 Last Alert
 
-[Description:]
+[Description]
 Our project is a game called last alert. The genre is a timed scavenger hunt game where you have to find objects in the scenes and bring them to an area while solving little puzzles along the way. For themes and settings we decided on having the game take place on a space station. The motive behind finding the objects is that there is a meteor on couse to hit the station. The player must find objects in the space station to finish the escape pod to escape before the time is up.
 
-[Visuals:]
+[Visuals]
 *insert screenshots here*
 
-[Installation:]
+[Installation]
 To play the game at the moment. you need to import the project into a unity editor and then run it inside the editor. In future we will have the executable in the repository so that people can download -> unzip -> play.
 
-[Support:]
+[Support]
 Our email addresses for contacting us are:
-Max Graham: xjr4265@autuni.ac.nz
-Caitlyn Young: gyx6888@autunit.ac.nz
-Toby McIsaac: jts6747@autuni.ac.nz
-Kieran Mahon: fnh2106@autuni.ac.nz
+- Max Graham: xjr4265@autuni.ac.nz
+- Caitlyn Young: gyx6888@autunit.ac.nz
+- Toby McIsaac: jts6747@autuni.ac.nz
+- Kieran Mahon: fnh2106@autuni.ac.nz
 
-[Roadmap:]
+[Roadmap]
+
 Our plan for sprint 1:
 - Be able to move player
 - Be able to look around
@@ -37,17 +38,18 @@ Our plan for sprint 2:
 - Be able to lose & complete (win) the game
 
 
-[Contributing:]
+[Contributing]
 Since this project is for a university assessment, we will not be accepting any contributions from outside sources since that would breach the AUT submission requirements that it must be our work.
 
-[Authors and acknowledgment:]
-This project is writen entirely by our amazing team of 4:
-Caitlyn Young,
-Kieran Mahon,
-Toby McIsaac,
-Max Graham.
+[Authors and acknowledgment]
 
-[License:]
+This project is writen entirely by our amazing team of 4:
+- Caitlyn Young,
+- Kieran Mahon,
+- Toby McIsaac,
+- Max Graham.
+
+[License]
 MIT License
 
 Copyright (c) 2022 (Last Alert)
@@ -70,5 +72,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-[Project status:]
+[Project status]
 This project is still in development and is currently in sprint 2.
