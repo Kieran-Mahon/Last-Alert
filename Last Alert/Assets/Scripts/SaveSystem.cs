@@ -33,8 +33,9 @@ public static class SaveSystem {
         BinaryFormatter formatter = new BinaryFormatter();
 
         //save to stream
-        FileStream stream = new FileStream(path, FileMode.Create);
         PlayerData data = load();
+        FileStream stream = new FileStream(path, FileMode.Create);
+        
         data.runKey = (int)KeyboardController.runKey;
         data.jumpKey = (int)KeyboardController.jumpKey;
         data.crouchKey = (int)KeyboardController.crouchKey;
@@ -64,8 +65,8 @@ public static class SaveSystem {
         stream.Close();
     }
 
-    //private method to get all data (should be proccess and only accessable through other "specific" public methods)
-    private static PlayerData load() {
+    //method to get all data
+    public static PlayerData load() {
         string path = Application.persistentDataPath + "/data.abc";
         
         //check if the file exists
