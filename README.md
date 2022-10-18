@@ -43,7 +43,7 @@ Since this project is for a university assessment, we will not be accepting any 
 
 [Authors and acknowledgment]
 
-This project is writen entirely by our amazing team of 4:
+This project is written entirely by our amazing team of 4:
 - Caitlyn Young,
 - Kieran Mahon,
 - Toby McIsaac,
