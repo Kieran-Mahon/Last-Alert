@@ -25,14 +25,17 @@ public class AudioManager : MonoBehaviour
 
     public static float volumeSetting = 0.5f;
 
-    // Start is called before the first frame update
+    // Awake is called before the first frame update
     void Awake()
     {
-        
+
         //ensure only one game object exists
-        if(instance == null){
+        if (instance == null)
+        {
             instance = this;
-        }else{
+        }
+        else
+        {
             Destroy(gameObject);
         }
 
@@ -49,15 +52,18 @@ public class AudioManager : MonoBehaviour
             s.source.loop = s.loop;
 
             //plays sound if playOnAwake is true
-            if(s.playOnAwake){
+            if (s.playOnAwake)
+            {
                 Play(s.name);
             }
         }
     }
 
-    public void UpdateVolume(){
-        foreach(Sound s in sounds){
-            s.source.volume = s.volume*volumeSetting;
+    public void UpdateVolume()
+    {
+        foreach (Sound s in sounds)
+        {
+            s.source.volume = s.volume * volumeSetting;
         }
     }
 
@@ -66,7 +72,8 @@ public class AudioManager : MonoBehaviour
     {
         //search for sound
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        if(s == null){
+        if (s == null)
+        {
             //no sound by this name is found
             Debug.LogWarning("Sound: " + name + " not found!");
             return;
@@ -76,10 +83,12 @@ public class AudioManager : MonoBehaviour
         s.source.Play();
     }
 
-    public void Pause(string name){
+    public void Pause(string name)
+    {
         //search for sound
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        if(s == null){
+        if (s == null)
+        {
             //no sound by this name is found
             Debug.LogWarning("Sound: " + name + " not found!");
             return;
@@ -89,8 +98,10 @@ public class AudioManager : MonoBehaviour
         s.source.Pause();
     }
 
-    public void PauseAll(){
-        foreach(Sound s in sounds){
+    public void PauseAll()
+    {
+        foreach (Sound s in sounds)
+        {
             s.source.Pause();
         }
     }
