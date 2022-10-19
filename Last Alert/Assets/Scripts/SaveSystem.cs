@@ -25,12 +25,30 @@ public static class SaveSystem {
         stream.Close();
     }
 
+    public static void save(PlayerData player, float timer) {
+
+        //settup saving
+        string path = Application.persistentDataPath + "/data.abc";
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        //settup writing stream
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        //save data
+        formatter.Serialize(stream, player);
+        stream.Close();
+    }
+
     //only update the save settings by calling: SaveSystem.saveSettings();
     public static void saveSettings() {
 
         //get path
         string path = Application.persistentDataPath + "/data.abc";
         BinaryFormatter formatter = new BinaryFormatter();
+
+        if(!isSaved()){
+            save(new PlayerData(), 0.0f);
+        }
 
         //save to stream
         PlayerData data = load();
@@ -135,6 +153,11 @@ public static class SaveSystem {
     public static bool isSaved() {
         PlayerData pd = load();
         return (pd != null);
+    }
+
+    public static bool isContinue(){
+        PlayerData pd = load();
+        return (pd != null && pd.position[0] != 0.0f && pd.position[1] != 0.0f && pd.position[2] != 0.0f);
     }
 
 }

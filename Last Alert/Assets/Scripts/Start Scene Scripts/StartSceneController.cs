@@ -26,6 +26,8 @@ public class StartSceneController : MonoBehaviour {
         print("data loading...");
         if (SaveSystem.isSaved())  {
             SaveSystem.loadSettings();
+        }
+        if(SaveSystem.isContinue()) {
             continueBtn.interactable = true;
         }
     }

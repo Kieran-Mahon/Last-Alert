@@ -50,11 +50,14 @@ public class Settings : MonoBehaviour {
 
     //updates settings ui
     public void ShowCurrentSettings() {
-        //volume
-        volume.value = AudioManager.volumeSetting;
+        
+        if(SaveSystem.isSaved()) {
+            //volume
+            volume.value = AudioManager.volumeSetting;
 
-        //sensitivity
-        mouseSensitivity.value = PlayerController.mouseXSensitivity;
+            //sensitivity
+            mouseSensitivity.value = PlayerController.mouseXSensitivity;
+        }
 
         //mouse inversion
         if (PlayerController.mouseXInverted == false) {
