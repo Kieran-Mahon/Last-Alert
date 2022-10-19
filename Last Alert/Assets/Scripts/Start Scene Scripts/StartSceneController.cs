@@ -23,8 +23,9 @@ public class StartSceneController : MonoBehaviour {
     void Start() {
         ChangeStartState(StartState.HOMEMENU);
 
-        print("data loading...");
+        
         if (SaveSystem.isSaved())  {
+            print("data loading...");
             SaveSystem.loadSettings();
         }
         if(SaveSystem.isContinue()) {

@@ -32,6 +32,8 @@ public class Settings : MonoBehaviour {
     void Start() {
         if (SaveSystem.isSaved()) {
            SaveSystem.loadSettings();
+        }else{
+            SaveSystem.save(new PlayerData(), 0.0f);
         }
 
         mouseXInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
@@ -93,7 +95,6 @@ public class Settings : MonoBehaviour {
         AudioManager.volumeSetting = volume.value;
         AudioManager.instance.UpdateVolume();
 
-        print("Saving settings...");
         SaveSystem.saveSettings();
     }
 
@@ -102,7 +103,6 @@ public class Settings : MonoBehaviour {
         PlayerController.mouseXSensitivity = mouseSensitivity.value;
         PlayerController.mouseYSensitivity = mouseSensitivity.value;
         
-        print("Saving settings...");
         SaveSystem.saveSettings();
     }
 
@@ -120,7 +120,6 @@ public class Settings : MonoBehaviour {
             PlayerController.mouseYInverted = false;
         }
 
-        print("Saving settings...");
         SaveSystem.saveSettings();
     }
 
@@ -191,7 +190,6 @@ public class Settings : MonoBehaviour {
                 break;
         }
 
-        print("saving setting changes...");
         SaveSystem.saveSettings();
     }
 
@@ -240,7 +238,6 @@ public class Settings : MonoBehaviour {
         //keybinds
         RestoreDefaultKeyBinds();
 
-        print("Saving settings...");
         SaveSystem.saveSettings();
     }
 
