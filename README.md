@@ -13,7 +13,7 @@ To play the game at the moment. you need to import the project into a unity edit
 [Support]
 Our email addresses for contacting us are:
 - Max Graham: xjr4265@autuni.ac.nz
-- Caitlyn Young: gyx6888@autunit.ac.nz
+- Caitlyn Young: gyx6888@autuni.ac.nz
 - Toby McIsaac: jts6747@autuni.ac.nz
 - Kieran Mahon: fnh2106@autuni.ac.nz
 
@@ -29,6 +29,21 @@ Our plan for sprint 1:
 - Have basic UI screens
 - Have a win condition
 - Have a lose condition
+
+Branch Merges from Sprint 1:
+- Audio -> Master
+- WinCondition -> Master
+- HomeMenu -> Master
+- ItemPickUp -> Master
+- PauseMenu -> Master
+- Audio -> Master
+- SaveLoad -> Master
+- ItemPickUp2 -> SettingsMenu
+- SaveLoad -> Master
+- AudioFiles -> Master
+- SettingsMenu -> Master
+- ExtraAudioFunctions -> Master
+- Tutorial -> Master
 
 Our plan for sprint 2:
 - Have room 1, 2 & 3 built
