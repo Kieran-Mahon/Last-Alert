@@ -30,9 +30,9 @@ public class Settings : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        //if (SaveSystem.isSaved()) {
-        //    SaveSystem.loadSettings();
-        //}
+        if (SaveSystem.isSaved()) {
+           SaveSystem.loadSettings();
+        }
 
         mouseXInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
         mouseYInvert.onValueChanged.AddListener(delegate { InvertMouse(); });

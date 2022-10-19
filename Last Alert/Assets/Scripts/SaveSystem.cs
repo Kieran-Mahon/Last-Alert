@@ -36,13 +36,16 @@ public static class SaveSystem {
         PlayerData data = load();
         FileStream stream = new FileStream(path, FileMode.Create);
         
-        data.runKey = (int)KeyboardController.runKey;
-        data.jumpKey = (int)KeyboardController.jumpKey;
-        data.crouchKey = (int)KeyboardController.crouchKey;
-        data.itemPickUpKey = (int)KeyboardController.itemPickUpKey;
-        data.itemRotateLeftKey = (int)KeyboardController.itemRotateLeftKey;
-        data.itemRotateRightKey = (int)KeyboardController.itemRotateRightKey;
-        data.pauseKey = (int)KeyboardController.pauseKey;
+        data.volume = AudioManager.volumeSetting; 
+        data.sensitivity = PlayerController.mouseXSensitivity;
+
+        data.runKey = KeyboardController.runKey.ToString();
+        data.jumpKey = KeyboardController.jumpKey.ToString();
+        data.crouchKey = KeyboardController.crouchKey.ToString();
+        data.itemPickUpKey = KeyboardController.itemPickUpKey.ToString();
+        data.itemRotateLeftKey = KeyboardController.itemRotateLeftKey.ToString();
+        data.itemRotateRightKey = KeyboardController.itemRotateRightKey.ToString();
+        data.pauseKey = KeyboardController.pauseKey.ToString();
 
         //finilize save
         formatter.Serialize(stream, data);
@@ -108,13 +111,17 @@ public static class SaveSystem {
     //to automatically update the keybinds call: SaveSystem.loadSettings();
     public static void loadSettings() {
         PlayerData pd = load();
-        KeyboardController.runKey = (KeyCode)pd.runKey;
-        KeyboardController.jumpKey = (KeyCode)pd.jumpKey;
-        KeyboardController.crouchKey = (KeyCode)pd.crouchKey;
-        KeyboardController.itemPickUpKey = (KeyCode)pd.itemPickUpKey;
-        KeyboardController.itemRotateLeftKey = (KeyCode)pd.itemRotateLeftKey;
-        KeyboardController.itemRotateRightKey = (KeyCode)pd.itemRotateRightKey;
-        KeyboardController.pauseKey = (KeyCode)pd.pauseKey;
+
+        AudioManager.volumeSetting = pd.volume;
+        PlayerController.mouseXSensitivity = pd.sensitivity;
+
+        KeyboardController.runKey = (KeyCode)Enum.Parse(typeof(KeyCode), pd.runKey);
+        KeyboardController.jumpKey = (KeyCode)Enum.Parse(typeof(KeyCode), pd.jumpKey);
+        KeyboardController.crouchKey = (KeyCode)Enum.Parse(typeof(KeyCode), pd.crouchKey);
+        KeyboardController.itemPickUpKey = (KeyCode)Enum.Parse(typeof(KeyCode), pd.itemPickUpKey);
+        KeyboardController.itemRotateLeftKey = (KeyCode)Enum.Parse(typeof(KeyCode), pd.itemRotateLeftKey);
+        KeyboardController.itemRotateRightKey = (KeyCode)Enum.Parse(typeof(KeyCode), pd.itemRotateRightKey);
+        KeyboardController.pauseKey = (KeyCode)Enum.Parse(typeof(KeyCode), pd.pauseKey);
     }
 
     //to check if there is a current save call: SaveSystem.isSaved();
