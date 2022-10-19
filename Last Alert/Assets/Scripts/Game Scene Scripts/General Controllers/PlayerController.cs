@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour {
     private float crouchingVelocityF = 0;
     private bool isCrouching = false;
 
+    [Header("SpaceZone")]
+    public static bool inSpace = false;
+
     [Header("Saving")]
     public bool loadPlayer = true;
     
