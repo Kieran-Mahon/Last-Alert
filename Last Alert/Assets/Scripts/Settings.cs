@@ -89,12 +89,18 @@ public class Settings : MonoBehaviour {
     public void volumeChanged() {
         AudioManager.volumeSetting = volume.value;
         AudioManager.instance.UpdateVolume();
+
+        print("Saving settings...");
+        SaveSystem.saveSettings();
     }
 
     //mouse sensitivity settings
     public void mouseSensitivityChanged() {
         PlayerController.mouseXSensitivity = mouseSensitivity.value;
         PlayerController.mouseYSensitivity = mouseSensitivity.value;
+        
+        print("Saving settings...");
+        SaveSystem.saveSettings();
     }
 
     //mouse inversion settings
@@ -110,6 +116,9 @@ public class Settings : MonoBehaviour {
         } else {
             PlayerController.mouseYInverted = false;
         }
+
+        print("Saving settings...");
+        SaveSystem.saveSettings();
     }
 
     //keybind settings
@@ -227,6 +236,9 @@ public class Settings : MonoBehaviour {
 
         //keybinds
         RestoreDefaultKeyBinds();
+
+        print("Saving settings...");
+        SaveSystem.saveSettings();
     }
 
     public void RestoreDefaultKeyBinds() {

@@ -9,19 +9,22 @@ public class PlayerData {
     public float[] position = new float[] { 0.0f, 0.0f, 0.0f };
     public float timer = 100.0f;
 
+    public bool invertY = false;
+    public bool invertX = false;
+
     public float volume = 0.5f;
     public float sensitivity = 2.0f;
 
     //KeyCodes
-    public string runKey = KeyCode.LeftShift.ToString();
-    public string jumpKey = KeyCode.Space.ToString();
-    public string crouchKey = KeyCode.LeftControl.ToString();
+    public int runKey = (int)KeyCode.LeftShift;
+    public int jumpKey = (int)KeyCode.Space;
+    public int crouchKey = (int)KeyCode.LeftControl;
     //Pick up key
-    public string itemPickUpKey = KeyCode.Mouse0.ToString();
-    public string itemRotateLeftKey = KeyCode.Q.ToString();
-    public string itemRotateRightKey = KeyCode.E.ToString();
+    public int itemPickUpKey = (int)KeyCode.Mouse0;
+    public int itemRotateLeftKey = (int)KeyCode.Q;
+    public int itemRotateRightKey = (int)KeyCode.E;
     //Pause key
-    public string pauseKey = KeyCode.Escape.ToString();
+    public int pauseKey = (int)KeyCode.Escape;
 
     public PlayerData() {
 
@@ -44,16 +47,19 @@ public class PlayerData {
 
         this.timer = timer;
 
+        this.invertX = PlayerController.mouseXInverted;
+        this.invertY = PlayerController.mouseYInverted;
+
         this.volume = AudioManager.volumeSetting;
         this.sensitivity = PlayerController.mouseXSensitivity;
 
-        this.runKey = KeyboardController.runKey.ToString();
-        this.jumpKey = KeyboardController.jumpKey.ToString();
-        this.crouchKey = KeyboardController.crouchKey.ToString();
-        this.itemPickUpKey = KeyboardController.itemPickUpKey.ToString();
-        this.itemRotateLeftKey = KeyboardController.itemRotateLeftKey.ToString();
-        this.itemRotateRightKey = KeyboardController.itemRotateRightKey.ToString();
-        this.pauseKey = KeyboardController.pauseKey.ToString();
+        this.runKey = (int)KeyboardController.runKey;
+        this.jumpKey = (int)KeyboardController.jumpKey;
+        this.crouchKey = (int)KeyboardController.crouchKey;
+        this.itemPickUpKey = (int)KeyboardController.itemPickUpKey;
+        this.itemRotateLeftKey = (int)KeyboardController.itemRotateLeftKey;
+        this.itemRotateRightKey = (int)KeyboardController.itemRotateRightKey;
+        this.pauseKey = (int)KeyboardController.pauseKey;
 
     }
 

@@ -35,17 +35,20 @@ public static class SaveSystem {
         //save to stream
         PlayerData data = load();
         FileStream stream = new FileStream(path, FileMode.Create);
-        
+
+        data.invertX = PlayerController.mouseXInverted;
+        data.invertY = PlayerController.mouseYInverted;
+
         data.volume = AudioManager.volumeSetting; 
         data.sensitivity = PlayerController.mouseXSensitivity;
 
-        data.runKey = KeyboardController.runKey.ToString();
-        data.jumpKey = KeyboardController.jumpKey.ToString();
-        data.crouchKey = KeyboardController.crouchKey.ToString();
-        data.itemPickUpKey = KeyboardController.itemPickUpKey.ToString();
-        data.itemRotateLeftKey = KeyboardController.itemRotateLeftKey.ToString();
-        data.itemRotateRightKey = KeyboardController.itemRotateRightKey.ToString();
-        data.pauseKey = KeyboardController.pauseKey.ToString();
+        data.runKey = (int)KeyboardController.runKey;
+        data.jumpKey = (int)KeyboardController.jumpKey;
+        data.crouchKey = (int)KeyboardController.crouchKey;
+        data.itemPickUpKey = (int)KeyboardController.itemPickUpKey;
+        data.itemRotateLeftKey = (int)KeyboardController.itemRotateLeftKey;
+        data.itemRotateRightKey = (int)KeyboardController.itemRotateRightKey;
+        data.pauseKey = (int)KeyboardController.pauseKey;
 
         //finilize save
         formatter.Serialize(stream, data);
@@ -112,16 +115,20 @@ public static class SaveSystem {
     public static void loadSettings() {
         PlayerData pd = load();
 
+        PlayerController.mouseXInverted = pd.invertX;
+        PlayerController.mouseYInverted = pd.invertY;
+
         AudioManager.volumeSetting = pd.volume;
         PlayerController.mouseXSensitivity = pd.sensitivity;
+        PlayerController.mouseYSensitivity = pd.sensitivity;
 
-        KeyboardController.runKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), pd.runKey);
-        KeyboardController.jumpKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), pd.jumpKey);
-        KeyboardController.crouchKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), pd.crouchKey);
-        KeyboardController.itemPickUpKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), pd.itemPickUpKey);
-        KeyboardController.itemRotateLeftKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), pd.itemRotateLeftKey);
-        KeyboardController.itemRotateRightKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), pd.itemRotateRightKey);
-        KeyboardController.pauseKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), pd.pauseKey);
+        KeyboardController.runKey = (KeyCode)pd.runKey;
+        KeyboardController.jumpKey = (KeyCode)pd.jumpKey;
+        KeyboardController.crouchKey = (KeyCode)pd.crouchKey;
+        KeyboardController.itemPickUpKey = (KeyCode)pd.itemPickUpKey;
+        KeyboardController.itemRotateLeftKey = (KeyCode)pd.itemRotateLeftKey;
+        KeyboardController.itemRotateRightKey = (KeyCode)pd.itemRotateRightKey;
+        KeyboardController.pauseKey = (KeyCode)pd.pauseKey;
     }
 
     //to check if there is a current save call: SaveSystem.isSaved();
