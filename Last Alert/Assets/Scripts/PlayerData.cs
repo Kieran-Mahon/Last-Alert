@@ -21,7 +21,7 @@ public class PlayerData {
     public string itemRotateLeftKey = KeyCode.Q.ToString();
     public string itemRotateRightKey = KeyCode.E.ToString();
     //Pause key
-    public string pauseKey = (int)KeyCode.Escape;
+    public string pauseKey = KeyCode.Escape.ToString();
 
     public PlayerData() {
 
