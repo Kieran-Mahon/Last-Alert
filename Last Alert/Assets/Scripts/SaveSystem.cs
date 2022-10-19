@@ -115,13 +115,13 @@ public static class SaveSystem {
         AudioManager.volumeSetting = pd.volume;
         PlayerController.mouseXSensitivity = pd.sensitivity;
 
-        KeyboardController.runKey = (KeyCode)Enum.Parse(typeof(KeyCode), pd.runKey);
-        KeyboardController.jumpKey = (KeyCode)Enum.Parse(typeof(KeyCode), pd.jumpKey);
-        KeyboardController.crouchKey = (KeyCode)Enum.Parse(typeof(KeyCode), pd.crouchKey);
-        KeyboardController.itemPickUpKey = (KeyCode)Enum.Parse(typeof(KeyCode), pd.itemPickUpKey);
-        KeyboardController.itemRotateLeftKey = (KeyCode)Enum.Parse(typeof(KeyCode), pd.itemRotateLeftKey);
-        KeyboardController.itemRotateRightKey = (KeyCode)Enum.Parse(typeof(KeyCode), pd.itemRotateRightKey);
-        KeyboardController.pauseKey = (KeyCode)Enum.Parse(typeof(KeyCode), pd.pauseKey);
+        KeyboardController.runKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), pd.runKey);
+        KeyboardController.jumpKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), pd.jumpKey);
+        KeyboardController.crouchKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), pd.crouchKey);
+        KeyboardController.itemPickUpKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), pd.itemPickUpKey);
+        KeyboardController.itemRotateLeftKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), pd.itemRotateLeftKey);
+        KeyboardController.itemRotateRightKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), pd.itemRotateRightKey);
+        KeyboardController.pauseKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), pd.pauseKey);
     }
 
     //to check if there is a current save call: SaveSystem.isSaved();
