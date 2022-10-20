@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Saving")]
     public bool loadPlayer = true;
-    
+
     void Start() {
         transformRef = GetComponent<Transform>();
         controllerRef = GetComponent<CharacterController>();
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour {
             LoadPlayer();
         }
     }
-    
+
     public void MovePlayer() {
         //Player crouch
         if (Input.GetKey(KeyboardController.crouchKey)) {
@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour {
 
     //Set player location
     public void SetLocation(Vector3 newLocation) {
-        
+
         controllerRef.enabled = false;
         transform.position = newLocation;
         controllerRef.enabled = true;
@@ -197,27 +197,18 @@ public class PlayerController : MonoBehaviour {
 
 
 
-    public void SavePlayer(){
+    public void SavePlayer()  {
         print("player data saved...");
-        SaveSystem.save(transform);
+        SaveSystem.save(transform, 0);
     }
 
     public void LoadPlayer() {
         print("player data loading...");
-        PlayerData data = SaveSystem.load();
-        if (data == null) {
-            SaveSystem.save(transform);
-            data = SaveSystem.load();
+        if (!SaveSystem.isSaved()) {
+            SaveSystem.save(transform, 0.0f);
         }
 
-        Vector3 position;
-        position.x = data.position[0];
-        position.y = data.position[1];
-        position.z = data.position[2];
-
-        if (position != null) {
-            SetLocation(position);
-        }
+        SetLocation(SaveSystem.getPlayerLocation());
     }
 
     public void ResetPlayer() {

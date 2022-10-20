@@ -23,9 +23,12 @@ public class StartSceneController : MonoBehaviour {
     void Start() {
         ChangeStartState(StartState.HOMEMENU);
 
-        print("data loading...");
-        PlayerData data = SaveSystem.load();
-        if(data != null){
+        
+        if (SaveSystem.isSaved())  {
+            print("data loading...");
+            SaveSystem.loadSettings();
+        }
+        if(SaveSystem.isContinue()) {
             continueBtn.interactable = true;
         }
     }
@@ -34,7 +37,7 @@ public class StartSceneController : MonoBehaviour {
     void Update() {
         if (startState == StartState.HOMEMENU) {
 
-        } else if (startState == StartState.SETTINGMENU) {
+        } else if (startState == StartState.SETTINGMENU)  {
 
         } else if (startState == StartState.CUTSCENE) {
 
@@ -43,7 +46,7 @@ public class StartSceneController : MonoBehaviour {
 
     //Actions which need to be done on the change state call
     public void ChangeStartState(StartState newStartState) {
-        if (newStartState == StartState.HOMEMENU) {
+        if (newStartState == StartState.HOMEMENU){
             MouseController.UnlockMouse();
             homeMenu.SetActive(true);
             settingsUI.SetActive(false);
@@ -64,7 +67,7 @@ public class StartSceneController : MonoBehaviour {
 
     //New Game Button
     public void NewGame() {
-        SaveSystem.save(null);
+        SaveSystem.clearSave();
         AudioManager.instance.Pause("homeTheme");
         AudioManager.instance.Play("gameBackground");
         SceneController.SwitchToGameScene();
