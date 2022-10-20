@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 //static class to controll saving player state
 public static class SaveSystem {
-    
+
     /*
         To save the players state:
          1. First get reference to the players transform, and the timer.
@@ -25,6 +25,20 @@ public static class SaveSystem {
         stream.Close();
     }
 
+    public static void save(PlayerData player, float timer) {
+
+        //settup saving
+        string path = Application.persistentDataPath + "/data.abc";
+        BinaryFormatter formatter = new BinaryFormatter();
+
+        //settup writing stream
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        //save data
+        formatter.Serialize(stream, player);
+        stream.Close();
+    }
+
     //only update the save settings by calling: SaveSystem.saveSettings();
     public static void saveSettings() {
 
@@ -32,10 +46,20 @@ public static class SaveSystem {
         string path = Application.persistentDataPath + "/data.abc";
         BinaryFormatter formatter = new BinaryFormatter();
 
+        if (!isSaved()) {
+            save(new PlayerData(), 0.0f);
+        }
+
         //save to stream
         PlayerData data = load();
         FileStream stream = new FileStream(path, FileMode.Create);
-        
+
+        data.invertX = PlayerController.mouseXInverted;
+        data.invertY = PlayerController.mouseYInverted;
+
+        data.volume = AudioManager.volumeSetting;
+        data.sensitivity = PlayerController.mouseXSensitivity;
+
         data.runKey = (int)KeyboardController.runKey;
         data.jumpKey = (int)KeyboardController.jumpKey;
         data.crouchKey = (int)KeyboardController.crouchKey;
@@ -68,7 +92,7 @@ public static class SaveSystem {
     //method to get all data
     public static PlayerData load() {
         string path = Application.persistentDataPath + "/data.abc";
-        
+
         //check if the file exists
         if (File.Exists(path)) {
 
@@ -108,6 +132,14 @@ public static class SaveSystem {
     //to automatically update the keybinds call: SaveSystem.loadSettings();
     public static void loadSettings() {
         PlayerData pd = load();
+
+        PlayerController.mouseXInverted = pd.invertX;
+        PlayerController.mouseYInverted = pd.invertY;
+
+        AudioManager.volumeSetting = pd.volume;
+        PlayerController.mouseXSensitivity = pd.sensitivity;
+        PlayerController.mouseYSensitivity = pd.sensitivity;
+
         KeyboardController.runKey = (KeyCode)pd.runKey;
         KeyboardController.jumpKey = (KeyCode)pd.jumpKey;
         KeyboardController.crouchKey = (KeyCode)pd.crouchKey;
@@ -123,4 +155,8 @@ public static class SaveSystem {
         return (pd != null);
     }
 
+    public static bool isContinue() {
+        PlayerData pd = load();
+        return (pd != null && pd.position[0] != 0.0f && pd.position[1] != 0.0f && pd.position[2] != 0.0f);
+    }
 }

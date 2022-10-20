@@ -30,9 +30,11 @@ public class Settings : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        //if (SaveSystem.isSaved()) {
-        //    SaveSystem.loadSettings();
-        //}
+        if (SaveSystem.isSaved()) {
+            SaveSystem.loadSettings();
+        } else {
+            SaveSystem.save(new PlayerData(), 0.0f);
+        }
 
         mouseXInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
         mouseYInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
@@ -50,11 +52,14 @@ public class Settings : MonoBehaviour {
 
     //updates settings ui
     public void ShowCurrentSettings() {
-        //volume
-        volume.value = AudioManager.volumeSetting;
 
-        //sensitivity
-        mouseSensitivity.value = PlayerController.mouseXSensitivity;
+        if (SaveSystem.isSaved()) {
+            //volume
+            volume.value = AudioManager.volumeSetting;
+
+            //sensitivity
+            mouseSensitivity.value = PlayerController.mouseXSensitivity;
+        }
 
         //mouse inversion
         if (PlayerController.mouseXInverted == false) {
@@ -77,8 +82,7 @@ public class Settings : MonoBehaviour {
     public void BackButton() {
         if (SceneScript.GetComponent<StartSceneController>() != null) { //check if from Start Menu
             SceneScript.GetComponent<StartSceneController>().ChangeStartState(StartState.HOMEMENU);
-        }
-        else if (SceneScript.GetComponent<GameController>() != null) { //check if from Game Scene
+        } else if (SceneScript.GetComponent<GameController>() != null) { //check if from Game Scene
             SceneScript.GetComponent<GameController>().ChangeGameState(GameState.PAUSEMENU);
         } else if (SceneScript.GetComponent<TutorialController>() != null) { //check if from Tutorial Scene
             SceneScript.GetComponent<TutorialController>().ChangeTutorialState(TutorialState.PAUSEMENU);
@@ -89,12 +93,16 @@ public class Settings : MonoBehaviour {
     public void volumeChanged() {
         AudioManager.volumeSetting = volume.value;
         AudioManager.instance.UpdateVolume();
+
+        SaveSystem.saveSettings();
     }
 
     //mouse sensitivity settings
     public void mouseSensitivityChanged() {
         PlayerController.mouseXSensitivity = mouseSensitivity.value;
         PlayerController.mouseYSensitivity = mouseSensitivity.value;
+
+        SaveSystem.saveSettings();
     }
 
     //mouse inversion settings
@@ -110,6 +118,8 @@ public class Settings : MonoBehaviour {
         } else {
             PlayerController.mouseYInverted = false;
         }
+
+        SaveSystem.saveSettings();
     }
 
     //keybind settings
@@ -120,8 +130,8 @@ public class Settings : MonoBehaviour {
     void OnGUI() {
         if (currentKey != null) {
             Event e = Event.current;
-            
-            if (e.isKey || e.isMouse){
+
+            if (e.isKey || e.isMouse) {
                 UpdateKeyBind(e);
                 currentKey = null;
             }
@@ -146,7 +156,7 @@ public class Settings : MonoBehaviour {
         }
 
         //assign new keybind
-        switch (currentKey.name){
+        switch (currentKey.name) {
             case "btnPause":
                 ChangeKeyBind(KeyboardController.Action.PAUSE, newKey);
                 UpdateButtonText(pauseText, KeyboardController.pauseKey.ToString());
@@ -179,7 +189,6 @@ public class Settings : MonoBehaviour {
                 break;
         }
 
-        print("saving setting changes...");
         SaveSystem.saveSettings();
     }
 
@@ -227,6 +236,8 @@ public class Settings : MonoBehaviour {
 
         //keybinds
         RestoreDefaultKeyBinds();
+
+        SaveSystem.saveSettings();
     }
 
     public void RestoreDefaultKeyBinds() {
