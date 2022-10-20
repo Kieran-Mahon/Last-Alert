@@ -23,9 +23,12 @@ public class StartSceneController : MonoBehaviour {
     void Start() {
         ChangeStartState(StartState.HOMEMENU);
 
-        print("data loading...");
-        PlayerData data = SaveSystem.load();
-        if(data != null){
+
+        if (SaveSystem.isSaved()) {
+            print("data loading...");
+            SaveSystem.loadSettings();
+        }
+        if (SaveSystem.isContinue()) {
             continueBtn.interactable = true;
         }
     }
@@ -64,7 +67,7 @@ public class StartSceneController : MonoBehaviour {
 
     //New Game Button
     public void NewGame() {
-        SaveSystem.save(null);
+        SaveSystem.clearSave();
         AudioManager.instance.Pause("homeTheme");
         AudioManager.instance.Play("gameBackground");
         SceneController.SwitchToGameScene();

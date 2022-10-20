@@ -30,6 +30,12 @@ public class Settings : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        if (SaveSystem.isSaved()) {
+            SaveSystem.loadSettings();
+        } else {
+            SaveSystem.save(new PlayerData(), 0.0f);
+        }
+
         mouseXInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
         mouseYInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
         volume.onValueChanged.AddListener(delegate { volumeChanged(); });
@@ -46,11 +52,14 @@ public class Settings : MonoBehaviour {
 
     //updates settings ui
     public void ShowCurrentSettings() {
-        //volume
-        volume.value = AudioManager.volumeSetting;
 
-        //sensitivity
-        mouseSensitivity.value = PlayerController.mouseXSensitivity;
+        if (SaveSystem.isSaved()) {
+            //volume
+            volume.value = AudioManager.volumeSetting;
+
+            //sensitivity
+            mouseSensitivity.value = PlayerController.mouseXSensitivity;
+        }
 
         //mouse inversion
         if (PlayerController.mouseXInverted == false) {
@@ -84,12 +93,16 @@ public class Settings : MonoBehaviour {
     public void volumeChanged() {
         AudioManager.volumeSetting = volume.value;
         AudioManager.instance.UpdateVolume();
+
+        SaveSystem.saveSettings();
     }
 
     //mouse sensitivity settings
     public void mouseSensitivityChanged() {
         PlayerController.mouseXSensitivity = mouseSensitivity.value;
         PlayerController.mouseYSensitivity = mouseSensitivity.value;
+
+        SaveSystem.saveSettings();
     }
 
     //mouse inversion settings
@@ -105,6 +118,8 @@ public class Settings : MonoBehaviour {
         } else {
             PlayerController.mouseYInverted = false;
         }
+
+        SaveSystem.saveSettings();
     }
 
     //keybind settings
@@ -115,6 +130,7 @@ public class Settings : MonoBehaviour {
     void OnGUI() {
         if (currentKey != null) {
             Event e = Event.current;
+
             if (e.isKey || e.isMouse) {
                 UpdateKeyBind(e);
                 currentKey = null;
@@ -135,9 +151,7 @@ public class Settings : MonoBehaviour {
                     }
                 }
             }
-        }
-        //key press
-        else if (e.isKey) {
+        } else if (e.isKey) { /*key press */
             newKey = e.keyCode;
         }
 
@@ -174,6 +188,8 @@ public class Settings : MonoBehaviour {
             default:
                 break;
         }
+
+        SaveSystem.saveSettings();
     }
 
     public void ChangeKeyBind(KeyboardController.Action control, KeyCode newKey) {
@@ -199,6 +215,7 @@ public class Settings : MonoBehaviour {
         UpdateButtonText(pickUpDropText, KeyboardController.itemPickUpKey.ToString());
         UpdateButtonText(rotateLeftText, KeyboardController.itemRotateLeftKey.ToString());
         UpdateButtonText(rotateRightText, KeyboardController.itemRotateRightKey.ToString());
+
     }
 
     //default restoration
@@ -219,6 +236,8 @@ public class Settings : MonoBehaviour {
 
         //keybinds
         RestoreDefaultKeyBinds();
+
+        SaveSystem.saveSettings();
     }
 
     public void RestoreDefaultKeyBinds() {

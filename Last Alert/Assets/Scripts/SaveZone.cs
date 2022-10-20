@@ -21,6 +21,4 @@ public class SaveZone : MonoBehaviour {
             exited.Invoke();
         }
     }
-
-
 }
