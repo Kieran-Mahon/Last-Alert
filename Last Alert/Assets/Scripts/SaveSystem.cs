@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 //static class to controll saving player state
 public static class SaveSystem {
-    
+
     /*
         To save the players state:
          1. First get reference to the players transform, and the timer.
@@ -46,7 +46,7 @@ public static class SaveSystem {
         string path = Application.persistentDataPath + "/data.abc";
         BinaryFormatter formatter = new BinaryFormatter();
 
-        if(!isSaved()){
+        if (!isSaved()) {
             save(new PlayerData(), 0.0f);
         }
 
@@ -57,7 +57,7 @@ public static class SaveSystem {
         data.invertX = PlayerController.mouseXInverted;
         data.invertY = PlayerController.mouseYInverted;
 
-        data.volume = AudioManager.volumeSetting; 
+        data.volume = AudioManager.volumeSetting;
         data.sensitivity = PlayerController.mouseXSensitivity;
 
         data.runKey = (int)KeyboardController.runKey;
@@ -92,7 +92,7 @@ public static class SaveSystem {
     //method to get all data
     public static PlayerData load() {
         string path = Application.persistentDataPath + "/data.abc";
-        
+
         //check if the file exists
         if (File.Exists(path)) {
 
@@ -155,9 +155,8 @@ public static class SaveSystem {
         return (pd != null);
     }
 
-    public static bool isContinue(){
+    public static bool isContinue() {
         PlayerData pd = load();
         return (pd != null && pd.position[0] != 0.0f && pd.position[1] != 0.0f && pd.position[2] != 0.0f);
     }
-
 }

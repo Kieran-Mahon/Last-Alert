@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour {
 
 
 
-    public void SavePlayer()  {
+    public void SavePlayer() {
         print("player data saved...");
         SaveSystem.save(transform, 0);
     }

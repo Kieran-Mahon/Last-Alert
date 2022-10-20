@@ -62,5 +62,4 @@ public class PlayerData {
         this.pauseKey = (int)KeyboardController.pauseKey;
 
     }
-
 }

@@ -31,8 +31,8 @@ public class Settings : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         if (SaveSystem.isSaved()) {
-           SaveSystem.loadSettings();
-        }else{
+            SaveSystem.loadSettings();
+        } else {
             SaveSystem.save(new PlayerData(), 0.0f);
         }
 
@@ -52,8 +52,8 @@ public class Settings : MonoBehaviour {
 
     //updates settings ui
     public void ShowCurrentSettings() {
-        
-        if(SaveSystem.isSaved()) {
+
+        if (SaveSystem.isSaved()) {
             //volume
             volume.value = AudioManager.volumeSetting;
 
@@ -82,8 +82,7 @@ public class Settings : MonoBehaviour {
     public void BackButton() {
         if (SceneScript.GetComponent<StartSceneController>() != null) { //check if from Start Menu
             SceneScript.GetComponent<StartSceneController>().ChangeStartState(StartState.HOMEMENU);
-        }
-        else if (SceneScript.GetComponent<GameController>() != null) { //check if from Game Scene
+        } else if (SceneScript.GetComponent<GameController>() != null) { //check if from Game Scene
             SceneScript.GetComponent<GameController>().ChangeGameState(GameState.PAUSEMENU);
         } else if (SceneScript.GetComponent<TutorialController>() != null) { //check if from Tutorial Scene
             SceneScript.GetComponent<TutorialController>().ChangeTutorialState(TutorialState.PAUSEMENU);
@@ -102,7 +101,7 @@ public class Settings : MonoBehaviour {
     public void mouseSensitivityChanged() {
         PlayerController.mouseXSensitivity = mouseSensitivity.value;
         PlayerController.mouseYSensitivity = mouseSensitivity.value;
-        
+
         SaveSystem.saveSettings();
     }
 
@@ -131,8 +130,8 @@ public class Settings : MonoBehaviour {
     void OnGUI() {
         if (currentKey != null) {
             Event e = Event.current;
-            
-            if (e.isKey || e.isMouse){
+
+            if (e.isKey || e.isMouse) {
                 UpdateKeyBind(e);
                 currentKey = null;
             }
@@ -157,7 +156,7 @@ public class Settings : MonoBehaviour {
         }
 
         //assign new keybind
-        switch (currentKey.name){
+        switch (currentKey.name) {
             case "btnPause":
                 ChangeKeyBind(KeyboardController.Action.PAUSE, newKey);
                 UpdateButtonText(pauseText, KeyboardController.pauseKey.ToString());
