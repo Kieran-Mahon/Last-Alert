@@ -72,7 +72,6 @@ public class StartSceneController : MonoBehaviour {
         AudioManager.instance.Play("gameBackground");
         SceneController.SwitchToGameScene();
         //SceneController.SwitchToTutorialScene();
-
     }
 
     //Continue Button

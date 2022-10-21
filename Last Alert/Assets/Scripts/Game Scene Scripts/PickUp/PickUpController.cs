@@ -106,18 +106,24 @@ public class PickUpController : MonoBehaviour {
 
     //Change item distance
     private void ChangeDistance() {
+        float shortestDistance = pickUpDistance;
         if (Physics.Raycast(cameraRef.transform.position, cameraRef.transform.TransformDirection(Vector3.forward), out RaycastHit hit, maxPickUpDistance)) {
             //Move the item closer to the player
             float newDistance = hit.distance - itemRef.pickUpDistanceOffset;
-            itemHolderRef.transform.localPosition = new Vector3(0, 0, newDistance);
-            if (newDistance <= (minPickUpDistance * 1)) {
-                //Release item if too close to the player
-                ReleaseItem();
+
+            //If the new distance is shorter than the current distance then change to the new distance
+            if (newDistance < shortestDistance) {
+                shortestDistance = newDistance;
             }
-        } else {
-            //Move the item back to its pick up distance
-            itemHolderRef.transform.localPosition = new Vector3(0, 0, pickUpDistance);
         }
+
+        //Move object
+        itemHolderRef.transform.localPosition = new Vector3(0, 0, shortestDistance);
+
+        //Release item if too close to the player
+        //if (shortestDistance <= (minPickUpDistance * 1)) {
+        //    ReleaseItem();
+        //}
     }
 
     //Drop the item
