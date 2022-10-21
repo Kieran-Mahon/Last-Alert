@@ -10,22 +10,22 @@ public static class SaveSystem {
          1. First get reference to the players transform, and the timer.
          2. call SaveSystem.save(transform, timer);
     */
-    public static void save(Transform player, float timer) {
-
+    public static void Save(Transform player) {
+ 
         //settup saving
         string path = Application.persistentDataPath + "/data.abc";
         BinaryFormatter formatter = new BinaryFormatter();
 
         //settup writing stream
         FileStream stream = new FileStream(path, FileMode.Create);
-        PlayerData data = new PlayerData(player, timer);
+        PlayerData data = new PlayerData(player);
 
         //save data
         formatter.Serialize(stream, data);
         stream.Close();
     }
 
-    public static void save(PlayerData player, float timer) {
+    public static void Save(PlayerData player) {
 
         //settup saving
         string path = Application.persistentDataPath + "/data.abc";
@@ -40,18 +40,18 @@ public static class SaveSystem {
     }
 
     //only update the save settings by calling: SaveSystem.saveSettings();
-    public static void saveSettings() {
+    public static void SaveSettings() {
 
         //get path
         string path = Application.persistentDataPath + "/data.abc";
         BinaryFormatter formatter = new BinaryFormatter();
 
-        if (!isSaved()) {
-            save(new PlayerData(), 0.0f);
+        if (!IsSaved()) {
+            Save(new PlayerData());
         }
 
         //save to stream
-        PlayerData data = load();
+        PlayerData data = Load();
         FileStream stream = new FileStream(path, FileMode.Create);
 
         data.invertX = PlayerController.mouseXInverted;
@@ -74,7 +74,7 @@ public static class SaveSystem {
     }
 
     //clears all data by saving null to the location
-    public static void clearSave() {
+    public static void ClearSave() {
 
         //get path
         string path = Application.persistentDataPath + "/data.abc";
@@ -82,7 +82,7 @@ public static class SaveSystem {
 
         //write null using stream
         FileStream stream = new FileStream(path, FileMode.Create);
-        PlayerData data = new PlayerData(null, -1);
+        PlayerData data = new PlayerData(null);
 
         //finalize
         formatter.Serialize(stream, data);
@@ -90,7 +90,7 @@ public static class SaveSystem {
     }
 
     //method to get all data
-    public static PlayerData load() {
+    public static PlayerData Load() {
         string path = Application.persistentDataPath + "/data.abc";
 
         //check if the file exists
@@ -118,20 +118,20 @@ public static class SaveSystem {
     }
 
     //to get player location in aa Vector3 call: SaveSystem.getPlayerLocation();
-    public static Vector3 getPlayerLocation() {
-        PlayerData pd = load();
+    public static Vector3 GetPlayerLocation() {
+        PlayerData pd = Load();
         return new Vector3(pd.position[0], pd.position[1], pd.position[2]);
     }
 
     //to get the timer as an float, call: SaveSystem.getTimer();
-    public static float getTimer() {
-        PlayerData pd = load();
+    public static float GetTimer() {
+        PlayerData pd = Load();
         return pd.timer;
     }
 
     //to automatically update the keybinds call: SaveSystem.loadSettings();
-    public static void loadSettings() {
-        PlayerData pd = load();
+    public static void LoadSettings() {
+        PlayerData pd = Load();
 
         PlayerController.mouseXInverted = pd.invertX;
         PlayerController.mouseYInverted = pd.invertY;
@@ -150,13 +150,13 @@ public static class SaveSystem {
     }
 
     //to check if there is a current save call: SaveSystem.isSaved();
-    public static bool isSaved() {
-        PlayerData pd = load();
+    public static bool IsSaved() {
+        PlayerData pd = Load();
         return (pd != null);
     }
 
-    public static bool isContinue() {
-        PlayerData pd = load();
+    public static bool IsContinue() {
+        PlayerData pd = Load();
         return (pd != null && pd.position[0] != 0.0f && pd.position[1] != 0.0f && pd.position[2] != 0.0f);
     }
 }

@@ -1,13 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 //data structure to hold data
-[System.Serializable]
+[Serializable]
 public class PlayerData {
     public float[] position = new float[] { 0.0f, 0.0f, 0.0f };
-    public float timer = 100.0f;
+    public float timer = GameTimer.GetTimeLeft();
 
     public bool invertY = false;
     public bool invertX = false;
@@ -31,7 +32,7 @@ public class PlayerData {
     }
 
     //constructor
-    public PlayerData(Transform player, float timer) {
+    public PlayerData(Transform player) {
         this.position = new float[3];
 
         if (player != null) {
@@ -45,7 +46,7 @@ public class PlayerData {
             this.position[2] = 0.0f;
         }
 
-        this.timer = timer;
+        this.timer = GameTimer.GetTimeLeft();
 
         this.invertX = PlayerController.mouseXInverted;
         this.invertY = PlayerController.mouseYInverted;

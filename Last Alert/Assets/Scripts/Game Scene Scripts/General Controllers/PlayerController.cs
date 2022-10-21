@@ -202,21 +202,23 @@ public class PlayerController : MonoBehaviour {
 
     public void SavePlayer() {
         print("player data saved...");
-        SaveSystem.save(transform, 0);
+        SaveSystem.Save(transform);
     }
 
     public void LoadPlayer() {
         print("player data loading...");
-        if (!SaveSystem.isSaved()) {
-            SaveSystem.save(transform, 0.0f);
+        if (!SaveSystem.IsSaved()) {
+            SaveSystem.Save(transform);
+            
         }
 
-        SetLocation(SaveSystem.getPlayerLocation());
+        SetLocation(SaveSystem.GetPlayerLocation());
     }
 
     public void ResetPlayer() {
         //TEMP CODE NEEDS TO BE REPLACED WITH CHECKPOINT SYSTEM'S LAST CHECKPOINT
         SetLocation(new Vector3(0, 0, 0));
         SetCameraAngle(new Vector2(0, 180));
+        GameReferenceGetter.pickUpControllerRef.DropItem(true);
     }
 }

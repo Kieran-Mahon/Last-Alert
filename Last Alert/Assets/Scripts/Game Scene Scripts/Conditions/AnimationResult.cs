@@ -9,28 +9,34 @@ public class AnimationResult : Result {
 
     public override void ResetResult() {
         //Reset the result and change the animators to false
-        completed = false;
+        SetCompleted(false);
         ChangeAnimatorState(false);
+        changed = false;
     }
 
     void Update() {
         //Check if all conditions are completed
         bool allCompleted = true;
         foreach (Condition condition in conditions) {
-            if (condition.completed == false) {
+            if (condition.GetCompleted() == false) {
                 allCompleted = false;
             }
         }
-        completed = allCompleted;
 
         //If completed then change all animators to true
-        if (completed == true) {
+        if (allCompleted == true) {
             //Make sure the change animation is only called once 
             if (changed == false) {
                 ChangeAnimatorState(true);
                 changed = true;
             }
+        } else {
+            if (GetCompleted() == true) {
+                ResetResult();
+            }
         }
+        //Change completed
+        SetCompleted(allCompleted);
     }
 
     //Change the state which the animators are in

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameController : MonoBehaviour {
 
@@ -15,6 +16,7 @@ public class GameController : MonoBehaviour {
     public Settings settingsRef;
 
     [Header("UI")]
+    public TextMeshProUGUI timerRef;
     public GameObject pauseScreen;
     public GameObject settingsUI;
     public GameObject gameWinScreen;
@@ -52,9 +54,19 @@ public class GameController : MonoBehaviour {
                 PauseGame();
             }
 
+            //Update time
+            GameTimer.UpdateTime();
+            timerRef.text = GameTimer.TimeLeftString();
+
             //Check for win
             if (winControllerRef.CheckForWin()) {
                 GameWon();
+            } else {
+                //Check for lost
+                if (GameTimer.GetTimeLeft() <= 0) {
+                    //Game over
+                    GameOver();
+                }
             }
 
         } else if (gameState == GameState.GAMEWIN) {
@@ -171,9 +183,11 @@ public class GameController : MonoBehaviour {
         if (playerControllerRef != null) {
             playerControllerRef.LoadPlayer();
 
-            if (!SaveSystem.isSaved()) {
-                SaveSystem.save(playerControllerRef.transform, 0.0f);
-                SaveSystem.loadSettings();
+            if (!SaveSystem.IsSaved()) {
+                SaveSystem.Save(playerControllerRef.transform);
+                SaveSystem.LoadSettings();
+                Debug.Log(SaveSystem.GetTimer());
+                GameTimer.SetTimer(SaveSystem.GetTimer());
             }
         }
     }

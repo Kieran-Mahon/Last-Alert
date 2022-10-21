@@ -15,7 +15,7 @@ public class KeyPadPanel : Panel {
 
     //Reset the panel
     public override void ResetResult() {
-        completed = false;
+        SetCompleted(false);
         //Reset the code and update it on the screen
         enteredCode = "";
         UpdateCodeLabel();
@@ -39,7 +39,7 @@ public class KeyPadPanel : Panel {
         //Check if the code is correct
         if (enteredCode == correctCode) {
             //Code is correct
-            completed = true;
+            SetCompleted(true);
 
             //Switch screens
             HideAllUI();

@@ -13,7 +13,7 @@ public class ColourSelectPanel : Panel {
 
     //Reset the panel
     public override void ResetResult() {
-        completed = false;
+        SetCompleted(false);
 
         //Reset each area
         foreach (ColourArea area in colourAreas) {
@@ -49,7 +49,7 @@ public class ColourSelectPanel : Panel {
         
         if (allCorrect == true) {
             //All colours are correct
-            completed = true;
+            SetCompleted(true);
 
             //Switch screens
             HideAllUI();
