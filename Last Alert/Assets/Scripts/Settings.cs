@@ -33,7 +33,7 @@ public class Settings : MonoBehaviour {
         if (SaveSystem.IsSaved()) {
             SaveSystem.LoadSettings();
         } else {
-            SaveSystem.Save(new PlayerData(), 0.0f);
+            SaveSystem.Save(new PlayerData());
         }
 
         mouseXInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
