@@ -23,13 +23,13 @@ public class ItemCollectedCondition : Condition {
     private void OnTriggerEnter(Collider other) {
         foreach (GameObject item in itemWanted) {
             if (item == other.gameObject) {
-                completed = true;
+                SetCompleted(true);
             }
         }
     }
 
     public override void ResetCondition() {
-        completed = false;
+        SetCompleted(false);
         //Put items back in start location if true
         if (resetItemToLocation == true) {
             for (int i = 0; i < itemWanted.Length; i++) {

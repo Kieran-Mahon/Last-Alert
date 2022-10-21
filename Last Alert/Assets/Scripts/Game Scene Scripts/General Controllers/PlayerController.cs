@@ -39,9 +39,12 @@ public class PlayerController : MonoBehaviour {
     private float crouchingVelocityF = 0;
     private bool isCrouching = false;
 
+    [Header("SpaceZone")]
+    public static bool inSpace = false;
+
     [Header("Saving")]
     public bool loadPlayer = true;
-    
+
     void Start() {
         transformRef = GetComponent<Transform>();
         controllerRef = GetComponent<CharacterController>();
@@ -50,7 +53,7 @@ public class PlayerController : MonoBehaviour {
             LoadPlayer();
         }
     }
-    
+
     public void MovePlayer() {
         //Player crouch
         if (Input.GetKey(KeyboardController.crouchKey)) {
@@ -183,7 +186,7 @@ public class PlayerController : MonoBehaviour {
 
     //Set player location
     public void SetLocation(Vector3 newLocation) {
-        
+
         controllerRef.enabled = false;
         transform.position = newLocation;
         controllerRef.enabled = true;
@@ -197,32 +200,25 @@ public class PlayerController : MonoBehaviour {
 
 
 
-    public void SavePlayer(){
+    public void SavePlayer() {
         print("player data saved...");
-        SaveSystem.save(transform);
+        SaveSystem.Save(transform);
     }
 
     public void LoadPlayer() {
         print("player data loading...");
-        PlayerData data = SaveSystem.load();
-        if (data == null) {
-            SaveSystem.save(transform);
-            data = SaveSystem.load();
+        if (!SaveSystem.IsSaved()) {
+            SaveSystem.Save(transform);
+            
         }
 
-        Vector3 position;
-        position.x = data.position[0];
-        position.y = data.position[1];
-        position.z = data.position[2];
-
-        if (position != null) {
-            SetLocation(position);
-        }
+        SetLocation(SaveSystem.GetPlayerLocation());
     }
 
     public void ResetPlayer() {
         //TEMP CODE NEEDS TO BE REPLACED WITH CHECKPOINT SYSTEM'S LAST CHECKPOINT
         SetLocation(new Vector3(0, 0, 0));
         SetCameraAngle(new Vector2(0, 180));
+        GameReferenceGetter.pickUpControllerRef.DropItem(true);
     }
 }

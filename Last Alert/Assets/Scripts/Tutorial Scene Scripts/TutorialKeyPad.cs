@@ -10,7 +10,7 @@ public class TutorialKeyPad : MonoBehaviour {
     public string animatorBoolName;
 
     void Update() {
-        if (condition.completed == true) {
+        if (condition.GetCompleted() == true) {
             //Get reference
             GameObject wantedItem = condition.itemWanted[0];
 

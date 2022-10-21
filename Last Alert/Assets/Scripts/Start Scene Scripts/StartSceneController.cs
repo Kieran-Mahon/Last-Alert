@@ -23,9 +23,12 @@ public class StartSceneController : MonoBehaviour {
     void Start() {
         ChangeStartState(StartState.HOMEMENU);
 
-        print("data loading...");
-        PlayerData data = SaveSystem.load();
-        if(data != null){
+
+        if (SaveSystem.IsSaved()) {
+            print("data loading...");
+            SaveSystem.LoadSettings();
+        }
+        if (SaveSystem.IsContinue()) {
             continueBtn.interactable = true;
         }
     }
@@ -64,18 +67,19 @@ public class StartSceneController : MonoBehaviour {
 
     //New Game Button
     public void NewGame() {
-        SaveSystem.save(null);
+        GameTimer.SetTimer(120.0f);
+        SaveSystem.ClearSave();
         AudioManager.instance.Pause("homeTheme");
         AudioManager.instance.Play("gameBackground");
         SceneController.SwitchToGameScene();
         //SceneController.SwitchToTutorialScene();
-
     }
 
     //Continue Button
     public void ContinueGame() {
         //continues game from last checkpoint save (if available)
         //SceneController.SwitchToTutorialScene();
+        GameTimer.SetTimer(SaveSystem.GetTimer());
         AudioManager.instance.Pause("homeTheme");
         AudioManager.instance.Play("gameBackground");
         SceneController.SwitchToGameScene();

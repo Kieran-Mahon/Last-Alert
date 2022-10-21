@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameController : MonoBehaviour {
 
@@ -13,8 +14,9 @@ public class GameController : MonoBehaviour {
     public WinController winControllerRef;
     public ItemManager itemManagerRef; //Manages all pickup objects in the scene
     public Settings settingsRef;
-    
+
     [Header("UI")]
+    public TextMeshProUGUI timerRef;
     public GameObject pauseScreen;
     public GameObject settingsUI;
     public GameObject gameWinScreen;
@@ -37,8 +39,9 @@ public class GameController : MonoBehaviour {
         } else if (gameState == GameState.SETTINGMENU) {
 
         } else if (gameState == GameState.CUTSCENE) {
-            
+
         } else if (gameState == GameState.GAME) {
+           
             //Move player
             playerControllerRef.MovePlayer();
             playerControllerRef.MoveCamera();
@@ -51,15 +54,25 @@ public class GameController : MonoBehaviour {
                 PauseGame();
             }
 
+            //Update time
+            GameTimer.UpdateTime();
+            timerRef.text = GameTimer.TimeLeftString();
+
             //Check for win
             if (winControllerRef.CheckForWin()) {
                 GameWon();
+            } else {
+                //Check for lost
+                if (GameTimer.GetTimeLeft() <= 0) {
+                    //Game over
+                    GameOver();
+                }
             }
-            
+
         } else if (gameState == GameState.GAMEWIN) {
-            
+
         } else if (gameState == GameState.GAMEOVER) {
-            
+
         }
     }
 
@@ -69,7 +82,7 @@ public class GameController : MonoBehaviour {
         if (gameState == GameState.PAUSEMENU) {
 
         } else if (gameState == GameState.SETTINGMENU) {
-            
+
         } else if (gameState == GameState.CUTSCENE) {
 
         } else if (gameState == GameState.GAME) {
@@ -95,7 +108,7 @@ public class GameController : MonoBehaviour {
             settingsRef.enabled = true;
             MouseController.UnlockMouse();
         } else if (newGameState == GameState.CUTSCENE) {
-            
+
         } else if (newGameState == GameState.GAME) {
             HideAllScreens();
             settingsRef.enabled = false;
@@ -112,7 +125,7 @@ public class GameController : MonoBehaviour {
             pickUpControllerRef.DropItem(true);
         }
     }
-    
+
     private void HideAllScreens() {
         pauseScreen.SetActive(false);
         settingsUI.SetActive(false);
@@ -162,18 +175,19 @@ public class GameController : MonoBehaviour {
         ChangeGameState(GameState.GAMEOVER);
     }
 
-    public void SaveData(){
+    public void SaveData() {
         playerControllerRef.SavePlayer();
     }
 
-    public void LoadData(){
-        if(playerControllerRef != null){
+    public void LoadData() {
+        if (playerControllerRef != null) {
             playerControllerRef.LoadPlayer();
 
-            PlayerData data = SaveSystem.load();
-            if(data == null){
-                SaveSystem.save(playerControllerRef.transform);
-                data = SaveSystem.load();
+            if (!SaveSystem.IsSaved()) {
+                SaveSystem.Save(playerControllerRef.transform);
+                SaveSystem.LoadSettings();
+                Debug.Log(SaveSystem.GetTimer());
+                GameTimer.SetTimer(SaveSystem.GetTimer());
             }
         }
     }

@@ -25,7 +25,7 @@ public class KeyboardController : MonoBehaviour {
             Destroy(this);
         }
     }
-    
+
     //Add a key to an action
     public static bool SetKey(Action action, KeyCode newKeyCode) {
         //Check if the new key is already in use
