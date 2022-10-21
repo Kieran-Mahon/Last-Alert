@@ -30681,7 +30681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   completed: 0
   conditions:
-  - {fileID: 127148671}
+  - {fileID: 1182045353}
   animators:
   - {fileID: 1181434068}
   animatorBools:
@@ -30727,6 +30727,38 @@ MonoBehaviour:
   animatorBools:
   - Correct
   animatorCompletedValues: 01
+--- !u!1 &1182045350 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2626367239262146657, guid: badcb7a42a24f8c49b0bb7524ed925be,
+    type: 3}
+  m_PrefabInstance: {fileID: 1407301104}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1182045351 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2626367239262146670, guid: badcb7a42a24f8c49b0bb7524ed925be,
+    type: 3}
+  m_PrefabInstance: {fileID: 1407301104}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182045350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebaacda20d2a88040b577c877c415d5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1182045353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182045350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deffd97dc81b0924eaab0f6262f6eedd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  completed: 0
+  result: {fileID: 1182045351}
 --- !u!1 &1188327385 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 110870, guid: 1fcc8ec3f56125644a57945c32cc1946,
