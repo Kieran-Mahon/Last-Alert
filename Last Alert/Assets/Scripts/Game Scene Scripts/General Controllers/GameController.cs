@@ -171,9 +171,9 @@ public class GameController : MonoBehaviour {
         if (playerControllerRef != null) {
             playerControllerRef.LoadPlayer();
 
-            if (!SaveSystem.isSaved()) {
-                SaveSystem.save(playerControllerRef.transform, 0.0f);
-                SaveSystem.loadSettings();
+            if (!SaveSystem.IsSaved()) {
+                SaveSystem.Save(playerControllerRef.transform, 0.0f);
+                SaveSystem.LoadSettings();
             }
         }
     }

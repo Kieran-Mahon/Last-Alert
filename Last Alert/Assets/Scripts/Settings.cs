@@ -30,16 +30,16 @@ public class Settings : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        if (SaveSystem.isSaved()) {
-            SaveSystem.loadSettings();
+        if (SaveSystem.IsSaved()) {
+            SaveSystem.LoadSettings();
         } else {
-            SaveSystem.save(new PlayerData(), 0.0f);
+            SaveSystem.Save(new PlayerData(), 0.0f);
         }
 
         mouseXInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
         mouseYInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
-        volume.onValueChanged.AddListener(delegate { volumeChanged(); });
-        mouseSensitivity.onValueChanged.AddListener(delegate { mouseSensitivityChanged(); });
+        volume.onValueChanged.AddListener(delegate { VolumeChanged(); });
+        mouseSensitivity.onValueChanged.AddListener(delegate { MouseSensitivityChanged(); });
 
         //update settings ui
         ShowCurrentSettings();
@@ -53,7 +53,7 @@ public class Settings : MonoBehaviour {
     //updates settings ui
     public void ShowCurrentSettings() {
 
-        if (SaveSystem.isSaved()) {
+        if (SaveSystem.IsSaved()) {
             //volume
             volume.value = AudioManager.volumeSetting;
 
@@ -90,19 +90,19 @@ public class Settings : MonoBehaviour {
     }
 
     //volume settings
-    public void volumeChanged() {
+    public void VolumeChanged() {
         AudioManager.volumeSetting = volume.value;
         AudioManager.instance.UpdateVolume();
 
-        SaveSystem.saveSettings();
+        SaveSystem.SaveSettings();
     }
 
     //mouse sensitivity settings
-    public void mouseSensitivityChanged() {
+    public void MouseSensitivityChanged() {
         PlayerController.mouseXSensitivity = mouseSensitivity.value;
         PlayerController.mouseYSensitivity = mouseSensitivity.value;
 
-        SaveSystem.saveSettings();
+        SaveSystem.SaveSettings();
     }
 
     //mouse inversion settings
@@ -119,7 +119,7 @@ public class Settings : MonoBehaviour {
             PlayerController.mouseYInverted = false;
         }
 
-        SaveSystem.saveSettings();
+        SaveSystem.SaveSettings();
     }
 
     //keybind settings
@@ -189,7 +189,7 @@ public class Settings : MonoBehaviour {
                 break;
         }
 
-        SaveSystem.saveSettings();
+        SaveSystem.SaveSettings();
     }
 
     public void ChangeKeyBind(KeyboardController.Action control, KeyCode newKey) {
@@ -237,7 +237,7 @@ public class Settings : MonoBehaviour {
         //keybinds
         RestoreDefaultKeyBinds();
 
-        SaveSystem.saveSettings();
+        SaveSystem.SaveSettings();
     }
 
     public void RestoreDefaultKeyBinds() {
