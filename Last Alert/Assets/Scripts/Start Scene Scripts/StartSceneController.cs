@@ -67,7 +67,7 @@ public class StartSceneController : MonoBehaviour {
 
     //New Game Button
     public void NewGame() {
-        GameTimer.SetTimer(300.0f);
+        GameTimer.SetTimer(120.0f);
         SaveSystem.ClearSave();
         AudioManager.instance.Pause("homeTheme");
         AudioManager.instance.Play("gameBackground");
