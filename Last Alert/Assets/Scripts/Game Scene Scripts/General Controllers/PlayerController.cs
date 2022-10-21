@@ -202,13 +202,14 @@ public class PlayerController : MonoBehaviour {
 
     public void SavePlayer() {
         print("player data saved...");
-        SaveSystem.Save(transform, 0);
+        SaveSystem.Save(transform);
     }
 
     public void LoadPlayer() {
         print("player data loading...");
         if (!SaveSystem.IsSaved()) {
-            SaveSystem.Save(transform, 0.0f);
+            SaveSystem.Save(transform);
+            
         }
 
         SetLocation(SaveSystem.GetPlayerLocation());

@@ -184,8 +184,10 @@ public class GameController : MonoBehaviour {
             playerControllerRef.LoadPlayer();
 
             if (!SaveSystem.IsSaved()) {
-                SaveSystem.Save(playerControllerRef.transform, 0.0f);
+                SaveSystem.Save(playerControllerRef.transform);
                 SaveSystem.LoadSettings();
+                Debug.Log(SaveSystem.GetTimer());
+                GameTimer.SetTimer(SaveSystem.GetTimer());
             }
         }
     }

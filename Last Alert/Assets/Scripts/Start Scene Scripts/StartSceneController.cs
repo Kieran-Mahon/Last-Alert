@@ -67,6 +67,7 @@ public class StartSceneController : MonoBehaviour {
 
     //New Game Button
     public void NewGame() {
+        GameTimer.SetTimer(300.0f);
         SaveSystem.ClearSave();
         AudioManager.instance.Pause("homeTheme");
         AudioManager.instance.Play("gameBackground");
@@ -78,6 +79,7 @@ public class StartSceneController : MonoBehaviour {
     public void ContinueGame() {
         //continues game from last checkpoint save (if available)
         //SceneController.SwitchToTutorialScene();
+        GameTimer.SetTimer(SaveSystem.GetTimer());
         AudioManager.instance.Pause("homeTheme");
         AudioManager.instance.Play("gameBackground");
         SceneController.SwitchToGameScene();

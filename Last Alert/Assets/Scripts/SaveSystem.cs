@@ -10,22 +10,22 @@ public static class SaveSystem {
          1. First get reference to the players transform, and the timer.
          2. call SaveSystem.save(transform, timer);
     */
-    public static void Save(Transform player, float timer) {
-
+    public static void Save(Transform player) {
+ 
         //settup saving
         string path = Application.persistentDataPath + "/data.abc";
         BinaryFormatter formatter = new BinaryFormatter();
 
         //settup writing stream
         FileStream stream = new FileStream(path, FileMode.Create);
-        PlayerData data = new PlayerData(player, timer);
+        PlayerData data = new PlayerData(player);
 
         //save data
         formatter.Serialize(stream, data);
         stream.Close();
     }
 
-    public static void Save(PlayerData player, float timer) {
+    public static void Save(PlayerData player) {
 
         //settup saving
         string path = Application.persistentDataPath + "/data.abc";
@@ -47,7 +47,7 @@ public static class SaveSystem {
         BinaryFormatter formatter = new BinaryFormatter();
 
         if (!IsSaved()) {
-            Save(new PlayerData(), 0.0f);
+            Save(new PlayerData());
         }
 
         //save to stream
@@ -82,7 +82,7 @@ public static class SaveSystem {
 
         //write null using stream
         FileStream stream = new FileStream(path, FileMode.Create);
-        PlayerData data = new PlayerData(null, -1);
+        PlayerData data = new PlayerData(null);
 
         //finalize
         formatter.Serialize(stream, data);
