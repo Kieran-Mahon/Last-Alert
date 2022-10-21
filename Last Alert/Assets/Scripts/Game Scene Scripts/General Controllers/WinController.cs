@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class WinController : MonoBehaviour {
 
-    [SerializeField]
-    private Condition[] conditions;
-    
+    public Condition[] conditions;
+
     public bool CheckForWin() {
         bool allCompleted = true;
         //Loop through all conditions and make sure none are not completed
         foreach (Condition condition in conditions) {
-            if (condition.completed == false) {
+            if (condition.GetCompleted() == false) {
                 allCompleted = false;
             }
         }

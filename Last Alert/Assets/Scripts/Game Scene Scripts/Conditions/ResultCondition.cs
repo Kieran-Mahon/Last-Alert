@@ -8,7 +8,7 @@ public class ResultCondition : Condition {
     public Result result;
 
     void Update() {
-        completed = result.completed;
+        SetCompleted(result.GetCompleted());
     }
 
     public override void ResetCondition() {
