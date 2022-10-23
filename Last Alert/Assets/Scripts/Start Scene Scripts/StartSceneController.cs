@@ -14,10 +14,16 @@ public class StartSceneController : MonoBehaviour {
     public GameObject settingsUI;
     public Settings settingRef;
 
+    //Difficulties reference
+    public GameObject difficultiesUI;
+
     //References
     //UI controller reference
     //etc. etc..
     public Button continueBtn;
+
+    //timer variable
+    private float startTime;
 
     // Start is called before the first frame update
     void Start() {
@@ -39,6 +45,8 @@ public class StartSceneController : MonoBehaviour {
 
         } else if (startState == StartState.SETTINGMENU) {
 
+        } else if (startState == StartState.DIFFICULTIES) {
+
         } else if (startState == StartState.CUTSCENE) {
 
         }
@@ -51,11 +59,17 @@ public class StartSceneController : MonoBehaviour {
             homeMenu.SetActive(true);
             settingsUI.SetActive(false);
             settingRef.enabled = false;
+            difficultiesUI.SetActive(false);
 
         } else if (newStartState == StartState.SETTINGMENU) {
             MouseController.UnlockMouse();
             settingsUI.SetActive(true);
             settingRef.enabled = true;
+            homeMenu.SetActive(false);
+
+        } else if (newStartState == StartState.DIFFICULTIES) {
+            MouseController.UnlockMouse();
+            difficultiesUI.SetActive(true);
             homeMenu.SetActive(false);
 
         } else if (newStartState == StartState.CUTSCENE) {
@@ -67,18 +81,12 @@ public class StartSceneController : MonoBehaviour {
 
     //New Game Button
     public void NewGame() {
-        GameTimer.SetTimer(120.0f);
-        SaveSystem.ClearSave();
-        AudioManager.instance.Pause("homeTheme");
-        AudioManager.instance.Play("gameBackground");
-        SceneController.SwitchToGameScene();
-        //SceneController.SwitchToTutorialScene();
+        ChangeStartState(StartState.DIFFICULTIES);
     }
 
     //Continue Button
     public void ContinueGame() {
         //continues game from last checkpoint save (if available)
-        //SceneController.SwitchToTutorialScene();
         GameTimer.SetTimer(SaveSystem.GetTimer());
         AudioManager.instance.Pause("homeTheme");
         AudioManager.instance.Play("gameBackground");
@@ -95,6 +103,38 @@ public class StartSceneController : MonoBehaviour {
         ChangeStartState(StartState.HOMEMENU);
     }
 
+    public void StartTutorial(){
+        SceneController.SwitchToTutorialScene();
+    }
+
+    public void StartGame(){
+        GameTimer.SetTimer(startTime);
+        SaveSystem.ClearSave();
+        AudioManager.instance.Pause("homeTheme");
+        AudioManager.instance.Play("gameBackground");
+        SceneController.SwitchToGameScene();
+    }
+
+    public void SetDifficulty(GameObject difficulty){
+        //set timer based on chosen difficulty
+        switch(difficulty.name){
+            case "btnEasy":
+                this.startTime = 10.5f * 60; //10 minutes 30 seconds
+                break;
+
+            case "btnNormal":
+                this.startTime = 2 * 60; //2 minutes
+                break;
+
+            case "btnHard":
+                this.startTime = 0.5f * 60; //30 seconds
+                break;
+        }
+
+        //switch to game scene
+        StartGame();
+    }
+
     //Quit Button
     public void Quit() {
         Application.Quit();
@@ -106,5 +146,6 @@ public class StartSceneController : MonoBehaviour {
 public enum StartState {
     HOMEMENU,
     SETTINGMENU,
+    DIFFICULTIES,
     CUTSCENE
 }
