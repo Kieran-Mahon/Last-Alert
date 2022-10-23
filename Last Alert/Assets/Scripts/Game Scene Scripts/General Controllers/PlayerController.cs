@@ -41,6 +41,11 @@ public class PlayerController : MonoBehaviour {
 
     [Header("SpaceZone")]
     public static bool inSpace = false;
+    public float spaceSpeed = 0.1f;
+    public float dampen = 0.05f;
+    public float maxSpeed = 5.0f;
+    public float velocity = 0.0f;
+
 
     [Header("Saving")]
     public bool loadPlayer = true;
@@ -55,74 +60,98 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void MovePlayer() {
-        //Player crouch
-        if (Input.GetKey(KeyboardController.crouchKey)) {
-            //Signal the player is crouching
-            isCrouching = true;
-            //Update controller height and camera
-            controllerRef.height = Mathf.SmoothDamp(controllerRef.height, crouchControllerHeight, ref crouchingVelocityF, crouchTime / 10);
-            cameraRef.transform.localPosition = Vector3.SmoothDamp(cameraRef.transform.localPosition, new Vector3(0, crouchCameraHeight, 0), ref crouchingVelocityV3, crouchTime / 10);
+        if (inSpace) {
+            //Space Movement//
+
+            //calculate speed
+            if (Input.GetKey(KeyCode.Mouse0)) {
+                this.velocity += this.spaceSpeed;
+            }else{
+                this.velocity -= this.dampen;
+            }
+            if(this.velocity < 0){
+                this.velocity = 0;
+            }
+            if(this.velocity > this.maxSpeed){
+                this.velocity = this.maxSpeed;
+            }
+
+            //move player
+            moveVector = transformRef.TransformDirection(new Vector3(0, 0, -this.velocity));
+            controllerRef.Move(moveVector * Time.deltaTime);
+
         } else {
-            //Check if anything above player
-            if (SpaceAbovePlayer(new Vector3(0, crouchControllerHeight, 0))) { //Middle
-                if (SpaceAbovePlayer(new Vector3(0.5f, crouchControllerHeight, 0))) { //Left Top
-                    if (SpaceAbovePlayer(new Vector3(-0.5f, crouchControllerHeight, 0))) { //Right Top
-                        if (SpaceAbovePlayer(new Vector3(0, crouchControllerHeight, 0.5f))) { //Left Bottom
-                            if (SpaceAbovePlayer(new Vector3(0, crouchControllerHeight, -0.5f))) { //Right Bottom
-                                //Signal the player is no longer crouching
-                                isCrouching = false;
-                                //Update controller height and camera
-                                controllerRef.height = Mathf.SmoothDamp(controllerRef.height, uncrouchControllerHeight, ref crouchingVelocityF, crouchTime / 10);
-                                cameraRef.transform.localPosition = Vector3.SmoothDamp(cameraRef.transform.localPosition, new Vector3(0, uncrouchCameraHeight, 0), ref crouchingVelocityV3, crouchTime / 10);
+            //Normal Movement//
+
+            //Player crouch
+            if (Input.GetKey(KeyboardController.crouchKey)) {
+                //Signal the player is crouching
+                isCrouching = true;
+                //Update controller height and camera
+                controllerRef.height = Mathf.SmoothDamp(controllerRef.height, crouchControllerHeight, ref crouchingVelocityF, crouchTime / 10);
+                cameraRef.transform.localPosition = Vector3.SmoothDamp(cameraRef.transform.localPosition, new Vector3(0, crouchCameraHeight, 0), ref crouchingVelocityV3, crouchTime / 10);
+            } else {
+                //Check if anything above player
+                if (SpaceAbovePlayer(new Vector3(0, crouchControllerHeight, 0))) { //Middle
+                    if (SpaceAbovePlayer(new Vector3(0.5f, crouchControllerHeight, 0))) { //Left Top
+                        if (SpaceAbovePlayer(new Vector3(-0.5f, crouchControllerHeight, 0))) { //Right Top
+                            if (SpaceAbovePlayer(new Vector3(0, crouchControllerHeight, 0.5f))) { //Left Bottom
+                                if (SpaceAbovePlayer(new Vector3(0, crouchControllerHeight, -0.5f))) { //Right Bottom
+                                    //Signal the player is no longer crouching
+                                    isCrouching = false;
+                                    //Update controller height and camera
+                                    controllerRef.height = Mathf.SmoothDamp(controllerRef.height, uncrouchControllerHeight, ref crouchingVelocityF, crouchTime / 10);
+                                    cameraRef.transform.localPosition = Vector3.SmoothDamp(cameraRef.transform.localPosition, new Vector3(0, uncrouchCameraHeight, 0), ref crouchingVelocityV3, crouchTime / 10);
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        //Update controller collider center
-        controllerRef.center = new Vector3(0, controllerRef.height / 2, 0);
+            //Update controller collider center
+            controllerRef.center = new Vector3(0, controllerRef.height / 2, 0);
 
-        //Get speed
-        if (Input.GetKey(KeyboardController.runKey)) {
-            speed = runSpeed;
-        } else {
-            speed = walkSpeed;
-        }
-
-        //Get input
-        float xInput = Input.GetAxis("Horizontal");
-        float yInput = Input.GetAxis("Vertical");
-
-        //Check if grounded
-        if (Physics.Raycast(transform.position, Vector3.down, 0.1f)) {
-            //Move player
-            moveVector = transformRef.TransformDirection(new Vector3(xInput, -0.1f, yInput));
-
-            //Check for jump key down
-            if (Input.GetKeyDown(KeyboardController.jumpKey)) {
-                moveVector.y = jumpSpeed;
+            //Get speed
+            if (Input.GetKey(KeyboardController.runKey)) {
+                speed = runSpeed;
+            } else {
+                speed = walkSpeed;
             }
-        } else {
-            //Allow mid air movement but change it by the lost variable
-            speed = speed * midAirSpeedModifier;
-            moveVector = transformRef.TransformDirection(new Vector3(xInput, moveVector.y, yInput));
+
+            //Get input
+            float xInput = Input.GetAxis("Horizontal");
+            float yInput = Input.GetAxis("Vertical");
+
+            //Check if grounded
+            if (Physics.Raycast(transform.position, Vector3.down, 0.1f)) {
+                //Move player
+                moveVector = transformRef.TransformDirection(new Vector3(xInput, -0.1f, yInput));
+
+                //Check for jump key down
+                if (Input.GetKeyDown(KeyboardController.jumpKey)) {
+                    moveVector.y = jumpSpeed;
+                }
+            } else {
+                //Allow mid air movement but change it by the lost variable
+                speed = speed * midAirSpeedModifier;
+                moveVector = transformRef.TransformDirection(new Vector3(xInput, moveVector.y, yInput));
+            }
+
+            //Apply movement modifiers (excluding mid air modifier)
+            if (isCrouching == true) {
+                speed = speed * crouchSpeedModifier;
+            }
+
+            //Apply gravity
+            moveVector = new Vector3(moveVector.x, moveVector.y - gravity * Time.deltaTime, moveVector.z);
+
+            //Apply speed
+            moveVector = new Vector3(moveVector.x * speed, moveVector.y, moveVector.z * speed);
+
+            //Move the controller
+            controllerRef.Move(moveVector * Time.deltaTime);
         }
-
-        //Apply movement modifiers (excluding mid air modifier)
-        if (isCrouching == true) {
-            speed = speed * crouchSpeedModifier;
-        }
-
-        //Apply gravity
-        moveVector = new Vector3(moveVector.x, moveVector.y - gravity * Time.deltaTime, moveVector.z);
-
-        //Apply speed
-        moveVector = new Vector3(moveVector.x * speed, moveVector.y, moveVector.z * speed);
-
-        //Move the controller
-        controllerRef.Move(moveVector * Time.deltaTime);
     }
 
     private bool SpaceAbovePlayer(Vector3 pos) {
