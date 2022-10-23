@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour {
     public static bool inSpace = false;
     public float spaceSpeed = 0.1f;
     public float dampen = 0.05f;
-    public float maxSpeed = 5.0f;
+    public float maxSpeed = 15.0f;
     public float velocity = 0.0f;
 
 
@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour {
             //Space Movement//
 
             //calculate speed
-            if (Input.GetKey(KeyCode.Mouse0)) {
+            if (Input.GetKey(KeyCode.Mouse1)) {
                 this.velocity += this.spaceSpeed;
             }else{
                 this.velocity -= this.dampen;
