@@ -4433,6 +4433,7 @@ MonoBehaviour:
   homeMenu: {fileID: 834484298}
   settingsUI: {fileID: 1302085590}
   settingRef: {fileID: 511086711}
+  difficultiesUI: {fileID: 0}
   continueBtn: {fileID: 1160103397}
 --- !u!1 &994680100
 GameObject:
