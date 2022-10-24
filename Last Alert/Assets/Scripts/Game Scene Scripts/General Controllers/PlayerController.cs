@@ -59,22 +59,63 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    // // Testing that the players speed in space is calculated
+    // [UnityTest]
+    // public void SpaceLess0Case()
+    // {
+    //     float velocity = -5.0f;
+    //     PlayerController playerController = new PlayerController();
+    //     velocity = playerController.CalculateVelocity(velocity, 0.1f, 0.05f, 15.0f);
+
+    //     Assert.IsTrue(velocity >= 0);
+    //     Assert.IsTrue(velocity <= 15.0f);
+    // }
+
+    // [UnityTest]
+    // public void SpaceBetweenCase()
+    // {
+    //     float velocity = 0.0f;
+    //     PlayerController playerController = new PlayerController();
+    //     velocity = playerController.CalculateVelocity(velocity, 0.1f, 0.05f, 15.0f);
+
+    //     Assert.IsTrue(velocity >= 0);
+    //     Assert.IsTrue(velocity <= 15.0f);
+    // }
+
+    // [UnityTest]
+    // public void SpaceGreaterThenCase()
+    // {
+    //     float velocity = 20.0f;
+    //     PlayerController playerController = new PlayerController();
+    //     velocity = playerController.CalculateVelocity(velocity, 0.1f, 0.05f, 15.0f);
+
+    //     Assert.IsTrue(velocity >= 0);
+    //     Assert.IsTrue(velocity <= 15.0f);
+    // }
+
+    public static float CalculateVelocity(float velocity, float spaceSpeed, float dampen, float maxSpeed){
+        if (Input.GetKey(KeyCode.Mouse1)) {
+            velocity += spaceSpeed;
+        } else {
+            velocity -= dampen;
+        }
+
+        if (velocity < 0) {
+            velocity = 0;
+        }
+        if (velocity > maxSpeed) {
+            velocity = maxSpeed;
+        }
+
+        return velocity;
+    }
+
     public void MovePlayer() {
         if (inSpace) {
             //Space Movement//
 
             //calculate speed
-            if (Input.GetKey(KeyCode.Mouse1)) {
-                this.velocity += this.spaceSpeed;
-            }else{
-                this.velocity -= this.dampen;
-            }
-            if(this.velocity < 0){
-                this.velocity = 0;
-            }
-            if(this.velocity > this.maxSpeed){
-                this.velocity = this.maxSpeed;
-            }
+            this.velocity = CalculateVelocity(this.velocity, this.spaceSpeed, this.dampen, this.maxSpeed);
 
             //move player
             moveVector = transformRef.TransformDirection(new Vector3(0, 0, -this.velocity));
