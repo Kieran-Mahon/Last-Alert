@@ -181,6 +181,7 @@ MonoBehaviour:
   maxSpeed: 1
   velocity: 0
   fireExtinguisher: {fileID: 2158202492687317193}
+  particles: {fileID: 0}
   loadPlayer: 1
 --- !u!114 &766560269569126085
 MonoBehaviour:
@@ -370,7 +371,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -605,7 +606,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 3
       minScalar: 1
       maxCurve:
         serializedVersion: 2

@@ -22,7 +22,16 @@ public class AudioManager : MonoBehaviour {
     //array of sounds
     public Sound[] sounds;
 
+    
+
     public static float volumeSetting = 0.5f;
+    
+    public static AudioManager getInstance(){
+        if(instance == null){
+            instance = new AudioManager();
+        }
+        return instance;
+    }
 
     // Awake is called before the first frame update
     void Awake() {

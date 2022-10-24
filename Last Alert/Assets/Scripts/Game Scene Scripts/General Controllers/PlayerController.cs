@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour {
     public float velocity = 0.0f;
 
     public GameObject fireExtinguisher;
+    public ParticleSystem particles;
 
 
     [Header("Saving")]
@@ -60,6 +61,8 @@ public class PlayerController : MonoBehaviour {
             LoadPlayer();
         }
     }
+
+    
 
     public static float CalculateVelocity(float velocity, float spaceSpeed, float dampen, float maxSpeed){
         if (Input.GetKey(KeyCode.Mouse1)) {
@@ -87,6 +90,13 @@ public class PlayerController : MonoBehaviour {
                 fireExtinguisher.SetActive(true);
             }
 
+            if (Input.GetKeyDown(KeyCode.Mouse1)) {
+                this.particles.Play(true);
+            }
+            if(Input.GetKeyUp(KeyCode.Mouse1)) {
+                this.particles.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            }
+
             //calculate speed
             this.velocity = CalculateVelocity(this.velocity, this.spaceSpeed, this.dampen, this.maxSpeed);
 
@@ -99,6 +109,7 @@ public class PlayerController : MonoBehaviour {
 
             //disable fireExtinguisher
             if (fireExtinguisher.activeSelf) {
+                this.velocity = 0.0f;
                 fireExtinguisher.SetActive(false);
             }
 
