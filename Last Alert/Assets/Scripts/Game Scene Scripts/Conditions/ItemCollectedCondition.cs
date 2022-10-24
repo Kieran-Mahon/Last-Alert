@@ -3,6 +3,7 @@ using UnityEngine;
 public class ItemCollectedCondition : Condition {
 
     public bool resetItemToLocation = true;
+
     //Allow multiple types of the same object if needed
     public GameObject[] itemWanted;
     private Vector3[] itemStartPos;
