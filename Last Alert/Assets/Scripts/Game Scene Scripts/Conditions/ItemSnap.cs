@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemSnap : MonoBehaviour
 {
+    public GameObject wantedObject;
 
     // Start is called before the first frame update
     void Start()
@@ -11,9 +12,17 @@ public class ItemSnap : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if(other.gameObject == wantedObject)
+        {
+            //snapToCenter(other.gameObject);
+        }
+    }
+
+    public void snapToCenter(GameObject snapObject, Vector3 areaPos, Quaternion areaRot)
+    {
+        snapObject.transform.position = areaPos;
+        snapObject.transform.rotation = areaRot;
     }
 }
