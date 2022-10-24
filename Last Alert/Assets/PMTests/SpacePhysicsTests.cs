@@ -8,29 +8,35 @@ public class SpacPhysicsTests {
 
     // Testing that the players speed in space is calculated
     [UnityTest]
-    public void SpaceLess0Case() {
+    public IEnumerator SpaceLess0Case() {
         float velocity = -5.0f;
         velocity = PlayerController.CalculateVelocity(velocity, 0.1f, 0.05f, 15.0f);
 
         Assert.IsTrue(velocity >= 0);
         Assert.IsTrue(velocity <= 15.0f);
+
+        yield return null;
     }
 
     [UnityTest]
-    public void SpaceBetweenCase() {
+    public IEnumerator SpaceBetweenCase() {
         float velocity = 0.0f;
         velocity = PlayerController.CalculateVelocity(velocity, 0.1f, 0.05f, 15.0f);
-Debug.Log("HI");
+
         Assert.IsTrue(velocity >= 0);
         Assert.IsTrue(velocity <= 15.0f);
+
+        yield return null;
     }
 
     [UnityTest]
-    public void SpaceGreaterThenCase() {
+    public IEnumerator SpaceGreaterThenCase() {
         float velocity = 20.0f;
         velocity = PlayerController.CalculateVelocity(velocity, 0.1f, 0.05f, 15.0f);
 
         Assert.IsTrue(velocity >= 0);
         Assert.IsTrue(velocity <= 15.0f);
+
+        yield return null;
     }
 }
