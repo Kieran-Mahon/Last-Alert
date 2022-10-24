@@ -30,10 +30,16 @@ public class Settings : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        if (SaveSystem.IsSaved()) {
+            SaveSystem.LoadSettings();
+        } else {
+            SaveSystem.Save(new PlayerData());
+        }
+
         mouseXInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
         mouseYInvert.onValueChanged.AddListener(delegate { InvertMouse(); });
-        volume.onValueChanged.AddListener(delegate { volumeChanged(); });
-        mouseSensitivity.onValueChanged.AddListener(delegate { mouseSensitivityChanged(); });
+        volume.onValueChanged.AddListener(delegate { VolumeChanged(); });
+        mouseSensitivity.onValueChanged.AddListener(delegate { MouseSensitivityChanged(); });
 
         //update settings ui
         ShowCurrentSettings();
@@ -46,11 +52,14 @@ public class Settings : MonoBehaviour {
 
     //updates settings ui
     public void ShowCurrentSettings() {
-        //volume
-        volume.value = AudioManager.volumeSetting;
 
-        //sensitivity
-        mouseSensitivity.value = PlayerController.mouseXSensitivity;
+        if (SaveSystem.IsSaved()) {
+            //volume
+            volume.value = AudioManager.volumeSetting;
+
+            //sensitivity
+            mouseSensitivity.value = PlayerController.mouseXSensitivity;
+        }
 
         //mouse inversion
         if (PlayerController.mouseXInverted == false) {
@@ -81,15 +90,19 @@ public class Settings : MonoBehaviour {
     }
 
     //volume settings
-    public void volumeChanged() {
+    public void VolumeChanged() {
         AudioManager.volumeSetting = volume.value;
         AudioManager.instance.UpdateVolume();
+
+        SaveSystem.SaveSettings();
     }
 
     //mouse sensitivity settings
-    public void mouseSensitivityChanged() {
+    public void MouseSensitivityChanged() {
         PlayerController.mouseXSensitivity = mouseSensitivity.value;
         PlayerController.mouseYSensitivity = mouseSensitivity.value;
+
+        SaveSystem.SaveSettings();
     }
 
     //mouse inversion settings
@@ -105,6 +118,8 @@ public class Settings : MonoBehaviour {
         } else {
             PlayerController.mouseYInverted = false;
         }
+
+        SaveSystem.SaveSettings();
     }
 
     //keybind settings
@@ -115,6 +130,7 @@ public class Settings : MonoBehaviour {
     void OnGUI() {
         if (currentKey != null) {
             Event e = Event.current;
+
             if (e.isKey || e.isMouse) {
                 UpdateKeyBind(e);
                 currentKey = null;
@@ -135,9 +151,7 @@ public class Settings : MonoBehaviour {
                     }
                 }
             }
-        }
-        //key press
-        else if (e.isKey) {
+        } else if (e.isKey) { /*key press */
             newKey = e.keyCode;
         }
 
@@ -174,6 +188,8 @@ public class Settings : MonoBehaviour {
             default:
                 break;
         }
+
+        SaveSystem.SaveSettings();
     }
 
     public void ChangeKeyBind(KeyboardController.Action control, KeyCode newKey) {
@@ -199,6 +215,7 @@ public class Settings : MonoBehaviour {
         UpdateButtonText(pickUpDropText, KeyboardController.itemPickUpKey.ToString());
         UpdateButtonText(rotateLeftText, KeyboardController.itemRotateLeftKey.ToString());
         UpdateButtonText(rotateRightText, KeyboardController.itemRotateRightKey.ToString());
+
     }
 
     //default restoration
@@ -219,6 +236,8 @@ public class Settings : MonoBehaviour {
 
         //keybinds
         RestoreDefaultKeyBinds();
+
+        SaveSystem.SaveSettings();
     }
 
     public void RestoreDefaultKeyBinds() {

@@ -14,6 +14,7 @@ public class ItemOutOfBoundsArea : MonoBehaviour {
         //Check if the object is the player
         PlayerController playerControllerRef = other.GetComponent<PlayerController>();
         if (playerControllerRef != null) {
+            print("hi");
             playerControllerRef.ResetPlayer();
             return;
         }
