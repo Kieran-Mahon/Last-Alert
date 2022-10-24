@@ -41,9 +41,9 @@ public class PlayerController : MonoBehaviour {
 
     [Header("SpaceZone")]
     public static bool inSpace = false;
-    public float spaceSpeed = 0.1f;
+    public float spaceSpeed = 0.2f;
     public float dampen = 0.05f;
-    public float maxSpeed = 15.0f;
+    public float maxSpeed = 100.0f;
     public float velocity = 0.0f;
 
 
@@ -58,40 +58,6 @@ public class PlayerController : MonoBehaviour {
             LoadPlayer();
         }
     }
-
-    // // Testing that the players speed in space is calculated
-    // [UnityTest]
-    // public void SpaceLess0Case()
-    // {
-    //     float velocity = -5.0f;
-    //     PlayerController playerController = new PlayerController();
-    //     velocity = playerController.CalculateVelocity(velocity, 0.1f, 0.05f, 15.0f);
-
-    //     Assert.IsTrue(velocity >= 0);
-    //     Assert.IsTrue(velocity <= 15.0f);
-    // }
-
-    // [UnityTest]
-    // public void SpaceBetweenCase()
-    // {
-    //     float velocity = 0.0f;
-    //     PlayerController playerController = new PlayerController();
-    //     velocity = playerController.CalculateVelocity(velocity, 0.1f, 0.05f, 15.0f);
-
-    //     Assert.IsTrue(velocity >= 0);
-    //     Assert.IsTrue(velocity <= 15.0f);
-    // }
-
-    // [UnityTest]
-    // public void SpaceGreaterThenCase()
-    // {
-    //     float velocity = 20.0f;
-    //     PlayerController playerController = new PlayerController();
-    //     velocity = playerController.CalculateVelocity(velocity, 0.1f, 0.05f, 15.0f);
-
-    //     Assert.IsTrue(velocity >= 0);
-    //     Assert.IsTrue(velocity <= 15.0f);
-    // }
 
     public static float CalculateVelocity(float velocity, float spaceSpeed, float dampen, float maxSpeed){
         if (Input.GetKey(KeyCode.Mouse1)) {
