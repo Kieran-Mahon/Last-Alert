@@ -16,13 +16,26 @@ public class ItemSnap : MonoBehaviour
     {
         if(other.gameObject == wantedObject)
         {
-            //snapToCenter(other.gameObject);
+            snapToCenter(other.gameObject);
         }
     }
 
-    public void snapToCenter(GameObject snapObject, Vector3 areaPos, Quaternion areaRot)
+    public void snapToCenter(GameObject snapObject)
     {
-        snapObject.transform.position = areaPos;
-        snapObject.transform.rotation = areaRot;
+        if(snapObject == null)
+        {
+            return;
+        }
+        
+        //Stop physics
+        Rigidbody rigidbody = snapObject.GetComponent<Rigidbody>();
+        if (rigidbody != null)
+        {
+            rigidbody.isKinematic = true;
+        }
+
+        // Change position and rotation
+        snapObject.transform.position = transform.position;
+        snapObject.transform.rotation = transform.rotation;
     }
 }
