@@ -16,7 +16,7 @@ public class SwitchMovement : MonoBehaviour {
     void OnTriggerExit(Collider other) {
         //checks if player has exited
         if (other.name == "Player") {
-
+            PlayerController.inSpace = false;
         }
     }
 }

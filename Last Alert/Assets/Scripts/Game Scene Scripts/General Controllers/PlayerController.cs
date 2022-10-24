@@ -43,8 +43,10 @@ public class PlayerController : MonoBehaviour {
     public static bool inSpace = false;
     public float spaceSpeed = 0.2f;
     public float dampen = 0.05f;
-    public float maxSpeed = 100.0f;
+    public float maxSpeed = 10.0f;
     public float velocity = 0.0f;
+
+    public GameObject fireExtinguisher;
 
 
     [Header("Saving")]
@@ -79,6 +81,11 @@ public class PlayerController : MonoBehaviour {
     public void MovePlayer() {
         if (inSpace) {
             //Space Movement//
+            
+            //enable fireextinguisher
+            if (!fireExtinguisher.activeSelf) {
+                fireExtinguisher.SetActive(true);
+            }
 
             //calculate speed
             this.velocity = CalculateVelocity(this.velocity, this.spaceSpeed, this.dampen, this.maxSpeed);
@@ -89,6 +96,11 @@ public class PlayerController : MonoBehaviour {
 
         } else {
             //Normal Movement//
+
+            //disable fireExtinguisher
+            if (fireExtinguisher.activeSelf) {
+                fireExtinguisher.SetActive(false);
+            }
 
             //Player crouch
             if (Input.GetKey(KeyboardController.crouchKey)) {
