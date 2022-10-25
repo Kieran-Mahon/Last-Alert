@@ -6,7 +6,12 @@ Our project is a game called last alert. The genre is a timed scavenger hunt gam
 
 [Visuals]
 
-![Alt text](/README Images/1.jpg?raw=true "Home menu")
+<img width="400" alt="Home Menu Img" src="https://user-images.githubusercontent.com/84115726/197695774-ff2d1be2-58b2-4de6-8281-8814ad8df0f4.PNG">
+<img width="400" alt="Room 1 Img" src="https://user-images.githubusercontent.com/84115726/197695858-f5bcad3b-2a37-48b5-be3b-fec009977c8c.PNG">
+<img width="400" alt="Room 2 Img" src="https://user-images.githubusercontent.com/84115726/197695926-d6a96ad1-1c19-4ae1-bc99-35ae5994427f.PNG">
+<img width="400" alt="Room 3 Img" src="https://user-images.githubusercontent.com/84115726/197695990-762411d1-e5df-4883-aa0d-695ef5914b80.PNG">
+<img width="400" alt="Room 4 Img" src="https://user-images.githubusercontent.com/84115726/197696032-ceb729ba-f594-4ee1-9fe2-dc38cb13edfe.PNG">
+
 
 [Installation]
 To play the game you will need to download the repository, then open up: Last Alert -> Builds. and then extract the Version 1.0.0.zip which contains the excecutable to run the game.
