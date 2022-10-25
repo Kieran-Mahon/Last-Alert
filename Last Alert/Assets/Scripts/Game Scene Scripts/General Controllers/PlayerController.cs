@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour {
     void Start() {
         transformRef = GetComponent<Transform>();
         controllerRef = GetComponent<CharacterController>();
+        inSpace = false;
 
         if (loadPlayer) {
             LoadPlayer();
