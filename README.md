@@ -2,7 +2,7 @@
 Last Alert
 
 [Description]
-Our project is a game called last alert. The genre is a timed scavenger hunt game where you have to find objects in the scenes and bring them to an area while solving little puzzles along the way. For themes and settings we decided on having the game take place on a space station. The motive behind finding the objects is that there is a meteor on couse to hit the station. The player must find objects in the space station to finish the escape pod to escape before the time is up.
+Our project is a game called last alert. The genre is a timed scavenger hunt/escape game where you have to find objects in the scenes and bring them to an area while solving little puzzles along the way. For themes and settings we decided on having the game take place on a space station. The motive behind finding the objects is that there is a meteor on couse to hit the station. The player must find objects in the space station to finish the escape pod to escape before the time is up.
 
 [Visuals]
 
@@ -14,7 +14,7 @@ Our project is a game called last alert. The genre is a timed scavenger hunt gam
 
 
 [Installation]
-To play the game you will need to download the repository, then open up: Last Alert -> Builds. and then extract the Version 1.0.0.zip which contains the excecutable to run the game.
+To play the game go to the repository folder and open up the Release Build folder, in there is a file called "Version 1.0.0.zip" which you need to extract and open. Finally, the extracted folder will contain the executable to run the game ("Last Alert.exe").
 
 [Support]
 Our email addresses for contacting us are:
@@ -94,4 +94,4 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 [Project status]
-This project is still in development and is currently in sprint 2.
+This project is still in development and is moving into sprint 3.
