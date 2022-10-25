@@ -41,9 +41,9 @@ public class PlayerData {
             this.position[2] = player.position.z;
 
         } else {
-            this.position[0] = 0.0f;
-            this.position[1] = 0.0f;
-            this.position[2] = 0.0f;
+            this.position[0] = -2.07f;
+            this.position[1] = -1.2f;
+            this.position[2] = -0.98f;
         }
 
         this.timer = GameTimer.GetTimeLeft();
