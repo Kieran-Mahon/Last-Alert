@@ -8,7 +8,7 @@ Our project is a game called last alert. The genre is a timed scavenger hunt gam
 *insert screenshots here*
 
 [Installation]
-To play the game at the moment. you need to import the project into a unity editor and then run it inside the editor. In future we will have the executable in the repository so that people can download -> unzip -> play.
+To play the game you will need to download the repository, then open up: Last Alert -> Builds. and then extract the Version 1.0.0.zip which contains the excecutable to run the game.
 
 [Support]
 Our email addresses for contacting us are:
