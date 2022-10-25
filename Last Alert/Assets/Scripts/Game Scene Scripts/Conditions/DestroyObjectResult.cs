@@ -8,6 +8,7 @@ public class DestroyObjectResult : Result {
     
     //Objects to destroy
     public GameObject[] objects;
+    private bool destroyed = false;
 
     //Reset condition
     public override void ResetResult() {
@@ -30,7 +31,10 @@ public class DestroyObjectResult : Result {
 
         //Destory if all are completed
         if (allCompleted == true) {
-            DestroyAll();
+            if (destroyed == false) {
+                DestroyAll();
+            }
+            destroyed = true;
         }
 
         SetCompleted(allCompleted);
@@ -38,6 +42,12 @@ public class DestroyObjectResult : Result {
 
     private void DestroyAll() {
         foreach (GameObject GO in objects) {
+            PickUp pickUpRef = GO.GetComponent<PickUp>();
+            if (pickUpRef != null) {
+                if (pickUpRef.held == true) {
+                    GameReferenceGetter.pickUpControllerRef.DropItem(false);
+                }
+            }
             Destroy(GO);
         }
     }

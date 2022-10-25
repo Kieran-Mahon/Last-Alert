@@ -30,15 +30,6 @@ public class PlayerController : MonoBehaviour {
     [Header("Physics")]
     public float pushForce;
 
-    private CharacterController controllerRef;
-    private Transform transformRef;
-    private Vector3 moveVector = Vector3.zero;
-    private float speed;
-    private float cameraOffset = 0;
-    private Vector3 crouchingVelocityV3 = Vector3.zero;
-    private float crouchingVelocityF = 0;
-    private bool isCrouching = false;
-
     [Header("SpaceZone")]
     public static bool inSpace = false;
     public float spaceSpeed = 0.2f;
@@ -48,10 +39,18 @@ public class PlayerController : MonoBehaviour {
 
     public GameObject fireExtinguisher;
     public ParticleSystem particles;
-
-
+    
     [Header("Saving")]
     public bool loadPlayer = true;
+
+    private CharacterController controllerRef;
+    private Transform transformRef;
+    private Vector3 moveVector = Vector3.zero;
+    private float speed;
+    private float cameraOffset = 0;
+    private Vector3 crouchingVelocityV3 = Vector3.zero;
+    private float crouchingVelocityF = 0;
+    private bool isCrouching = false;
 
     void Start() {
         transformRef = GetComponent<Transform>();
@@ -61,8 +60,6 @@ public class PlayerController : MonoBehaviour {
             LoadPlayer();
         }
     }
-
-    
 
     public static float CalculateVelocity(float velocity, float spaceSpeed, float dampen, float maxSpeed){
         if (Input.GetKey(KeyCode.Mouse1)) {
@@ -154,7 +151,7 @@ public class PlayerController : MonoBehaviour {
             float yInput = Input.GetAxis("Vertical");
 
             //Check if grounded
-            if (Physics.Raycast(transform.position, Vector3.down, 0.1f)) {
+            if (controllerRef.isGrounded == true) {
                 //Move player
                 moveVector = transformRef.TransformDirection(new Vector3(xInput, -0.1f, yInput));
 
@@ -185,7 +182,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private bool SpaceAbovePlayer(Vector3 pos) {
-        return !Physics.Raycast(transform.position + pos, Vector3.up, uncrouchControllerHeight - crouchControllerHeight + 0.1f);
+        return !Physics.Raycast(transform.position + pos, Vector3.up, uncrouchControllerHeight - crouchControllerHeight + 0.1f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
     }
 
     public void MoveCamera() {
@@ -256,9 +253,7 @@ public class PlayerController : MonoBehaviour {
         transform.rotation = Quaternion.Euler(0, newAngle.y, 0);
         cameraRef.transform.localRotation = Quaternion.Euler(newAngle.x, 0, 0);
     }
-
-
-
+    
     public void SavePlayer() {
         print("player data saved...");
         SaveSystem.Save(transform);
@@ -276,8 +271,7 @@ public class PlayerController : MonoBehaviour {
 
     public void ResetPlayer() {
         //TEMP CODE NEEDS TO BE REPLACED WITH CHECKPOINT SYSTEM'S LAST CHECKPOINT
-        SetLocation(new Vector3(0, 0, 0));
-        SetCameraAngle(new Vector2(0, 180));
+        SetLocation(SaveSystem.GetPlayerLocation());
         GameReferenceGetter.pickUpControllerRef.DropItem(true);
     }
 }

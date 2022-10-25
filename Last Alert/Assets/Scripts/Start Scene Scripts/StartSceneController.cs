@@ -119,15 +119,15 @@ public class StartSceneController : MonoBehaviour {
         //set timer based on chosen difficulty
         switch(difficulty.name){
             case "btnEasy":
-                this.startTime = 10.5f * 60; //10 minutes 30 seconds
+                this.startTime = 15 * 60; //15 minutes
                 break;
 
             case "btnNormal":
-                this.startTime = 2 * 60; //2 minutes
+                this.startTime = 8 * 60; //8 minutes
                 break;
 
             case "btnHard":
-                this.startTime = 0.5f * 60; //30 seconds
+                this.startTime = 3 * 60; //3 minutes
                 break;
         }
 

@@ -39,7 +39,7 @@ public class PickUpController : MonoBehaviour {
         //Check if key is pressed
         if (Input.GetKeyDown(KeyboardController.itemPickUpKey)) {
             //See if there is an item in front of the player
-            if (Physics.Raycast(cameraRef.transform.position, cameraRef.transform.TransformDirection(Vector3.forward), out RaycastHit hit, maxPickUpDistance)) {
+            if (Physics.Raycast(cameraRef.transform.position, cameraRef.transform.TransformDirection(Vector3.forward), out RaycastHit hit, maxPickUpDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore)) {
                 //Make sure the item is not too close to the player
                 if (hit.distance <= minPickUpDistance) {
                     return;
@@ -107,7 +107,7 @@ public class PickUpController : MonoBehaviour {
     //Change item distance
     private void ChangeDistance() {
         float shortestDistance = pickUpDistance;
-        if (Physics.Raycast(cameraRef.transform.position, cameraRef.transform.TransformDirection(Vector3.forward), out RaycastHit hit, maxPickUpDistance)) {
+        if (Physics.Raycast(cameraRef.transform.position, cameraRef.transform.TransformDirection(Vector3.forward), out RaycastHit hit, maxPickUpDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore)) {
             //Move the item closer to the player
             float newDistance = hit.distance - itemRef.pickUpDistanceOffset;
 

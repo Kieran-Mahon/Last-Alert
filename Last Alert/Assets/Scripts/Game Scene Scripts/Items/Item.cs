@@ -26,6 +26,13 @@ public class Item : MonoBehaviour {
     }
 
     public void ResetItem() {
+        //Remove item from pick up controller if the player is held onto it
+        if (pickUpRef != null) {
+            if (pickUpRef.held == true) {
+                GameReferenceGetter.pickUpControllerRef.DropItem(false);
+            }
+        }
+
         //Pause physics
         if (rigidbodyRef != null) {
             rigidbodyRef.isKinematic = true;

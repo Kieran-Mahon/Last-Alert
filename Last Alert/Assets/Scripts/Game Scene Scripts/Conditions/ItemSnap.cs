@@ -2,35 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemSnap : MonoBehaviour
-{
+public class ItemSnap : MonoBehaviour {
     public GameObject wantedObject;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == wantedObject)
-        {
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject == wantedObject) {
             snapToCenter(other.gameObject);
         }
     }
 
-    public void snapToCenter(GameObject snapObject)
-    {
-        if (snapObject == null)
-        {
+    public void snapToCenter(GameObject snapObject) {
+        if (snapObject == null) {
             return;
+        }
+
+        //Release from player
+        PickUp pickUpRef = snapObject.GetComponent<PickUp>();
+        if (pickUpRef != null) {
+            if (pickUpRef.held == true) {
+                GameReferenceGetter.pickUpControllerRef.DropItem(false);
+            }
         }
 
         //Stop physics
         Rigidbody rigidbody = snapObject.GetComponent<Rigidbody>();
-        if (rigidbody != null)
-        {
+        if (rigidbody != null) {
             rigidbody.isKinematic = true;
         }
 

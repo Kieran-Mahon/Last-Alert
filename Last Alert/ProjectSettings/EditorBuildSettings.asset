@@ -9,12 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/StartScene.unity
     guid: ae947457a01672841bef2c4525cc5aa8
   - enabled: 1
-    path: Assets/Scenes/GameScene.unity
-    guid: 771f0234ecf084c4fa9b44e7d54160a7
-  - enabled: 1
-    path: Assets/Scenes/Room2_(Laboratory).unity
-    guid: e618475a4e6d41740b1f5a48c6cf75dc
-  - enabled: 1
     path: Assets/Scenes/TutorialScene.unity
     guid: d43af7392152df64891857adc2be0875
+  - enabled: 1
+    path: Assets/Scenes/GameScene.unity
+    guid: 771f0234ecf084c4fa9b44e7d54160a7
   m_configObjects: {}
