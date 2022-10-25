@@ -5,7 +5,8 @@ Last Alert
 Our project is a game called last alert. The genre is a timed scavenger hunt game where you have to find objects in the scenes and bring them to an area while solving little puzzles along the way. For themes and settings we decided on having the game take place on a space station. The motive behind finding the objects is that there is a meteor on couse to hit the station. The player must find objects in the space station to finish the escape pod to escape before the time is up.
 
 [Visuals]
-*insert screenshots here*
+
+![Alt text](/README Images/1.jpg?raw=true "Home menu")
 
 [Installation]
 To play the game you will need to download the repository, then open up: Last Alert -> Builds. and then extract the Version 1.0.0.zip which contains the excecutable to run the game.
