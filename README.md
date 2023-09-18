@@ -1,3 +1,10 @@
+### This version of the game is what was handed in for our SDP project. There is another version linked below where we have updated the game.
+### https://github.com/Kieran-Mahon/Last-Alert-Game
+
+---
+
+<br><br><br><br>
+
 [Name]
 Last Alert
 
